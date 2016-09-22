@@ -10,20 +10,23 @@ namespace JungleScape
     public class Character : GameObject
     {
         // attributes
-        public bool alive;      // bool to determine if the character is still alive
-        Point location;
+        protected bool alive;         // bool to determine if the character is still alive
+        protected float speedX;
+        protected float speedY
         
         // constructor
         public Character(Point loc, Rectangle hBox) : base(loc, hBox)      // takes in Location and HitBox for the new Character
         {
             alive = true;       // making a character automatically sets them as "alive"
-            location = loc;
+            speedX = 0;
+            speedY = 0;
         }
 
         // methods
-        public void Move(int speed)      // basic movment. Change location based on input
+        public void Move(int speedx, int speedy)      // basic movment. Change location based on input
         {
-             
+            location.X = location.X + speedx;
+            location.Y = location.Y + speedy;
         }
     }
 }       

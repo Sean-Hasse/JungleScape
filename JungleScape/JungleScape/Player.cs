@@ -9,5 +9,12 @@ namespace JungleScape
 {
     public class Player : Character
     {
+        // attributes
+
+        // constructor
+        public Player(Point loc, Rectangle hBox) : base(loc, hBox)
+        {
+
+        }
     }
 }

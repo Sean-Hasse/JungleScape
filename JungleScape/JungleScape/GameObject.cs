@@ -19,5 +19,16 @@ namespace JungleScape
             location = loc;
             hitBox = hBox;
         }
+
+        // method
+        public bool DetectCollision(GameObject go)      // detects collision between this object and the object passed in.
+        {
+            if (hitBox.Intersects(go.hitBox))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
