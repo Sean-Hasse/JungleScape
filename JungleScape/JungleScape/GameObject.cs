@@ -10,12 +10,14 @@ namespace JungleScape
     public abstract class GameObject
     {
         // attributes
-        Point location;              // holds the y value of the position
-        Rectangle hitBox;
+        public Point location;         // holds the location of the object
+        public Rectangle hitBox;       // holds the rectangle of the hitbox
 
         // constructor
-        public GameObject()
+        public GameObject(Point loc, Rectangle hBox)
         {
+            location = loc;
+            hitBox = hBox;
         }
     }
 }

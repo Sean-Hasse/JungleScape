@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace JungleScape
 {
-    public class Map : GameObject
+    public class Map
     {
     }
 }
