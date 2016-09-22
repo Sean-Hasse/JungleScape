@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JungleScape
 {
-    class SpriteManager
+    public class SpriteManager
     {
     }
 }

@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace JungleScape
 {
-    class Character
+    public class Character : GameObject
     {
+        // attributes
+        public bool alive;
+        
+        // constructor
+        public Character(int x, int y) : base(x, y)
+        {
+
+        }
+
     }
 }
