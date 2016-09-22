@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace JungleScape
 {
     public abstract class GameObject
     {
         // attributes
-        public int xPos;              // holds the x value of the position
-        int yPos;              // holds the y value of the position
+        Point location;              // holds the y value of the position
+        Rectangle hitBox;
 
         // constructor
-        public GameObject(int x, int y)
+        public GameObject()
         {
-            xPos = x;
-            yPos = y;
         }
     }
 }
