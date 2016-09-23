@@ -13,9 +13,10 @@ namespace JungleScape
         SpriteBatch spriteBatch;
 
         // attempting to make an enemy
-        Enemy spider = new Enemy(new Point(0,0), new Rectangle(0, 0, 20, 20), 5);
-        Enemy e = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 1);
-        // can't call "spider" or "e"
+        Enemy spider;
+        // call spider in LoadContent
+        
+
 
         public Game1()
         {
@@ -46,6 +47,9 @@ namespace JungleScape
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            // initialize and call spider here
+            spider = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 5);
+            spider.Move(spider.speed, 0);
         }
 
         /// <summary>
