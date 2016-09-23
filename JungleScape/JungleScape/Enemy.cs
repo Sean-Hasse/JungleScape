@@ -9,10 +9,13 @@ namespace JungleScape
 {
     public class Enemy : Character
     {
+        // attributes
+        int speed;      // for measuring the speed the enemy will move. Gets passed into Character.Move()
+
         // constructor
-        public Enemy(Point loc, Rectangle hBox) : base(loc, hBox)
+        public Enemy(Point loc, Rectangle hBox, int spd) : base(loc, hBox)
         {
-            
+            speed = spd;
         }
 
         // methods
@@ -24,7 +27,7 @@ namespace JungleScape
 
             if(!leftRect.Intersects(ledge.hitBox) || !rightRect.Intersects(ledge.hitBox))
             {
-                
+                speed = -speed;
             }
 
         }

@@ -12,6 +12,11 @@ namespace JungleScape
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        // attempting to make an enemy
+        Enemy spider = new Enemy(new Point(0,0), new Rectangle(0, 0, 20, 20), 5);
+        Enemy e = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 1);
+        // can't call "spider" or "e"
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);

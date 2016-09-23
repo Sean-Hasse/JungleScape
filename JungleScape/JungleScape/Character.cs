@@ -12,7 +12,7 @@ namespace JungleScape
         // attributes
         protected bool alive;         // bool to determine if the character is still alive
         protected float speedX;
-        protected float speedY
+        protected float speedY;
         
         // constructor
         public Character(Point loc, Rectangle hBox) : base(loc, hBox)      // takes in Location and HitBox for the new Character
