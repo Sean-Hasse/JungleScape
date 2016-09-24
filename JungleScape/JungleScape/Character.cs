@@ -28,5 +28,18 @@ namespace JungleScape
             location.X = location.X + speedx;
             location.Y = location.Y + speedy;
         }
+
+        // takeDamage, when called, sets alive to false for passed in character
+        public void takeDamage(Character char1)
+        {
+            char1.alive = false;
+        }
+
+        // dealDamage, when called, checks to see if there is an intersecting hitbox, and if true, calls takeDamage
+        public void dealDamage(Character otherChar)
+        {
+            if (DetectCollision(otherChar))
+                takeDamage(otherChar);
+        }
     }
 }       
