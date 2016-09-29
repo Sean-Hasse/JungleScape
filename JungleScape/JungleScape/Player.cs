@@ -43,10 +43,26 @@ namespace JungleScape
             }
         }
 
+        // Aim will determine which direction the player in inputting to aim in
+        public string Aim(KeyboardState keyState)
+        {
+            if(keyState.IsKeyDown(Keys.Up))
+                return "up";
+            if (keyState.IsKeyDown(Keys.Right))
+                return "right";
+            if (keyState.IsKeyDown(Keys.Left))
+                return "left";
+            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
+                return "diagonal right";
+            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+                return "diagonal left";
+            else
+                return "";
+        }
+
         // FireArrow will fire an arrow
         public void FireArrow()
         {
-            Rectangle arrow = new Rectangle(location, new Point(20, 5));        // creates a hitbox for the arrow
             
         }
     }
