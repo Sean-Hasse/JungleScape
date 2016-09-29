@@ -3,6 +3,4 @@
 - Add new class: Arrow.
 - Add attributes to Arrow: hitBox, speed
 - Add methods to Arrow: ArrowMove, ArrowHit
-- Add attribute to Player: aimDirection
-- Add method to Player: Aim
 - Add code to Player method FireArrow: create new Arrow object and set speed based on aim

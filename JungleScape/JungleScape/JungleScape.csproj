@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Arrow.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Environment.cs" />
