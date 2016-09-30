@@ -70,23 +70,23 @@ namespace JungleScape
 
             if(direction == "up")
             {
-                arrow = new Arrow(0, 20, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+                arrow = new Arrow(0, 20, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), new Point(hitBox.X, hitBox.Y));
             }
             if(direction == "right")
             {
-                arrow = new Arrow(20, 0, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+                arrow = new Arrow(20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), new Point(hitBox.X, hitBox.Y));
             }
             if (direction == "left") ;
             {
-                arrow = new Arrow(-20, 0, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+                arrow = new Arrow(-20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), new Point(hitBox.X, hitBox.Y));
             }
             if (direction == "diagonal right")
             {
-                arrow = new Arrow(5, 5, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+                arrow = new Arrow(5, 5, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), new Point(hitBox.X, hitBox.Y));
             }
             if (direction == "diagonal left")
             {
-                arrow = new Arrow(-5, 5, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+                arrow = new Arrow(-5, 5, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), new Point(hitBox.X, hitBox.Y));
             }
         }
     }
