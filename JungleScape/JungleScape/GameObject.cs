@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -11,10 +12,12 @@ namespace JungleScape
     {
         // attributes
         public Rectangle hitBox;       // holds the rectangle of the hitbox
+        public Texture2D sprite;
 
         // constructor
         public GameObject(Rectangle hBox)
         {
+            sprite = null;
             hitBox = hBox;
         }
 

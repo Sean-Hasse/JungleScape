@@ -15,12 +15,12 @@ namespace JungleScape
         int speedY;
 
         // constructor
-        public Arrow(int spdX, int spdY, Rectangle hBox, Point loc) : base(loc, hBox)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Player player1) : base(hBox)
         {
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
-            string direction = player1.Aim(keyState);
+            string direction = player1.Aim();
             hitBox = new Rectangle();
         }
     }
