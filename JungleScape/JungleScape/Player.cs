@@ -11,17 +11,17 @@ namespace JungleScape
     public class Player : Character
     {
         // attributes
+        KeyboardState keyState;
 
         // constructor
         public Player(Rectangle hBox) : base(hBox)
         {
-
+            keyState = new KeyboardState();
         }
 
         // methods
         public void PlayerMove()
         {
-            KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
@@ -44,9 +44,11 @@ namespace JungleScape
         }
 
         // Aim will determine which direction the player in inputting to aim in
-        public string Aim(KeyboardState keyState)
+        public string Aim()
         {
-            if(keyState.IsKeyDown(Keys.Up))
+            keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.Up))
                 return "up";
             if (keyState.IsKeyDown(Keys.Right))
                 return "right";
@@ -61,9 +63,31 @@ namespace JungleScape
         }
 
         // FireArrow will fire an arrow
-        public void FireArrow()
+        public void FireArrow()     // currently this method will just create the arrow and set its speed, still need to make it move and make sure it's detecting for collisions and killing things
         {
-            
+            Arrow arrow;
+            string direction = Aim();
+
+            if(direction == "up")
+            {
+                arrow = new Arrow(0, 20, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+            }
+            if(direction == "right")
+            {
+                arrow = new Arrow(20, 0, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+            }
+            if (direction == "left") ;
+            {
+                arrow = new Arrow(-20, 0, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+            }
+            if (direction == "diagonal right")
+            {
+                arrow = new Arrow(5, 5, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+            }
+            if (direction == "diagonal left")
+            {
+                arrow = new Arrow(-5, 5, new Rectangle((location.X), (location.Y), 30, 5), new Point(location.X, location.Y));
+            }
         }
     }
 }

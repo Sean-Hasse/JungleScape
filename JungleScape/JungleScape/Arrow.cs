@@ -8,15 +8,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace JungleScape
 {
-    class Arrow
+    class Arrow : GameObject
     {
         // attributes
-        int speed;
-        Rectangle hitBox;
+        int speedX;
+        int speedY;
 
         // constructor
-        public Arrow(int spd, Player player1)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Point loc) : base(loc, hBox)
         {
+
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
             string direction = player1.Aim(keyState);
