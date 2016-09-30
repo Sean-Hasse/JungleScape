@@ -1,6 +1,5 @@
 ﻿This file is for planned changes, anyone can contribute
 
-- Add new class: Arrow.
-- Add attributes to Arrow: hitBox, speed
+- Focus right now: Allow for shooting the arrow.
 - Add methods to Arrow: ArrowMove, ArrowHit
-- Add code to Player method FireArrow: create new Arrow object and set speed based on aim
+- Add code to Player method FireArrow: make the arrow move and check for collisions and all.
