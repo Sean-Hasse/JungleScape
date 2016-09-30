@@ -9,7 +9,7 @@ namespace JungleScape
 {
     class Environment : GameObject
     {
-        public Environment(Point loc, Rectangle hBox) : base(loc, hBox)
+        public Environment(Rectangle hBox) : base(hBox)
         {
         }
     }

@@ -15,7 +15,7 @@ namespace JungleScape
         protected float speedY;
         
         // constructor
-        public Character(Point loc, Rectangle hBox) : base(loc, hBox)      // takes in Location and HitBox for the new Character
+        public Character(Rectangle hBox) : base(hBox)      // takes in Location and HitBox for the new Character
         {
             alive = true;       // making a character automatically sets them as "alive"
             speedX = 0;
@@ -25,8 +25,8 @@ namespace JungleScape
         // methods
         public void Move(int speedx, int speedy)      // basic movment. Change location based on input
         {
-            location.X = location.X + speedx;
-            location.Y = location.Y + speedy;
+            hitBox.X = hitBox.X + speedx;
+            hitBox.Y = hitBox.Y + speedy;
         }
 
         // takeDamage, when called, sets alive to false for passed in character

@@ -13,7 +13,7 @@ namespace JungleScape
         // attributes
 
         // constructor
-        public Player(Point loc, Rectangle hBox) : base(loc, hBox)
+        public Player(Rectangle hBox) : base(hBox)
         {
 
         }

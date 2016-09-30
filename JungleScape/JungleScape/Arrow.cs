@@ -8,19 +8,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace JungleScape
 {
-    class Arrow 
+    class Arrow
     {
         // attributes
         int speed;
         Rectangle hitBox;
 
         // constructor
-        public Arrow(int spd)
+        public Arrow(int spd, Player player1)
         {
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
-            Player player1;
             string direction = player1.Aim(keyState);
-            hitBox = new Rectangle()
+            hitBox = new Rectangle();
         }
+    }
 }

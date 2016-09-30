@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -24,7 +26,10 @@ namespace JungleScape
         public void loadmap()
         {
             objectMap.Clear();
-            objectMap.Add(new Environment(new Point(100, 100), new Rectangle()));
+            for (int i=0; i<10; i++)
+            {
+                objectMap.Add(new Environment(new Rectangle(new Point(i * 100, 400), new Point(100,50))));
+            }
         }
     }
 }
