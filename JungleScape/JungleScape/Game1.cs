@@ -15,7 +15,9 @@ namespace JungleScape
         // attempting to make an enemy
         Enemy spider;
         // call spider in LoadContent
-        
+
+        Map levelMap;
+        Texture2D blockSprite;
 
 
         public Game1()
@@ -33,6 +35,7 @@ namespace JungleScape
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            levelMap = new Map();
 
             base.Initialize();
         }
@@ -47,9 +50,13 @@ namespace JungleScape
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
             // initialize and call spider here
-            spider = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 5);
-            spider.Move(spider.speed, 0);
+            //spider = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 5);
+            //spider.Move(spider.speed, 0);
+
+            blockSprite = Content.Load<Texture2D>("firstPlatformerBrick");
+            levelMap.loadMap(blockSprite);
         }
 
         /// <summary>
@@ -85,6 +92,10 @@ namespace JungleScape
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            levelMap.drawMap(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

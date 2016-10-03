@@ -23,28 +23,23 @@ namespace JungleScape
         /// For now it creates a hard-coded map, but will eventually
         /// load objects from an external Json file created from the map editor.
         /// </summary>
-        public void loadMap()
+        public void loadMap(Texture2D texture)
         {
             objectMap.Clear();
             for (int i=0; i<10; i++)
             {
-                objectMap.Add(new Environment(new Rectangle(new Point(i * 100, 400), new Point(100,50))));
+                Environment env = new Environment(new Rectangle(new Point(i * 100, 400), new Point(100, 50)));
+                env.sprite = texture;
+                objectMap.Add(env);
             }
-        }
-
-        public void loadSprites()
-        {
-
         }
 
         public void drawMap(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             foreach (GameObject obj in objectMap)
             {
                 spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
-            spriteBatch.End();
         }
     }
 }
