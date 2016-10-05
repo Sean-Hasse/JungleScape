@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace JungleScape
 {
@@ -17,7 +18,7 @@ namespace JungleScape
         // call spider in LoadContent
 
         Map levelMap;
-        Texture2D blockSprite;
+        List<Texture2D> textures;
 
 
         public Game1()
@@ -36,6 +37,7 @@ namespace JungleScape
         {
             // TODO: Add your initialization logic here
             levelMap = new Map();
+            textures = new List<Texture2D>();
 
             base.Initialize();
         }
@@ -55,8 +57,11 @@ namespace JungleScape
             //spider = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 5);
             //spider.Move(spider.speed, 0);
 
-            blockSprite = Content.Load<Texture2D>("firstPlatformerBrick");
-            levelMap.loadMap(blockSprite);
+            //order of adding textures is important for map loading
+            textures.Add(Content.Load<Texture2D>("firstPlatformerBrick"));
+            textures.Add(Content.Load<Texture2D>("BasicPlayer"));
+
+            levelMap.loadMap(textures);
         }
 
         /// <summary>
@@ -80,6 +85,7 @@ namespace JungleScape
 
             // TODO: Add your update logic here
 
+            Draw(gameTime);
             base.Update(gameTime);
         }
 
