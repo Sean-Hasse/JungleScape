@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JungleScape
 {
@@ -84,6 +85,12 @@ namespace JungleScape
                 Exit();
 
             // TODO: Add your update logic here
+
+            foreach (Player p in levelMap.objectMap.OfType<Player>())
+            {
+                p.Move();
+            }
+            
 
             Draw(gameTime);
             base.Update(gameTime);

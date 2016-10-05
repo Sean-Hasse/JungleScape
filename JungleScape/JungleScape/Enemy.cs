@@ -31,5 +31,10 @@ namespace JungleScape
                 speed = -speed;
             }
         }
+
+        public override void Move()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,12 +7,12 @@ using Microsoft.Xna.Framework;
 
 namespace JungleScape
 {
-    public class Character : GameObject
+    public abstract class Character : GameObject
     {
         // attributes
         protected bool alive;         // bool to determine if the character is still alive
-        protected float speedX;
-        protected float speedY;
+        protected int speedX;
+        protected int speedY;
         
         // constructor
         public Character(Rectangle hBox) : base(hBox)      // takes in Location and HitBox for the new Character
@@ -23,11 +23,7 @@ namespace JungleScape
         }
 
         // methods
-        public void Move(int speedx, int speedy)      // basic movment. Change location based on input
-        {
-            hitBox.X = hitBox.X + speedx;
-            hitBox.Y = hitBox.Y + speedy;
-        }
+        public abstract void Move();
 
         // takeDamage, when called, sets alive to false for passed in character
         public void takeDamage(Character char1)

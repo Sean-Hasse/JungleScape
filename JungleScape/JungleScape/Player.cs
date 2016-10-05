@@ -17,29 +17,31 @@ namespace JungleScape
         public Player(Rectangle hBox) : base(hBox)
         {
             keyState = new KeyboardState();
+            speedX = 5;
+            speedY = 5;
         }
 
         // methods
-        public void PlayerMove()
+        public override void Move()
         {
             keyState = Keyboard.GetState();
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             if (keyState.IsKeyDown(Keys.W))
             {
-                Move(0,1);      // temp jump button
+                hitBox.Y -= speedY; // temp jump button
             }
             if (keyState.IsKeyDown(Keys.A))
             {
-                Move(-1,0);
+                hitBox.X -= speedX;
             }
             if (keyState.IsKeyDown(Keys.S))
             {
-                Move(0,0);      // temp Drop Down button
+                hitBox.Y += speedY; // temp Drop Down button
             }
             if (keyState.IsKeyDown(Keys.D))
             {
-                Move(1,0);
+                hitBox.X += speedX;
             }
         }
 
