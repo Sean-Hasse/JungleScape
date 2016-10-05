@@ -27,6 +27,8 @@ namespace JungleScape
         public void loadMap(List<Texture2D> textures)
         {
             objectMap.Clear();
+
+            //add environment blocks
             for (int i=0; i<10; i++)
             {
                 Environment env = new Environment(new Rectangle(i * GRID_SCALE * 2, GRID_SCALE * 8, GRID_SCALE * 2, GRID_SCALE));
@@ -34,9 +36,15 @@ namespace JungleScape
                 objectMap.Add(env);
             }
 
+            //add player
             Player p = new Player(new Rectangle(GRID_SCALE * 2, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2));
             p.sprite = textures.ElementAt(1); //player sprite is at first index of texure list
             objectMap.Add(p);
+
+            //add enemy
+            Enemy e = new Enemy(new Rectangle(GRID_SCALE * 8, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2), objectMap.ElementAt(2)); //get 3rd block
+            e.sprite = textures.ElementAt(1);  //use player sprite for now
+            objectMap.Add(e);
         }
 
         public void drawMap(SpriteBatch spriteBatch)

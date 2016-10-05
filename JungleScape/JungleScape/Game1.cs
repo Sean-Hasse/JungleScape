@@ -86,13 +86,11 @@ namespace JungleScape
 
             // TODO: Add your update logic here
 
-            foreach (Player p in levelMap.objectMap.OfType<Player>())
+            foreach (Character chara in levelMap.objectMap.OfType<Character>())
             {
-                p.Move();
+                chara.Move();
             }
             
-
-            Draw(gameTime);
             base.Update(gameTime);
         }
 
