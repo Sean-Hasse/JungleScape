@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -13,7 +14,7 @@ namespace JungleScape
         // attributes
 
         // constructor
-        public Arrow(int spdX, int spdY, Rectangle hBox, Player player1) : base(hBox)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Player player1, Texture2D texture) : base(hBox, texture)
         {
 
             KeyboardState keyState = new KeyboardState();
