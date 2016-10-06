@@ -8,11 +8,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace JungleScape
 {
-    class Arrow : GameObject
+    class Arrow : Character
     {
         // attributes
-        int speedX;
-        int speedY;
 
         // constructor
         public Arrow(int spdX, int spdY, Rectangle hBox, Player player1) : base(hBox)
@@ -25,12 +23,15 @@ namespace JungleScape
         }
 
         // methods
+
+        public override void Move()
+        {
+            ;
+        }
+
         public void ArrowHit(GameObject collisionObj)
         {
-            if(DetectCollision(collisionObj))
-            {
-                if()
-            }
+            
         }
     }
 }
