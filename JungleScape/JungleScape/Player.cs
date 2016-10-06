@@ -64,8 +64,8 @@ namespace JungleScape
                 return "";
         }
 
-        // FireArrow will fire an arrow
-        public void FireArrow()     // currently this method will just create the arrow and set its speed, still need to make it move and make sure it's detecting for collisions and killing things
+        // FireArrow creates a new arrow
+        Arrow FireArrow()     
         {
             Arrow arrow;
             string direction = Aim();
@@ -78,7 +78,7 @@ namespace JungleScape
             {
                 arrow = new Arrow(20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
             }
-            if (direction == "left") ;
+            if (direction == "left") 
             {
                 arrow = new Arrow(-20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
             }
@@ -90,6 +90,10 @@ namespace JungleScape
             {
                 arrow = new Arrow(-5, 5, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
             }
+            else
+                arrow = null; 
+
+            return arrow;
         }
     }
 }

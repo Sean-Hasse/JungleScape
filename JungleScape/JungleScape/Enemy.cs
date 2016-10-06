@@ -21,7 +21,7 @@ namespace JungleScape
 
         // methods
         // checkLedges turns the enemy around when they approach a ledge
-        public bool checkLedges(GameObject ledge)
+        public bool CheckLedges(GameObject ledge)
         {
             // how I want to do this: make 2 new Rectangles on the Left and Right edge of the enemy 1 pixel taller than it, and when one of them isn't colliding, reverse the speed
             Rectangle leftRect = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height + 1);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
@@ -37,7 +37,7 @@ namespace JungleScape
 
         public override void Move()
         {
-            if (checkLedges(linkedBlock))
+            if (CheckLedges(linkedBlock))
             {
                 speedX = -speedX;
             }

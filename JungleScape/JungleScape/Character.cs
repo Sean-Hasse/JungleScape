@@ -26,16 +26,16 @@ namespace JungleScape
         public abstract void Move();
 
         // takeDamage, when called, sets alive to false for passed in character
-        public void takeDamage(Character char1)
+        public void TakeDamage(Character char1)
         {
             char1.alive = false;
         }
 
         // dealDamage, when called, checks to see if there is an intersecting hitbox, and if true, calls takeDamage
-        public void dealDamage(Character otherChar)
+        public void DealDamage(Character otherChar)
         {
             if (DetectCollision(otherChar))
-                takeDamage(otherChar);
+                TakeDamage(otherChar);
         }
     }
 }       
