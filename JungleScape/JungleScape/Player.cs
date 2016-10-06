@@ -38,7 +38,6 @@ namespace JungleScape
             }
             if (keyState.IsKeyDown(Keys.A))
             {
-                if()
                 hitBox.X -= speedX;
             }
             /* if (keyState.IsKeyDown(Keys.S))
