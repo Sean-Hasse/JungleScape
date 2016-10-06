@@ -18,7 +18,6 @@ namespace JungleScape
         public GameObject(Rectangle hBox, Texture2D texture)
         {
             sprite = texture;
-            sprite = null;
             hitBox = hBox;
         }
 
