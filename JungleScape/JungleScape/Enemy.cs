@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -12,7 +13,7 @@ namespace JungleScape
         GameObject linkedBlock;
 
         // constructor
-        public Enemy(Rectangle hBox, GameObject env) : base(hBox)
+        public Enemy(Rectangle hBox, GameObject env, Texture2D texture) : base(hBox, texture)
         {
             linkedBlock = env;
             speedX = -2;

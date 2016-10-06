@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -14,7 +15,7 @@ namespace JungleScape
         KeyboardState keyState;
 
         // constructor
-        public Player(Rectangle hBox) : base(hBox)
+        public Player(Rectangle hBox, Texture2D texture) : base(hBox, texture)
         {
             keyState = new KeyboardState();
             speedX = 5;

@@ -15,8 +15,9 @@ namespace JungleScape
         public Texture2D sprite;
 
         // constructor
-        public GameObject(Rectangle hBox)
+        public GameObject(Rectangle hBox, Texture2D texture)
         {
+            sprite = texture;
             sprite = null;
             hitBox = hBox;
         }

@@ -31,20 +31,17 @@ namespace JungleScape
             //add environment blocks
             for (int i=0; i<10; i++)
             {
-                Environment env = new Environment(new Rectangle(i * GRID_SCALE * 2, GRID_SCALE * 8, GRID_SCALE * 2, GRID_SCALE));
-                env.sprite = textures.ElementAt(0); //block sprite is at first index of texure list
-                objectMap.Add(env);
+                //block sprite is at first index of texure list
+                objectMap.Add(new Environment(new Rectangle(i * GRID_SCALE * 2, GRID_SCALE * 8, GRID_SCALE * 2, GRID_SCALE), textures.ElementAt(0)));
             }
 
             //add player
-            Player p = new Player(new Rectangle(GRID_SCALE * 2, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2));
-            p.sprite = textures.ElementAt(1); //player sprite is at first index of texure list
-            objectMap.Add(p);
+            //player sprite is at first index of texure list
+            objectMap.Add(new Player(new Rectangle(GRID_SCALE * 2, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2), textures.ElementAt(1)));
 
             //add enemy
-            Enemy e = new Enemy(new Rectangle(GRID_SCALE * 8, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2), objectMap.ElementAt(2)); //get 3rd block
-            e.sprite = textures.ElementAt(1);  //use player sprite for now
-            objectMap.Add(e);
+            //use player sprite for now
+            objectMap.Add(new Enemy(new Rectangle(GRID_SCALE * 8, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2), objectMap.ElementAt(2), textures.ElementAt(1)));
         }
 
         public void drawMap(SpriteBatch spriteBatch)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
@@ -15,7 +16,7 @@ namespace JungleScape
         protected int speedY;
         
         // constructor
-        public Character(Rectangle hBox) : base(hBox)      // takes in Location and HitBox for the new Character
+        public Character(Rectangle hBox, Texture2D texture) : base(hBox, texture)      // takes in Location and HitBox for the new Character
         {
             alive = true;       // making a character automatically sets them as "alive"
             speedX = 0;
