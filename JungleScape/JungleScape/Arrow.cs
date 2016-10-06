@@ -23,5 +23,14 @@ namespace JungleScape
             string direction = player1.Aim();
             hitBox = new Rectangle();
         }
+
+        // methods
+        public void ArrowHit(GameObject collisionObj)
+        {
+            if(DetectCollision(collisionObj))
+            {
+                if()
+            }
+        }
     }
 }
