@@ -13,6 +13,10 @@ namespace JungleScape
     {
         // attributes
         const int MAX_FALL_SPEED = -10;
+        Rectangle leftSide;
+        Rectangle rightSide;
+        Rectangle topSide;
+        Rectangle bottomSide;
         KeyboardState keyState;
         enum AimDirection { Forward, Diagonal, Up };
         AimDirection aimDirection;
@@ -24,6 +28,12 @@ namespace JungleScape
             aimDirection = AimDirection.Forward;
             speedX = 5;
             speedY = -5;
+
+            // set rectangles for collsion detection
+            leftSide = new Rectangle(hitBox.Left, hitBox.Top, 1, hitBox.Height);
+            rightSide = new Rectangle(hitBox.Right, hitBox.Top, -1, hitBox.Height);
+            topSide = new Rectangle(hitBox.Left, hitBox.Top, hitBox.Width, 1);
+            bottomSide = new Rectangle(hitBox.Left, hitBox.Bottom, hitBox.Width, -1);
         }
 
         // methods
@@ -38,7 +48,6 @@ namespace JungleScape
             }
             if (keyState.IsKeyDown(Keys.A))
             {
-                if()
                 hitBox.X -= speedX;
             }
             /* if (keyState.IsKeyDown(Keys.S))
