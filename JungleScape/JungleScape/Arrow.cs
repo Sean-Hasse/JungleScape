@@ -21,7 +21,7 @@ namespace JungleScape
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
             direction = player1.Aim();
-            hitBox = new Rectangle();
+            hitBox = new Rectangle(player1.hitBox.Center, new Point(20, 5));
         }
 
         // methods
@@ -56,7 +56,13 @@ namespace JungleScape
 
         public void ArrowHit(GameObject collisionObj)
         {
-            
+            if(DetectCollision(collisionObj))
+            {
+                if(collisionObj is Enemy)
+                {
+                    DealDamage((Enemy)collisionObj);
+                }
+            }
         }
     }
 }

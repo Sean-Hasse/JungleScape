@@ -1,8 +1,6 @@
 ﻿This file is for planned changes, anyone can contribute
 
-- Focus right now: Allow for shooting the arrow.
-- Add methods to Arrow: ArrowMove, ArrowHit
-- Add code to Player method FireArrow: make the arrow move and check for collisions and all.
 - Add Boss to Enemy, or as another class (unlikely).
 - Add fake physics to the jump. 
 - Fix enemy ledge detection
+- Discuss crouching.

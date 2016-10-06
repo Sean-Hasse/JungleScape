@@ -39,10 +39,10 @@ namespace JungleScape
             {
                 hitBox.X -= speedX;
             }
-            if (keyState.IsKeyDown(Keys.S))
+            /* if (keyState.IsKeyDown(Keys.S))
             {
                 hitBox.Y += speedY; // temp Drop Down button
-            }
+            } */
             if (keyState.IsKeyDown(Keys.D))
             {
                 hitBox.X += speedX;
