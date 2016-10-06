@@ -12,6 +12,7 @@ namespace JungleScape
     public class Player : Character
     {
         // attributes
+        const int MAX_FALL_SPEED = -10;
         KeyboardState keyState;
         enum AimDirection { Forward, Diagonal, Up };
         AimDirection aimDirection;
@@ -22,7 +23,7 @@ namespace JungleScape
             keyState = new KeyboardState();
             aimDirection = AimDirection.Forward;
             speedX = 5;
-            speedY = 5;
+            speedY = -5;
         }
 
         // methods
@@ -33,10 +34,11 @@ namespace JungleScape
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             if (keyState.IsKeyDown(Keys.W))
             {
-                hitBox.Y -= speedY; // temp jump button
+                speedY = 10;
             }
             if (keyState.IsKeyDown(Keys.A))
             {
+                if()
                 hitBox.X -= speedX;
             }
             /* if (keyState.IsKeyDown(Keys.S))
@@ -46,6 +48,15 @@ namespace JungleScape
             if (keyState.IsKeyDown(Keys.D))
             {
                 hitBox.X += speedX;
+            }
+
+            // fake physics
+            hitBox.Y -= speedY;
+            speedY--;
+
+            if (speedY < MAX_FALL_SPEED)
+            {
+                speedY = MAX_FALL_SPEED;
             }
         }
 

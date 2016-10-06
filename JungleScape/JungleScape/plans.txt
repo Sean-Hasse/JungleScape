@@ -4,3 +4,4 @@
 - Add fake physics to the jump. 
 - Fix enemy ledge detection
 - Discuss crouching.
+- Don't let the player jump in midair
