@@ -13,11 +13,14 @@ namespace JungleScape
     {
         // attributes
         KeyboardState keyState;
+        enum AimDirection { Forward, Diagonal, Up };
+        AimDirection aimDirection;
 
         // constructor
         public Player(Rectangle hBox, Texture2D texture) : base(hBox, texture)
         {
             keyState = new KeyboardState();
+            aimDirection = AimDirection.Forward;
             speedX = 5;
             speedY = 5;
         }
@@ -52,49 +55,32 @@ namespace JungleScape
             keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.Up))
+            {
+                aimDirection = AimDirection.Up;
                 return "up";
+            }      
             if (keyState.IsKeyDown(Keys.Right))
+            {
+                aimDirection = AimDirection.Forward;
                 return "right";
+            }
             if (keyState.IsKeyDown(Keys.Left))
+            {
+                aimDirection = AimDirection.Forward;
                 return "left";
+            }
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
+            {
+                aimDirection = AimDirection.Diagonal;
                 return "diagonal right";
+            }
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+            {
+                aimDirection = AimDirection.Diagonal;
                 return "diagonal left";
-            else
-                return "";
-        }
-
-        // FireArrow creates a new arrow
-        Arrow FireArrow()     
-        {
-            Arrow arrow;
-            string direction = Aim();
-
-            if(direction == "up")
-            {
-                arrow = new Arrow(0, 20, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
-            }
-            if(direction == "right")
-            {
-                arrow = new Arrow(20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
-            }
-            if (direction == "left") 
-            {
-                arrow = new Arrow(-20, 0, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
-            }
-            if (direction == "diagonal right")
-            {
-                arrow = new Arrow(5, 5, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
-            }
-            if (direction == "diagonal left")
-            {
-                arrow = new Arrow(-5, 5, new Rectangle((hitBox.X), (hitBox.Y), 30, 5), this);
             }
             else
-                arrow = null; 
-
-            return arrow;
+                return null;
         }
     }
 }

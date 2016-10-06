@@ -12,6 +12,7 @@ namespace JungleScape
     class Arrow : Character
     {
         // attributes
+        string direction;
 
         // constructor
         public Arrow(int spdX, int spdY, Rectangle hBox, Player player1, Texture2D texture) : base(hBox, texture)
@@ -19,15 +20,38 @@ namespace JungleScape
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
-            string direction = player1.Aim();
+            direction = player1.Aim();
             hitBox = new Rectangle();
         }
 
         // methods
-
         public override void Move()
         {
-            ;
+            if (direction == "up")
+            {
+                speedX = 0;
+                speedY = 8;
+            }
+            if (direction == "right")
+            {
+                speedX = 8;
+                speedY = 0;
+            }
+            if (direction == "left")
+            {
+                speedX = -8;
+                speedY = 0;
+            }
+            if (direction == "diagonal right")
+            {
+                speedX = 4;
+                speedY = 4;
+            }
+            if (direction == "diagonal left")
+            {
+                speedX = 4;
+                speedY = 4;
+            }
         }
 
         public void ArrowHit(GameObject collisionObj)
