@@ -70,7 +70,6 @@ namespace JungleScape
         // move meant for Player class. Not used.
         public override void Move(List<GameObject> gObj)
         {
-            throw new NotImplementedException();
         }
     }
 }

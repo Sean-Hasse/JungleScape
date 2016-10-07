@@ -128,7 +128,6 @@ namespace JungleScape
         // Original Move. Not being used.
         public override void Move()
         {
-            throw new NotImplementedException();
         }
     }
 }
