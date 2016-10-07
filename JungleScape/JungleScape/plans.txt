@@ -1,7 +1,8 @@
 ﻿This file is for planned changes, anyone can contribute
 
 - Add Boss to Enemy, or as another class (unlikely).
-- Add fake physics to the jump. 
+- Add player ledge detection
 - Fix enemy ledge detection
 - Discuss crouching.
 - Don't let the player jump in midair
+- Possible GetAdjacentEnviroObjs in Character

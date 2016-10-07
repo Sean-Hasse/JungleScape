@@ -56,6 +56,7 @@ namespace JungleScape
             }
 
             // fake physics
+            if(PlayerDetectCollision(bottomSide, ))
             hitBox.Y -= speedY;
             speedY--;
 
@@ -98,5 +99,16 @@ namespace JungleScape
             else
                 return null;
         }
+
+        private bool PlayerDetectCollision(Rectangle side, GameObject platform)
+        {
+            if (side.Intersects(platform.hitBox))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+    }
     }
 }
