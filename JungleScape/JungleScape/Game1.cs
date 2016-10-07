@@ -158,6 +158,9 @@ namespace JungleScape
                     break;
 
                 case GameState.Pause:
+                    if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
+                        myState = GameState.Game;
+
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         pauseIndex += 1;
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
@@ -186,14 +189,16 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
                         gameOverIndex -= 1;
 
-                    if (gameOverIndex >= 2)
+                    if (gameOverIndex >= 3)
                         gameOverIndex = 0;
                     else if (gameOverIndex < 0)
-                        gameOverIndex = 1;
+                        gameOverIndex = 2;
 
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 0)
                         myState = GameState.Game;
-                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
+                        myState = GameState.Menu;
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 2)
                         Exit();
 
                     break;
@@ -263,13 +268,16 @@ namespace JungleScape
 
                 case GameState.GameOver:
                     spriteBatch.DrawString(testFont2, "Oops", new Vector2(280, 10), Color.White);
-                    spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 175), Color.White);
-                    spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 325), Color.White);
+                    spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 350), Color.White);
 
                     if (gameOverIndex == 0)
-                        spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 175), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.Yellow);
                     else if (gameOverIndex == 1)
-                        spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 325), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.Yellow);
+                    else if (gameOverIndex == 2)
+                        spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 350), Color.Yellow);
 
                     break;
 
