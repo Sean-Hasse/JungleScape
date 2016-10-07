@@ -32,10 +32,14 @@ namespace JungleScape
         Map levelMap;
         List<Texture2D> textures;
         GameState myState;
+        GameState previousGameState;
         int menuIndex;
+        int pauseIndex;
+        int gameOverIndex;
         KeyboardState previousKbState;
         KeyboardState kbState;
         SpriteFont testFont;
+        SpriteFont testFont2;
         
 
         public Game1()
@@ -81,6 +85,7 @@ namespace JungleScape
             textures.Add(Content.Load<Texture2D>("BasicPlayer"));
 
             testFont = Content.Load<SpriteFont>("testFont");
+            testFont2 = Content.Load<SpriteFont>("testFont2");
 
             levelMap.loadMap(textures);
         }
@@ -122,7 +127,10 @@ namespace JungleScape
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 0)
                         myState = GameState.Game;
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 1)
+                    {
+                        previousGameState = GameState.Menu;
                         myState = GameState.Instructions;
+                    }
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 2)
                         Exit();
 
@@ -130,7 +138,10 @@ namespace JungleScape
 
                 case GameState.Instructions:
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) || SingleKeyPress(Keys.Back, kbState, previousKbState))
-                        myState = GameState.Menu;
+                        if (previousGameState == GameState.Menu)
+                            myState = GameState.Menu;
+                        else
+                            myState = GameState.Pause;
                     break;
 
                 case GameState.Game:
@@ -146,17 +157,44 @@ namespace JungleScape
                     break;
 
                 case GameState.Pause:
-                    if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
+                    if (SingleKeyPress(Keys.Down, kbState, previousKbState))
+                        pauseIndex += 1;
+                    else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
+                        pauseIndex -= 1;
+
+                    if (pauseIndex >= 3)
+                        pauseIndex = 0;
+                    else if (pauseIndex < 0)
+                        pauseIndex = 2;
+
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && pauseIndex == 0)
                         myState = GameState.Game;
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && pauseIndex == 1)
+                    {
+                        previousGameState = GameState.Pause;
+                        myState = GameState.Instructions;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && pauseIndex == 2)
+                        Exit();
+
                     break;
 
                 case GameState.GameOver:
-                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
-                    {
-                        myState = GameState.Menu;
-                        menuIndex = 0;
-                    }
-                       
+                    if (SingleKeyPress(Keys.Down, kbState, previousKbState))
+                        gameOverIndex += 1;
+                    else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
+                        gameOverIndex -= 1;
+
+                    if (gameOverIndex >= 2)
+                        gameOverIndex = 0;
+                    else if (gameOverIndex < 0)
+                        gameOverIndex = 1;
+
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 0)
+                        myState = GameState.Game;
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
+                        Exit();
+
                     break;
 
                 default:
@@ -182,30 +220,56 @@ namespace JungleScape
             switch (myState)
             {
                 case GameState.Menu:
-                    spriteBatch.DrawString(testFont, "This is a Menu", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 350), Color.White);
+
                     if (menuIndex == 0)
-                        spriteBatch.DrawString(testFont, "Start Game is selected", new Vector2(0, 50), Color.White);
+                        spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.Yellow);
                     else if (menuIndex == 1)
-                        spriteBatch.DrawString(testFont, "Instructions are selected", new Vector2(0, 50), Color.White);
+                        spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 250), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "exit game is selected", new Vector2(0, 50), Color.White);
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 350), Color.Yellow);
                     break;
 
                 case GameState.Instructions:
                     spriteBatch.DrawString(testFont, "These are Instructions", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
                     break;
 
                 case GameState.Game:
                     levelMap.drawMap(spriteBatch);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
                     break;
 
                 case GameState.Pause:
-                    spriteBatch.DrawString(testFont, "This is a pause menu", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont2, "Paused", new Vector2(230, 10), Color.White);
+                    spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Give Up", new Vector2(300, 350), Color.White);
+
+                    if (pauseIndex == 0)
+                        spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.Yellow);
+                    else if (pauseIndex == 1)
+                        spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.Yellow);
+                    else
+                        spriteBatch.DrawString(testFont, "Give Up", new Vector2(300, 350), Color.Yellow);
+
                     break;
 
                 case GameState.GameOver:
-                    spriteBatch.DrawString(testFont, "Game over man, game over.", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont2, "Oops", new Vector2(280, 10), Color.White);
+                    spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 175), Color.White);
+                    spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 325), Color.White);
+
+                    if (gameOverIndex == 0)
+                        spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 175), Color.Yellow);
+                    else if (gameOverIndex == 1)
+                        spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 325), Color.Yellow);
+
                     break;
 
                 default:
