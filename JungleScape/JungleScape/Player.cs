@@ -42,11 +42,19 @@ namespace JungleScape
             keyState = Keyboard.GetState();
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
-            if (keyState.IsKeyDown(Keys.W))
+            // if the top of the player isn't intersecting any platforms, and the bottom of the player is intersecting the platform, run jump logic
+            if (!PlayerDetectCollision(topSide, platforms) && PlayerDetectCollision(bottomSide, platforms))
             {
-                speedY = 10;
+                if (keyState.IsKeyDown(Keys.W))
+                {
+                    speedY = 10;
+                    hitBox.Y -= speedY;
+                    speedY--;
+                }
             }
-            if (PlayerDetectCollision(leftSide, platforms))
+
+            // if the left side of the player does not instersect any platforms, move the player to the left.
+            if (!PlayerDetectCollision(leftSide, platforms))
             {
                 if (keyState.IsKeyDown(Keys.A))
                 {
@@ -54,16 +62,23 @@ namespace JungleScape
                 }
             }
 
-                
-            if (keyState.IsKeyDown(Keys.D))
+            // if the right side of the player does not interesect any platforms, move the player to the right.
+            if (!PlayerDetectCollision(rightSide, platforms))
             {
-                hitBox.X += speedX;
+                if (keyState.IsKeyDown(Keys.D))
+                {
+                    hitBox.X += speedX;
+                }
             }
 
+
             // fake physics
-            //if(PlayerDetectCollision(bottomSide, ))
-            hitBox.Y -= speedY;
-            speedY--;
+            // if the bottom side of the player does not intersect with any platforms, make them fall.
+            if(!PlayerDetectCollision(bottomSide, platforms))
+            {
+                hitBox.Y -= speedY;
+                speedY--;
+            }
 
             if (speedY < MAX_FALL_SPEED)
             {
