@@ -36,6 +36,7 @@ namespace JungleScape
                 return false;
         }
 
+        // calls  CheckLedges based on the ledge they were assigned to, and moves the enemy
         public override void Move()
         {
             if (CheckLedges(linkedBlock))
@@ -43,6 +44,12 @@ namespace JungleScape
                 speedX = -speedX;
             }
             hitBox.X += speedX;
+        }
+
+        // Move meant for Player class. Not used.
+        public override void Move(List<GameObject> gObj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

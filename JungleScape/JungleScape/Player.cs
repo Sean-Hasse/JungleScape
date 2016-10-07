@@ -37,7 +37,7 @@ namespace JungleScape
         }
 
         // methods
-        public override void Move()
+        public override void Move(List<GameObject> platforms)
         {
             keyState = Keyboard.GetState();
 
@@ -46,10 +46,15 @@ namespace JungleScape
             {
                 speedY = 10;
             }
-            if (keyState.IsKeyDown(Keys.A))
+            if (PlayerDetectCollision(leftSide, platforms))
             {
-                hitBox.X -= speedX;
+                if (keyState.IsKeyDown(Keys.A))
+                {
+                    hitBox.X -= speedX;
+                }
             }
+
+                
             if (keyState.IsKeyDown(Keys.D))
             {
                 hitBox.X += speedX;
@@ -100,9 +105,10 @@ namespace JungleScape
                 return null;
         }
 
+        // specialized detect collision for each side of the player.
         private bool PlayerDetectCollision(Rectangle side, List<GameObject> platforms)
         {
-            if (platforms != null)
+            if (platforms.Count != 0)
             {
                 foreach (GameObject platform in platforms)
                 {
@@ -113,9 +119,16 @@ namespace JungleScape
                     else
                         return false;
                 }
+                return false;
             }
             else
                 return false;
+        }
+
+        // Original Move. Not being used.
+        public override void Move()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -25,6 +25,7 @@ namespace JungleScape
         }
 
         // methods
+        // move method. 
         public override void Move()
         {
             if (direction == "up")
@@ -54,6 +55,7 @@ namespace JungleScape
             }
         }
 
+        // checks if there is a collision. Then checks if the collision is an enemy, dealing damage to them.
         public void ArrowHit(GameObject collisionObj)
         {
             if(DetectCollision(collisionObj))
@@ -63,6 +65,12 @@ namespace JungleScape
                     DealDamage((Enemy)collisionObj);
                 }
             }
+        }
+
+        // move meant for Player class. Not used.
+        public override void Move(List<GameObject> gObj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

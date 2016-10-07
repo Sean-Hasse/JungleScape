@@ -25,6 +25,7 @@ namespace JungleScape
 
         // methods
         public abstract void Move();
+        public abstract void Move(List<GameObject> gObj);
 
         // takeDamage, when called, sets alive to false for passed in character
         public void TakeDamage(Character char1)
