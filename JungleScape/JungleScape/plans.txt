@@ -1,7 +1,8 @@
 ﻿This file is for planned changes, anyone can contribute
 
-- Add Boss to Enemy, or as another class (unlikely).
+- Add Boss to Enemy, or as another class (unlikely)
 - Fix enemy ledge detection
-- Make the Player.Move() y-speed = 0 if they hit their head.
+- Make the Player.Move() y-speed = 0 if they hit their head
 - Fix artificial gravity in Player.Move()
-- Implement firing arrows.
+- Implement firing arrows
+- Make the spider hurt the player.

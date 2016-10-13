@@ -83,16 +83,16 @@ namespace JungleScape
                     hitBox.X += speedX;
                 }
             }
-
-
-            // fake physics
-            // if the bottom side of the player does not intersect with any platforms, make them fall.
             
-
+            // Maximum falling speed. If exceeded, resets the falling speed to the maximum. Ensures not continuous accelleration
             if (speedY < MAX_FALL_SPEED)
             {
                 speedY = MAX_FALL_SPEED;
             }
+
+            // TEMP CODE: ALLOW PLAYER TO MOVE DOWN WITH 'S' FOR TESTING
+            if (keyState.IsKeyDown(Keys.S))
+                hitBox.Y += 10;
         }
 
         // Aim will determine which direction the player in inputting to aim in

@@ -42,7 +42,7 @@ namespace JungleScape
             if (CheckLedges(linkedBlock))
             {
                 speedX = -speedX;
-            }
+            } 
             hitBox.X += speedX;
         }
 
