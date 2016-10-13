@@ -27,7 +27,7 @@ namespace JungleScape
             keyState = new KeyboardState();
             aimDirection = AimDirection.Forward;
             speedX = 5;
-            speedY = -5;
+            speedY = 0;
 
             // set rectangles for collsion detection
             leftSide = new Rectangle(hitBox.Left, hitBox.Top, 1, hitBox.Height);
@@ -76,7 +76,7 @@ namespace JungleScape
             // if the bottom side of the player does not intersect with any platforms, make them fall.
             if(!PlayerDetectCollision(bottomSide, platforms))
             {
-                hitBox.Y -= speedY;
+                hitBox.Y += speedY;
                 speedY--;
             }
 

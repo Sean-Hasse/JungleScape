@@ -148,7 +148,18 @@ namespace JungleScape
                 case GameState.Game:
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
-                    chara.Move();
+                        if (chara is Player)
+                        {
+                            List<GameObject> platforms = new List<GameObject>();
+                            foreach(GameObject obj in levelMap.objectMap)
+                            {
+                                if (obj is Environment)
+                                    platforms.Add(obj);
+                            }
+                            chara.Move(platforms);
+                        }
+                        else
+                            chara.Move();
                     }
 
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
