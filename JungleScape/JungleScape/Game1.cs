@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LevelEditor;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -134,7 +135,11 @@ namespace JungleScape
                         myState = GameState.Instructions;
                     }
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 2)
+                    {
                         myState = GameState.Editor;
+                        
+                    }
+                        
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 3)
                         Exit();
 
