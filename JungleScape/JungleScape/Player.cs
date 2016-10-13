@@ -30,10 +30,10 @@ namespace JungleScape
             speedY = 0;
 
             // set rectangles for collsion detection
-            leftSide = new Rectangle(hitBox.Left, hitBox.Top, 1, hitBox.Height);
-            rightSide = new Rectangle(hitBox.Right, hitBox.Top, -1, hitBox.Height);
-            topSide = new Rectangle(hitBox.Left, hitBox.Top, hitBox.Width, 1);
-            bottomSide = new Rectangle(hitBox.Left, hitBox.Bottom, hitBox.Width, -1);
+            leftSide = new Rectangle(hitBox.X, hitBox.Y, -3, hitBox.Height);
+            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 3, hitBox.Height);
+            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, -3);
+            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 3);
         }
 
         // methods
@@ -43,13 +43,21 @@ namespace JungleScape
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             // if the top of the player isn't intersecting any platforms, and the bottom of the player is intersecting the platform, run jump logic
-            if (!PlayerDetectCollision(topSide, platforms) && PlayerDetectCollision(bottomSide, platforms))
+            if (PlayerDetectCollision(bottomSide, platforms))
             {
-                if (keyState.IsKeyDown(Keys.W))
+                // first, set speedy to 0, player should no be moving in y direction when on a platform with no key press
+                speedY = 0;
+
+                // check if the player is colliding with a platform above them
+                if (!PlayerDetectCollision(topSide, platforms))
                 {
-                    speedY = 10;
-                    hitBox.Y -= speedY;
-                    speedY--;
+                    // Allow jump if these conditions are met.
+                    if (keyState.IsKeyDown(Keys.W))
+                    {
+                        speedY = 10;
+                        hitBox.Y -= speedY;
+                        speedY--;
+                    }
                 }
             }
 
@@ -76,7 +84,7 @@ namespace JungleScape
             // if the bottom side of the player does not intersect with any platforms, make them fall.
             if(!PlayerDetectCollision(bottomSide, platforms))
             {
-                hitBox.Y += speedY;
+                hitBox.Y -= speedY;
                 speedY--;
             }
 
