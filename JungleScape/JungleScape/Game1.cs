@@ -42,6 +42,7 @@ namespace JungleScape
         KeyboardState kbState;
         SpriteFont testFont;
         SpriteFont testFont2;
+        MapEditor editor;
         
 
         public Game1()
@@ -60,6 +61,7 @@ namespace JungleScape
         {
             // TODO: Add your initialization logic here
             levelMap = new Map();
+            editor = new MapEditor();
             textures = new List<Texture2D>();
             myState = GameState.Menu;
             menuIndex = 0;
@@ -137,7 +139,7 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 2)
                     {
                         myState = GameState.Editor;
-                        
+                        System.Windows.Forms.Application.Run(editor);
                     }
                         
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 3)
