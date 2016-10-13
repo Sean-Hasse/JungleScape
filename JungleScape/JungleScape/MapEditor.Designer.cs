@@ -42,14 +42,29 @@
             this.instructionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.Height = new System.Windows.Forms.Label();
-            this.Width = new System.Windows.Forms.Label();
-            this.TileSize = new System.Windows.Forms.Label();
             this.setbutton = new System.Windows.Forms.Button();
+            this.TileSize = new System.Windows.Forms.Label();
+            this.Width = new System.Windows.Forms.Label();
+            this.Height = new System.Windows.Forms.Label();
+            this.Layer = new System.Windows.Forms.Label();
+            this.zValue = new System.Windows.Forms.Label();
+            this.WidthPicker = new System.Windows.Forms.NumericUpDown();
+            this.HeightPicker = new System.Windows.Forms.NumericUpDown();
+            this.SizePicker = new System.Windows.Forms.NumericUpDown();
+            this.zValuePicker = new System.Windows.Forms.NumericUpDown();
+            this.LayerPicker = new System.Windows.Forms.ComboBox();
+            this.isVisible = new System.Windows.Forms.CheckBox();
+            this.isSolid = new System.Windows.Forms.CheckBox();
+            this.fileName = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthPicker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightPicker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SizePicker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zValuePicker)).BeginInit();
             this.SuspendLayout();
             // 
             // fileToolStripMenuItem
@@ -146,7 +161,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(965, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(853, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -156,25 +171,46 @@
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.fileName);
+            this.splitContainer1.Panel1.Controls.Add(this.isSolid);
+            // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.isVisible);
+            this.splitContainer1.Panel2.Controls.Add(this.LayerPicker);
+            this.splitContainer1.Panel2.Controls.Add(this.zValuePicker);
+            this.splitContainer1.Panel2.Controls.Add(this.SizePicker);
+            this.splitContainer1.Panel2.Controls.Add(this.HeightPicker);
+            this.splitContainer1.Panel2.Controls.Add(this.WidthPicker);
+            this.splitContainer1.Panel2.Controls.Add(this.zValue);
+            this.splitContainer1.Panel2.Controls.Add(this.Layer);
             this.splitContainer1.Panel2.Controls.Add(this.setbutton);
             this.splitContainer1.Panel2.Controls.Add(this.TileSize);
             this.splitContainer1.Panel2.Controls.Add(this.Width);
             this.splitContainer1.Panel2.Controls.Add(this.Height);
-            this.splitContainer1.Size = new System.Drawing.Size(965, 655);
-            this.splitContainer1.SplitterDistance = 321;
+            this.splitContainer1.Size = new System.Drawing.Size(853, 655);
+            this.splitContainer1.SplitterDistance = 283;
             this.splitContainer1.TabIndex = 1;
             // 
-            // Height
+            // setbutton
             // 
-            this.Height.AutoSize = true;
-            this.Height.Location = new System.Drawing.Point(210, 23);
-            this.Height.Name = "Height";
-            this.Height.Size = new System.Drawing.Size(38, 13);
-            this.Height.TabIndex = 0;
-            this.Height.Text = "Height";
-            this.Height.Click += new System.EventHandler(this.Height_Click);
+            this.setbutton.Location = new System.Drawing.Point(310, 50);
+            this.setbutton.Name = "setbutton";
+            this.setbutton.Size = new System.Drawing.Size(105, 23);
+            this.setbutton.TabIndex = 3;
+            this.setbutton.Text = "Set";
+            this.setbutton.UseVisualStyleBackColor = true;
+            // 
+            // TileSize
+            // 
+            this.TileSize.AutoSize = true;
+            this.TileSize.Location = new System.Drawing.Point(432, 23);
+            this.TileSize.Name = "TileSize";
+            this.TileSize.Size = new System.Drawing.Size(47, 13);
+            this.TileSize.TabIndex = 2;
+            this.TileSize.Text = "Tile Size";
             // 
             // Width
             // 
@@ -185,42 +221,122 @@
             this.Width.TabIndex = 1;
             this.Width.Text = "Width";
             // 
-            // TileSize
+            // Height
             // 
-            this.TileSize.AutoSize = true;
-            this.TileSize.Location = new System.Drawing.Point(420, 23);
-            this.TileSize.Name = "TileSize";
-            this.TileSize.Size = new System.Drawing.Size(47, 13);
-            this.TileSize.TabIndex = 2;
-            this.TileSize.Text = "Tile Size";
+            this.Height.AutoSize = true;
+            this.Height.Location = new System.Drawing.Point(164, 23);
+            this.Height.Name = "Height";
+            this.Height.Size = new System.Drawing.Size(38, 13);
+            this.Height.TabIndex = 0;
+            this.Height.Text = "Height";
+            this.Height.Click += new System.EventHandler(this.Height_Click);
             // 
-            // setbutton
+            // Layer
             // 
-            this.setbutton.Location = new System.Drawing.Point(300, 18);
-            this.setbutton.Name = "setbutton";
-            this.setbutton.Size = new System.Drawing.Size(75, 23);
-            this.setbutton.TabIndex = 3;
-            this.setbutton.Text = "Set";
-            this.setbutton.UseVisualStyleBackColor = true;
+            this.Layer.AutoSize = true;
+            this.Layer.Location = new System.Drawing.Point(22, 98);
+            this.Layer.Name = "Layer";
+            this.Layer.Size = new System.Drawing.Size(33, 13);
+            this.Layer.TabIndex = 4;
+            this.Layer.Text = "Layer";
+            // 
+            // zValue
+            // 
+            this.zValue.AutoSize = true;
+            this.zValue.Location = new System.Drawing.Point(307, 98);
+            this.zValue.Name = "zValue";
+            this.zValue.Size = new System.Drawing.Size(44, 13);
+            this.zValue.TabIndex = 5;
+            this.zValue.Text = "Z-Value";
+            // 
+            // WidthPicker
+            // 
+            this.WidthPicker.Location = new System.Drawing.Point(25, 47);
+            this.WidthPicker.Name = "WidthPicker";
+            this.WidthPicker.Size = new System.Drawing.Size(105, 20);
+            this.WidthPicker.TabIndex = 6;
+            // 
+            // HeightPicker
+            // 
+            this.HeightPicker.Location = new System.Drawing.Point(167, 47);
+            this.HeightPicker.Name = "HeightPicker";
+            this.HeightPicker.Size = new System.Drawing.Size(105, 20);
+            this.HeightPicker.TabIndex = 7;
+            // 
+            // SizePicker
+            // 
+            this.SizePicker.Location = new System.Drawing.Point(433, 50);
+            this.SizePicker.Name = "SizePicker";
+            this.SizePicker.Size = new System.Drawing.Size(105, 20);
+            this.SizePicker.TabIndex = 8;
+            // 
+            // zValuePicker
+            // 
+            this.zValuePicker.Location = new System.Drawing.Point(310, 114);
+            this.zValuePicker.Name = "zValuePicker";
+            this.zValuePicker.Size = new System.Drawing.Size(105, 20);
+            this.zValuePicker.TabIndex = 9;
+            // 
+            // LayerPicker
+            // 
+            this.LayerPicker.FormattingEnabled = true;
+            this.LayerPicker.Location = new System.Drawing.Point(25, 114);
+            this.LayerPicker.Name = "LayerPicker";
+            this.LayerPicker.Size = new System.Drawing.Size(247, 21);
+            this.LayerPicker.TabIndex = 10;
+            // 
+            // isVisible
+            // 
+            this.isVisible.AutoSize = true;
+            this.isVisible.Location = new System.Drawing.Point(435, 114);
+            this.isVisible.Name = "isVisible";
+            this.isVisible.Size = new System.Drawing.Size(56, 17);
+            this.isVisible.TabIndex = 11;
+            this.isVisible.Text = "Visible";
+            this.isVisible.UseVisualStyleBackColor = true;
+            // 
+            // isSolid
+            // 
+            this.isSolid.AutoSize = true;
+            this.isSolid.Location = new System.Drawing.Point(211, 23);
+            this.isSolid.Name = "isSolid";
+            this.isSolid.Size = new System.Drawing.Size(49, 17);
+            this.isSolid.TabIndex = 12;
+            this.isSolid.Text = "Solid";
+            this.isSolid.UseVisualStyleBackColor = true;
+            // 
+            // fileName
+            // 
+            this.fileName.FormattingEnabled = true;
+            this.fileName.Location = new System.Drawing.Point(12, 20);
+            this.fileName.Name = "fileName";
+            this.fileName.Size = new System.Drawing.Size(178, 21);
+            this.fileName.TabIndex = 12;
             // 
             // MapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(965, 679);
+            this.ClientSize = new System.Drawing.Size(853, 679);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MapEditor";
             this.Text = "MapEditor";
             this.Load += new System.EventHandler(this.MapEditor_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.WidthPicker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeightPicker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SizePicker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zValuePicker)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +362,15 @@
         private System.Windows.Forms.Label Width;
         private System.Windows.Forms.Label Height;
         private System.Windows.Forms.Button setbutton;
+        private System.Windows.Forms.Label zValue;
+        private System.Windows.Forms.Label Layer;
+        private System.Windows.Forms.ComboBox fileName;
+        private System.Windows.Forms.CheckBox isSolid;
+        private System.Windows.Forms.CheckBox isVisible;
+        private System.Windows.Forms.ComboBox LayerPicker;
+        private System.Windows.Forms.NumericUpDown zValuePicker;
+        private System.Windows.Forms.NumericUpDown SizePicker;
+        private System.Windows.Forms.NumericUpDown HeightPicker;
+        private System.Windows.Forms.NumericUpDown WidthPicker;
     }
 }
