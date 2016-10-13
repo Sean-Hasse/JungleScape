@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JungleScape", "JungleScape\JungleScape.csproj", "{31211C03-D73E-4C0B-A2A0-5475E0AC175C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\LevelEditor.csproj", "{238EF191-0D57-4220-B0EC-C85DD707A846}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,14 +19,6 @@ Global
 		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|Any CPU.ActiveCfg = Release|x86
 		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|x86.ActiveCfg = Release|x86
 		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|x86.Build.0 = Release|x86
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Debug|x86.Build.0 = Debug|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Release|Any CPU.Build.0 = Release|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Release|x86.ActiveCfg = Release|Any CPU
-		{238EF191-0D57-4220-B0EC-C85DD707A846}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
