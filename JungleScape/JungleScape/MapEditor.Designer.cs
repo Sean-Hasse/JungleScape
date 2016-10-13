@@ -55,7 +55,7 @@
             this.LayerPicker = new System.Windows.Forms.ComboBox();
             this.isVisible = new System.Windows.Forms.CheckBox();
             this.isSolid = new System.Windows.Forms.CheckBox();
-            this.fileName = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -80,19 +80,19 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // editToolStripMenuItem
@@ -110,31 +110,31 @@
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // helpToolStripMenuItem
@@ -148,7 +148,7 @@
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.instructionsToolStripMenuItem.Text = "Instructions";
             // 
             // menuStrip1
@@ -173,7 +173,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.fileName);
+            this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
             this.splitContainer1.Panel1.Controls.Add(this.isSolid);
             // 
             // splitContainer1.Panel2
@@ -196,7 +196,7 @@
             // 
             // setbutton
             // 
-            this.setbutton.Location = new System.Drawing.Point(310, 50);
+            this.setbutton.Location = new System.Drawing.Point(310, 44);
             this.setbutton.Name = "setbutton";
             this.setbutton.Size = new System.Drawing.Size(105, 23);
             this.setbutton.TabIndex = 3;
@@ -255,6 +255,7 @@
             this.WidthPicker.Name = "WidthPicker";
             this.WidthPicker.Size = new System.Drawing.Size(105, 20);
             this.WidthPicker.TabIndex = 6;
+            this.WidthPicker.ValueChanged += new System.EventHandler(this.WidthPicker_ValueChanged);
             // 
             // HeightPicker
             // 
@@ -262,13 +263,15 @@
             this.HeightPicker.Name = "HeightPicker";
             this.HeightPicker.Size = new System.Drawing.Size(105, 20);
             this.HeightPicker.TabIndex = 7;
+            this.HeightPicker.ValueChanged += new System.EventHandler(this.HeightPicker_ValueChanged);
             // 
             // SizePicker
             // 
-            this.SizePicker.Location = new System.Drawing.Point(433, 50);
+            this.SizePicker.Location = new System.Drawing.Point(435, 44);
             this.SizePicker.Name = "SizePicker";
             this.SizePicker.Size = new System.Drawing.Size(105, 20);
             this.SizePicker.TabIndex = 8;
+            this.SizePicker.ValueChanged += new System.EventHandler(this.SizePicker_ValueChanged);
             // 
             // zValuePicker
             // 
@@ -276,6 +279,7 @@
             this.zValuePicker.Name = "zValuePicker";
             this.zValuePicker.Size = new System.Drawing.Size(105, 20);
             this.zValuePicker.TabIndex = 9;
+            this.zValuePicker.ValueChanged += new System.EventHandler(this.zValuePicker_ValueChanged);
             // 
             // LayerPicker
             // 
@@ -284,6 +288,7 @@
             this.LayerPicker.Name = "LayerPicker";
             this.LayerPicker.Size = new System.Drawing.Size(247, 21);
             this.LayerPicker.TabIndex = 10;
+            this.LayerPicker.SelectedIndexChanged += new System.EventHandler(this.LayerPicker_SelectedIndexChanged);
             // 
             // isVisible
             // 
@@ -294,24 +299,26 @@
             this.isVisible.TabIndex = 11;
             this.isVisible.Text = "Visible";
             this.isVisible.UseVisualStyleBackColor = true;
+            this.isVisible.CheckedChanged += new System.EventHandler(this.isVisible_CheckedChanged);
             // 
             // isSolid
             // 
             this.isSolid.AutoSize = true;
-            this.isSolid.Location = new System.Drawing.Point(211, 23);
+            this.isSolid.Location = new System.Drawing.Point(211, 19);
             this.isSolid.Name = "isSolid";
             this.isSolid.Size = new System.Drawing.Size(49, 17);
             this.isSolid.TabIndex = 12;
             this.isSolid.Text = "Solid";
             this.isSolid.UseVisualStyleBackColor = true;
+            this.isSolid.CheckedChanged += new System.EventHandler(this.isSolid_CheckedChanged);
             // 
-            // fileName
+            // comboBox1
             // 
-            this.fileName.FormattingEnabled = true;
-            this.fileName.Location = new System.Drawing.Point(12, 20);
-            this.fileName.Name = "fileName";
-            this.fileName.Size = new System.Drawing.Size(178, 21);
-            this.fileName.TabIndex = 12;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(12, 20);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(178, 21);
+            this.comboBox1.TabIndex = 12;
             // 
             // MapEditor
             // 
@@ -364,7 +371,7 @@
         private System.Windows.Forms.Button setbutton;
         private System.Windows.Forms.Label zValue;
         private System.Windows.Forms.Label Layer;
-        private System.Windows.Forms.ComboBox fileName;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.CheckBox isSolid;
         private System.Windows.Forms.CheckBox isVisible;
         private System.Windows.Forms.ComboBox LayerPicker;
