@@ -60,6 +60,11 @@ namespace JungleScape
                     }
                 }
             }
+            else
+            {
+                hitBox.Y -= speedY;
+                speedY--;
+            }
 
             // if the left side of the player does not instersect any platforms, move the player to the left.
             if (!PlayerDetectCollision(leftSide, platforms))
@@ -82,11 +87,7 @@ namespace JungleScape
 
             // fake physics
             // if the bottom side of the player does not intersect with any platforms, make them fall.
-            if(!PlayerDetectCollision(bottomSide, platforms))
-            {
-                hitBox.Y -= speedY;
-                speedY--;
-            }
+            
 
             if (speedY < MAX_FALL_SPEED)
             {
@@ -139,8 +140,6 @@ namespace JungleScape
                     {
                         return true;
                     }
-                    else
-                        return false;
                 }
                 return false;
             }
