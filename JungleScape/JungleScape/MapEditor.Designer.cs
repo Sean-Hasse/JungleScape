@@ -202,6 +202,7 @@
             this.setbutton.TabIndex = 3;
             this.setbutton.Text = "Set";
             this.setbutton.UseVisualStyleBackColor = true;
+            this.setbutton.Click += new System.EventHandler(this.setbutton_Click);
             // 
             // TileSize
             // 

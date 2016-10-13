@@ -68,5 +68,11 @@ namespace LevelEditor
         {
 
         }
+
+        //have the ability to select the options for the game asset
+        private void setbutton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have submitted your options.");
+        }
     }
 }
