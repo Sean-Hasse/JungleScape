@@ -2,7 +2,6 @@
 
 - Add Boss to Enemy, or as another class (unlikely).
 - Fix enemy ledge detection
-- Discuss crouching.
-- Don't let the player jump in midair
-- Fix PlayerMove() ability
-- check FireArrow ability
+- Make the Player.Move() y-speed = 0 if they hit their head.
+- Fix artificial gravity in Player.Move()
+- Implement firing arrows.
