@@ -21,5 +21,10 @@ namespace LevelEditor
         {
 
         }
+
+        private void Height_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
