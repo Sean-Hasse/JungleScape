@@ -130,7 +130,7 @@ namespace JungleScape
         }
 
         // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
-        void FireArrow(Texture2D arrowImage, List<GameObject> objects)
+        public void FireArrow(Texture2D arrowImage, List<GameObject> objects)
         {
             // get what direction the player is aiming in
             string direction = Aim();
