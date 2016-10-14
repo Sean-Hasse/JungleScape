@@ -15,43 +15,43 @@ namespace JungleScape
         string direction;
 
         // constructor
-        public Arrow(int spdX, int spdY, Rectangle hBox, Player player1, Texture2D texture) : base(hBox, texture)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture) : base(hBox, texture)
         {
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
-            direction = player1.Aim();
-            hitBox = new Rectangle(player1.hitBox.Center, new Point(20, 5));
         }
 
         // methods
         // move method. 
-        public override void Move()
+        public override void Move(List<GameObject> gObj)
         {
-            if (direction == "up")
+            // move the arrow according to the speed.
+            hitBox.X += speedX;
+            hitBox.Y += speedY;
+
+            // check for collisions with the game objects, and execute logic based on what type of object is hit.
+            foreach(GameObject gObject in gObj)
             {
-                speedX = 0;
-                speedY = 8;
-            }
-            if (direction == "right")
-            {
-                speedX = 8;
-                speedY = 0;
-            }
-            if (direction == "left")
-            {
-                speedX = -8;
-                speedY = 0;
-            }
-            if (direction == "diagonal right")
-            {
-                speedX = 4;
-                speedY = 4;
-            }
-            if (direction == "diagonal left")
-            {
-                speedX = 4;
-                speedY = 4;
+                if(DetectCollision(gObject))
+                {
+                    if(gObject is Enemy)
+                    {
+                        speedX = 0;
+                        speedY = 0;
+                        DealDamage((Enemy)gObject);
+
+                        alive = false;
+                    }
+
+                    if(gObject is Environment)
+                    {
+                        speedX = 0;
+                        speedY = 0;
+
+                        alive = false;
+                    }
+                }
             }
         }
 
@@ -67,9 +67,10 @@ namespace JungleScape
             }
         }
 
-        // move meant for Player class. Not used.
-        public override void Move(List<GameObject> gObj)
+        // Standard Move(). Not used.
+        public override void Move()
         {
         }
+        
     }
 }

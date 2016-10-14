@@ -129,6 +129,49 @@ namespace JungleScape
                 return null;
         }
 
+        // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
+        void FireArrow(Texture2D arrowImage, List<GameObject> objects)
+        {
+            // get what direction the player is aiming in
+            string direction = Aim();
+
+            // check to see if the player has pressed spacebar to fire
+            if (keyState.IsKeyDown(Keys.Space))
+            {
+                if (direction == "up")
+                {
+                    // creates an arrow, 0 horizontal speed, 8 verticle, starts in player center with dimesnions 20x5, and uses the passed in image
+                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+
+                    // make the arrow move 
+                    arrow.Move(objects);
+                }
+                if (direction == "right")
+                {
+                    Arrow arrow = new Arrow(8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    arrow.Move(objects);
+                }
+                if (direction == "left")
+                {
+                    Arrow arrow = new Arrow(-8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    arrow.Move(objects);
+                }
+                if (direction == "diagonal right")
+                {
+                    Arrow arrow = new Arrow(4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    arrow.Move(objects);
+                }
+                if (direction == "diagonal left")
+                {
+                    Arrow arrow = new Arrow(-4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    arrow.Move(objects);
+                }
+                
+                // code to stop rapid fire arrows here
+
+            }
+        }
+
         // specialized detect collision for each side of the player.
         private bool PlayerDetectCollision(Rectangle side, List<GameObject> platforms)
         {
