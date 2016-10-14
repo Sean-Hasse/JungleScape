@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace PlatformerEditor
 {
@@ -11,6 +12,11 @@ namespace PlatformerEditor
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D bg;
+        Texture2D sp;
+        int currentX = 0;
+        int lvlX = 0;
+        List<Vector2> platforms = new List<Vector2>();
 
         public Game1()
         {
@@ -39,7 +45,8 @@ namespace PlatformerEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            bg = Content.Load<Texture2D>("leftImage");
+            sp = Content.Load<Texture2D>("background");
             // TODO: use this.Content to load your game content here
         }
 
@@ -63,6 +70,24 @@ namespace PlatformerEditor
                 Exit();
 
             // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                currentX += 2;
+                lvlX += 2;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                currentX -= 2;
+                lvlX -= 2;
+            }
+            if (currentX < 0)
+                currentX = 0;
+            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                platforms.Add(new Vector2(Mouse.GetState().X - lvlX, Mouse.GetState().Y));
+            }
 
             base.Update(gameTime);
         }
@@ -76,7 +101,18 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(bg, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Draw(bg, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            spriteBatch.Draw(bg, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
+            spriteBatch.Draw(sp, new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 100, 100), Color.White);
+            foreach (var item in platforms)
+            {
+                spriteBatch.Draw(sp, new Rectangle((int)item.X - lvlX, (int)item.Y, 100, 100), Color.White);
+            }
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
