@@ -48,6 +48,10 @@ namespace JungleScape
         {
             foreach (GameObject obj in objectMap)
             {
+                if (obj is Character)
+                {
+                    
+                }
                 spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
         }

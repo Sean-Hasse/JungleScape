@@ -85,7 +85,7 @@ namespace JungleScape
             //spider.Move(spider.speed, 0);
 
             //order of adding textures is important for map loading
-            textures.Add(Content.Load<Texture2D>("firstPlatformerBrick"));
+            textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
             textures.Add(Content.Load<Texture2D>("BasicPlayer"));
             textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
 
@@ -139,7 +139,6 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 2)
                     {
                         myState = GameState.Editor;
-                        System.Windows.Forms.Application.Run(editor);
                     }
                         
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 3)
@@ -158,18 +157,22 @@ namespace JungleScape
                 case GameState.Game:
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
+                        
                         if (chara is Player)
                         {
+                            Player player1 = (Player)chara;
                             List<GameObject> platforms = new List<GameObject>();
                             foreach(GameObject obj in levelMap.objectMap)
                             {
                                 if (obj is Environment)
                                     platforms.Add(obj);
                             }
-                            chara.Move(platforms);
+                            player1.Move(platforms);
+                            player1.FireArrow(textures[1], levelMap.objectMap);
                         }
                         else
                             chara.Move();
+
                     }
 
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
@@ -179,6 +182,9 @@ namespace JungleScape
                     break;
 
                 case GameState.Editor:
+                    //You can get rid of this if statement if you put in another way to break out of the editor
+                    if (SingleKeyPress(Keys.P, kbState, previousKbState))
+                        myState = GameState.Menu;
                     break;
 
                 case GameState.Pause:
@@ -254,7 +260,7 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 200), Color.White);
                     spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 275), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.White);
 
                     if (menuIndex == 0)
                         spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.Yellow);
@@ -263,7 +269,7 @@ namespace JungleScape
                     else if (menuIndex == 2)
                         spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 275), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 350), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.Yellow);
                     break;
 
                 case GameState.Instructions:
