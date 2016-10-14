@@ -85,7 +85,7 @@ namespace JungleScape
             //spider.Move(spider.speed, 0);
 
             //order of adding textures is important for map loading
-            textures.Add(Content.Load<Texture2D>("firstPlatformerBrick"));
+            textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
             textures.Add(Content.Load<Texture2D>("BasicPlayer"));
             textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
 
