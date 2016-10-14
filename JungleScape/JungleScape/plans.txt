@@ -4,5 +4,6 @@
 - Fix enemy ledge detection
 - Make the Player.Move() y-speed = 0 if they hit their head
 - Fix artificial gravity in Player.Move()
-- Implement firing arrows
+- Implement FireArrow(Texture 2D, List<GameObject> objects) into Game1
+- Fix up code preventing FireArrow from being spammed
 - Make the spider hurt the player.

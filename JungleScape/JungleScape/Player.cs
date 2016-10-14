@@ -134,9 +134,10 @@ namespace JungleScape
         {
             // get what direction the player is aiming in
             string direction = Aim();
+            int timer = 0;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyDown(Keys.Space) && timer >= 60)
             {
                 if (direction == "up")
                 {
@@ -145,31 +146,38 @@ namespace JungleScape
 
                     // make the arrow move 
                     arrow.Move(objects);
+
+                    // reset timer
+                    timer = 0;
                 }
                 if (direction == "right")
                 {
                     Arrow arrow = new Arrow(8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
+                    timer = 0;
                 }
                 if (direction == "left")
                 {
                     Arrow arrow = new Arrow(-8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
+                    timer = 0;
                 }
                 if (direction == "diagonal right")
                 {
                     Arrow arrow = new Arrow(4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
+                    timer = 0;
                 }
                 if (direction == "diagonal left")
                 {
                     Arrow arrow = new Arrow(-4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
+                    timer = 0;
                 }
-                
-                // code to stop rapid fire arrows here
-
             }
+
+            // code to stop rapid fire arrows here
+            timer++;
         }
 
         // specialized detect collision for each side of the player.
