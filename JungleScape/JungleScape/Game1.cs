@@ -258,16 +258,16 @@ namespace JungleScape
                 case GameState.Menu:
                     spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 275), Color.White);
+                    spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
+                    spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 300), Color.White);
                     spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.White);
 
                     if (menuIndex == 0)
                         spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.Yellow);
                     else if (menuIndex == 1)
-                        spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 200), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.Yellow);
                     else if (menuIndex == 2)
-                        spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 275), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 300), Color.Yellow);
                     else
                         spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.Yellow);
                     break;
