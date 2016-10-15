@@ -14,9 +14,13 @@ namespace PlatformerEditor
         SpriteBatch spriteBatch;
         Texture2D bg;
         Texture2D sp;
-        int currentX = 0;
-        int lvlX = 0;
-        List<Vector2> platforms = new List<Vector2>();
+        int currentX;
+        int lvlX;
+        List<Vector2> platforms;
+        KeyboardState kbState;
+        KeyboardState previousKbState;
+        MouseState mState;
+        MouseState previousMState;
 
         public Game1()
         {
@@ -33,7 +37,9 @@ namespace PlatformerEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            currentX = 0;
+            lvlX = 0;
+            platforms = new List<Vector2>();
             base.Initialize();
         }
 
@@ -66,6 +72,12 @@ namespace PlatformerEditor
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //define keyboard and mouse states
+            previousKbState = kbState;
+            kbState = Keyboard.GetState();
+            previousMState = mState;
+            mState = Mouse.GetState();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -84,7 +96,7 @@ namespace PlatformerEditor
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (SingleMouseClick())
             {
                 platforms.Add(new Vector2(Mouse.GetState().X - lvlX, Mouse.GetState().Y));
             }
@@ -114,6 +126,26 @@ namespace PlatformerEditor
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private bool SingleKeyPress(Keys key)
+        {
+            if (kbState.IsKeyDown(key) && previousKbState.IsKeyUp(key))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private bool SingleMouseClick()
+        {
+            if (mState.LeftButton == ButtonState.Pressed && previousMState.LeftButton == ButtonState.Released)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
