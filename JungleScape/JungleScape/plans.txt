@@ -3,7 +3,6 @@
 - (Max) Add Boss to Enemy, or as another class (unlikely).
 - (Max) Fix enemy ledge detection.
 - (Sean) Make the Player.Move() y-speed = 0 if they hit their head.
-- (Sean) Fix artificial gravity in Player.Move().
 - Fix up code preventing FireArrow from being spammed.
 - (Max) Make the spider hurt the player.
 - Draw different Player images depending on which enum state Player.Aim() set it to.

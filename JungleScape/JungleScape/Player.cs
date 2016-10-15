@@ -28,25 +28,26 @@ namespace JungleScape
             aimDirection = AimDirection.Forward;
             speedX = 5;
             speedY = 0;
-
-            // set rectangles for collsion detection
-            leftSide = new Rectangle(hitBox.X, hitBox.Y, -3, hitBox.Height);
-            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 3, hitBox.Height);
-            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, -3);
-            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 3);
         }
 
         // methods
         public override void Move(List<GameObject> platforms)
         {
+            // set rectangles for collsion detection
+            leftSide = new Rectangle(hitBox.X, hitBox.Y, -3, hitBox.Height);
+            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 3, hitBox.Height);
+            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, -3);
+            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 3);
+
             keyState = Keyboard.GetState();
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             // if the top of the player isn't intersecting any platforms, and the bottom of the player is intersecting the platform, run jump logic
             if (PlayerDetectCollision(bottomSide, platforms))
             {
-                // first, set speedy to 0, player should no be moving in y direction when on a platform with no key press
+                // first, set speedy to 0, player should no be moving in y direction when on a platform with no key press. Also set y to level with the ground
                 speedY = 0;
+                PlayerResetY(bottomSide, platforms);
 
                 // check if the player is colliding with a platform above them
                 if (!PlayerDetectCollision(topSide, platforms))
@@ -54,7 +55,7 @@ namespace JungleScape
                     // Allow jump if these conditions are met.
                     if (keyState.IsKeyDown(Keys.W))
                     {
-                        speedY = 10;
+                        speedY = 15;
                         hitBox.Y -= speedY;
                         speedY--;
                     }
@@ -89,10 +90,6 @@ namespace JungleScape
             {
                 speedY = MAX_FALL_SPEED;
             }
-
-            // TEMP CODE: ALLOW PLAYER TO MOVE DOWN WITH 'S' FOR TESTING
-            if (keyState.IsKeyDown(Keys.S))
-                hitBox.Y += 10;
         }
 
         // Aim will determine which direction the player in inputting to aim in
@@ -196,6 +193,23 @@ namespace JungleScape
             }
             else
                 return false;
+        }
+
+        // method for setting the Y position = to the platform being hit. Stops character from sinking.
+        private void PlayerResetY(Rectangle side, List<GameObject> platforms)
+        {
+            if (platforms.Count != 0)
+            {
+                foreach (GameObject platform in platforms)
+                {
+                    if (side.Intersects(platform.hitBox))
+                    {
+                        // set the Y value of the player hitbox equal to the top of the platform
+                        hitBox.Y = platform.hitBox.Y - hitBox.Height;
+                    }
+                }
+                
+            }
         }
 
         // Original Move. Not being used.
