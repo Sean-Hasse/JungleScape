@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PlatformerEditor
 {
@@ -16,7 +18,7 @@ namespace PlatformerEditor
         Texture2D background;
         int currentX;
         int lvlX;
-        List<Tile> platforms;
+        List<Tile> tiles;
         KeyboardState kbState;
         KeyboardState previousKbState;
         MouseState mState;
@@ -43,7 +45,7 @@ namespace PlatformerEditor
             // TODO: Add your initialization logic here
             currentX = 0;
             lvlX = 0;
-            platforms = new List<Tile>();
+            tiles = new List<Tile>();
             tileDict = new Dictionary<ObjectType, Texture2D>();
             currentType = ObjectType.TopBrick;
             base.Initialize();
@@ -140,21 +142,30 @@ namespace PlatformerEditor
                     break;
             }
 
-
+            //on single mouse click, add a new tile object to the selected location
+            //if there is a tile already there, delete it before adding the new one
             if (SingleMouseClick())
             {
                 Point currentCoord = getGridCoord(Mouse.GetState().X, Mouse.GetState().Y);
-                foreach(Tile tile in platforms)
+                foreach(Tile tile in tiles)
                 {
                     Point checkPoint = new Point(tile.bounds.X, tile.bounds.Y);
                     if (checkPoint == currentCoord)
                     {
-                        platforms.Remove(tile);
+                        tiles.Remove(tile);
                         break;
                     }
 
                 }
-                platforms.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+            }
+
+            //saves current list of Tiles into JungleScape's Content folder
+            if (SingleKeyPress(Keys.Enter))
+            {
+                StreamWriter joutput = new StreamWriter("../../../../../JungleScape/Content/level.json");
+                joutput.WriteLine(JsonConvert.SerializeObject(tiles));
+                joutput.Close();
             }
 
             base.Update(gameTime);
@@ -174,7 +185,7 @@ namespace PlatformerEditor
             spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            foreach (var item in platforms)
+            foreach (var item in tiles)
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
             }
@@ -184,6 +195,11 @@ namespace PlatformerEditor
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Checks for single key press.
+        /// </summary>
+        /// <param name="key">input key</param>
+        /// <returns>boolean</returns>
         private bool SingleKeyPress(Keys key)
         {
             if (kbState.IsKeyDown(key) && previousKbState.IsKeyUp(key))
@@ -194,6 +210,10 @@ namespace PlatformerEditor
                 return false;
         }
 
+        /// <summary>
+        /// Checks for single mouse click.
+        /// </summary>
+        /// <returns>boolean</returns>
         private bool SingleMouseClick()
         {
             if (mState.LeftButton == ButtonState.Pressed && previousMState.LeftButton == ButtonState.Released)
@@ -207,7 +227,7 @@ namespace PlatformerEditor
         /// <summary>
         /// Calculates the relative grid coordinates from given x/y values.
         /// </summary>
-        public Point getGridCoord(int givenX, int givenY)
+        private Point getGridCoord(int givenX, int givenY)
         {
             int x = (int)Math.Round((double)(givenX / GRID_SIZE)) * GRID_SIZE;
             int y = (int)Math.Round((double)(givenY / GRID_SIZE)) * GRID_SIZE;
