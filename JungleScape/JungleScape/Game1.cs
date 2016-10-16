@@ -177,8 +177,14 @@ namespace JungleScape
 
                 case GameState.Editor:
                     //You can get rid of this if statement if you put in another way to break out of the editor
-                    if (SingleKeyPress(Keys.P, kbState, previousKbState))
-                        myState = GameState.Menu;
+                    // if (SingleKeyPress(Keys.P, kbState, previousKbState))
+                    //myState = GameState.Menu;
+                    //break;
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) || SingleKeyPress(Keys.Back, kbState, previousKbState))
+                        if (previousGameState == GameState.Menu)
+                            myState = GameState.Menu;
+                        else
+                            myState = GameState.Pause;
                     break;
 
                 case GameState.Pause:
@@ -253,7 +259,7 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
-                    spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "Map Editor Instructions", new Vector2(20, 300), Color.White);
                     spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.White);
 
                     if (menuIndex == 0)
@@ -261,30 +267,32 @@ namespace JungleScape
                     else if (menuIndex == 1)
                         spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.Yellow);
                     else if (menuIndex == 2)
-                        spriteBatch.DrawString(testFont, "Make Your Own Map", new Vector2(20, 300), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Map Editor Instructions", new Vector2(20, 300), Color.Yellow);
                     else
                         spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.Yellow);
                     break;
 
                 case GameState.Instructions:
-                    spriteBatch.DrawString(testFont, "These are Instructions", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 50), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the A key to move left ", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the D key to move right ", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the W key to move to jump", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "These are Instructions:", new Vector2(0, 0), Color.White);
+                    //spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the W key to move to jump.", new Vector2(0, 200), Color.White);
                     spriteBatch.DrawString(testFont, "Press the spacebar to shoot.", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Can't shoot right now. :(", new Vector2(0, 300), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
                     break;
 
                 case GameState.Editor:
-                    spriteBatch.DrawString(testFont, "How To Use The Map Editor", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "Begin by creating a new instance of the map editor in order to go to the screen.", new Vector2(0, 50), Color.White);
-                    spriteBatch.DrawString(testFont, "Place the game objects into the game by left clicking on your mouse.", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "You can scroll through the options by clicking on the up and down keys on your keyboard.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "If you make a mistake, just overwrite by clicking a different object into place.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Do keep in mind in order to play you must include a player..", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Once you are done press enter, the next time you run the game the map you have selected will appear. Enjoy!", new Vector2(0, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'P' to return", new Vector2(0, 400), Color.White);
+                    spriteBatch.DrawString(testFont, "How To Use The Map Editor:", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "Create new instance of the editor.", new Vector2(0, 50), Color.White);
+                    spriteBatch.DrawString(testFont, "Left click to place game objects.", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Press up/down keys to pick options.", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Left click on 'nothing' to delete.", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "You must include a player.", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Once you are done press 'Enter'.", new Vector2(0, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "Run the game again.", new Vector2(0, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
                     break;
 
                 case GameState.Game:
