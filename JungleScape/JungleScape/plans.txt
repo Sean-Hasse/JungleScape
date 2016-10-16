@@ -7,4 +7,4 @@
 - (Alexia) Required drawings for images: the Player aiming forward, diagonal and up; Arrows.
 - Make the Player drawn last.
 - Make the Arrow spawn from the bow.
-- 
+- Fix Arrow hit detection.
