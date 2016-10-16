@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace PlatformerEditor
@@ -16,7 +17,7 @@ namespace PlatformerEditor
         Texture2D sp;
         int currentX;
         int lvlX;
-        List<Vector2> platforms;
+        List<Tile> platforms;
         KeyboardState kbState;
         KeyboardState previousKbState;
         MouseState mState;
@@ -39,7 +40,7 @@ namespace PlatformerEditor
             // TODO: Add your initialization logic here
             currentX = 0;
             lvlX = 0;
-            platforms = new List<Vector2>();
+            platforms = new List<Tile>();
             base.Initialize();
         }
 
@@ -82,7 +83,7 @@ namespace PlatformerEditor
                 Exit();
 
             // TODO: Add your update logic here
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            /* if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 currentX += 2;
                 lvlX += 2;
@@ -94,11 +95,11 @@ namespace PlatformerEditor
             }
             if (currentX < 0)
                 currentX = 0;
-            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;
+            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
 
             if (SingleMouseClick())
             {
-                platforms.Add(new Vector2(Mouse.GetState().X - lvlX, Mouse.GetState().Y));
+                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(100, 100)), sp));
             }
 
             base.Update(gameTime);
@@ -118,10 +119,10 @@ namespace PlatformerEditor
             spriteBatch.Draw(bg, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             spriteBatch.Draw(bg, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            spriteBatch.Draw(sp, new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 100, 100), Color.White);
+            spriteBatch.Draw(sp, new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(100, 100)), Color.White);
             foreach (var item in platforms)
             {
-                spriteBatch.Draw(sp, new Rectangle((int)item.X - lvlX, (int)item.Y, 100, 100), Color.White);
+                spriteBatch.Draw(item.texture, item.bounds, Color.White);
             }
 
             spriteBatch.End();
@@ -146,6 +147,21 @@ namespace PlatformerEditor
             }
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Calculates the relative grid coordinates from given x/y values.
+        /// </summary>
+        public Point getGridCoord(int givenX, int givenY)
+        {
+            int x = (int)Math.Round((double)(givenX / 100)) * 100;
+            int y = (int)Math.Round((double)(givenY / 100)) * 100;
+            if (x > givenX)
+                x -= 100;
+            if (y > givenY)
+                y -= 100;
+
+            return new Point(x, y);
         }
     }
 }
