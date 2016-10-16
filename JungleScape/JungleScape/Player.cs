@@ -85,6 +85,12 @@ namespace JungleScape
                 }
             }
             
+            // If player hits their head on a wall, make them stop moving up.
+            if(PlayerDetectCollision(topSide, platforms))
+            {
+                speedY = 0;
+            }
+
             // Maximum falling speed. If exceeded, resets the falling speed to the maximum. Ensures not continuous accelleration
             if (speedY < MAX_FALL_SPEED)
             {
@@ -127,15 +133,19 @@ namespace JungleScape
         }
 
         // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
-        public void FireArrow(Texture2D arrowImage, List<GameObject> objects)
+        public void FireArrow(Texture2D arrowImage, List<GameObject> objects, GameTime gameTime)
         {
             // get what direction the player is aiming in
             string direction = Aim();
-            int timer = 0;
+            
+            double timer = gameTime.ElapsedGameTime.TotalSeconds;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timer >= 60)
+            if (keyState.IsKeyDown(Keys.Space) && timer >= 1)
             {
+                // reset the timer
+                timer = 0;
+
                 if (direction == "up")
                 {
                     // creates an arrow, 0 horizontal speed, 8 verticle, starts in player center with dimesnions 20x5, and uses the passed in image
