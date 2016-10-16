@@ -88,6 +88,7 @@ namespace JungleScape
             textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
             textures.Add(Content.Load<Texture2D>("BasicPlayer0"));
             textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
+            textures.Add(Content.Load<Texture2D>("PlainPlatformerBrick"));
             testFont = Content.Load<SpriteFont>("testFont");
             testFont2 = Content.Load<SpriteFont>("testFont2");
 

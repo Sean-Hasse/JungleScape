@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
 namespace JungleScape
 {
@@ -28,6 +29,7 @@ namespace JungleScape
         {
             objectMap.Clear();
 
+            /*
             //add environment blocks
             for (int i=0; i<10; i++)
             {
@@ -42,6 +44,30 @@ namespace JungleScape
             //add enemy
             //use player sprite for now
             objectMap.Add(new Enemy(new Rectangle(GRID_SCALE * 8, (int)(GRID_SCALE * 6.5), (GRID_SCALE * 2), (int)(GRID_SCALE * 1.5)), objectMap, textures.ElementAt(2)));
+            */
+
+            StreamReader jinput = new StreamReader("../../../../Content/level.json");
+            List<Tile> inputList = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
+            jinput.Close();
+
+            foreach(Tile tile in inputList)
+            {
+                switch (tile.type)
+                {
+                    case ObjectType.TopBrick:
+                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(0)));
+                        break;
+                    case ObjectType.PlainBrick:
+                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(3)));
+                        break;
+                    case ObjectType.Player:
+                        objectMap.Add(new Player(tile.bounds, textures.ElementAt(1)));
+                        break;
+                    case ObjectType.Enemy:
+                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures.ElementAt(2)));
+                        break;
+                }
+            }
         }
 
         public void drawMap(SpriteBatch spriteBatch)
