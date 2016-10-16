@@ -107,6 +107,8 @@ namespace PlatformerEditor
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
 
+            //change currently selected object type with up/down arrow keys
+            //list order loops in order of coded case sequence
             switch (currentType)
             {
                 case ObjectType.TopBrick:
@@ -141,7 +143,18 @@ namespace PlatformerEditor
 
             if (SingleMouseClick())
             {
-                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                Point currentCoord = getGridCoord(Mouse.GetState().X, Mouse.GetState().Y);
+                foreach(Tile tile in platforms)
+                {
+                    Point checkPoint = new Point(tile.bounds.X, tile.bounds.Y);
+                    if (checkPoint == currentCoord)
+                    {
+                        platforms.Remove(tile);
+                        break;
+                    }
+
+                }
+                platforms.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
             }
 
             base.Update(gameTime);
@@ -161,11 +174,11 @@ namespace PlatformerEditor
             spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
             foreach (var item in platforms)
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
             }
+            spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
