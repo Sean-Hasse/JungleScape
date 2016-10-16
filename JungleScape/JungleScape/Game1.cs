@@ -160,13 +160,7 @@ namespace JungleScape
                         if (chara is Player)
                         {
                             Player player1 = (Player)chara;
-                            List<GameObject> platforms = new List<GameObject>();
-                            foreach(GameObject obj in levelMap.objectMap)
-                            {
-                                if (obj is Environment)
-                                    platforms.Add(obj);
-                            }
-                            player1.Move(platforms);
+                            player1.Move(levelMap.objectMap);
                             player1.FireArrow(textures[1], levelMap.objectMap);
                         }
                         else

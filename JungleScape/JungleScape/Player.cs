@@ -32,13 +32,24 @@ namespace JungleScape
         }
 
         // methods
-        public override void Move(List<GameObject> platforms)
+        public override void Move(List<GameObject> gameObjs)
         {
             // set rectangles for collsion detection
             leftSide = new Rectangle(hitBox.X, hitBox.Y, -3, hitBox.Height);
             rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 3, hitBox.Height);
             topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, -3);
             bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 3);
+            List<GameObject> platforms = new List<GameObject>();
+            List<GameObject> enemies = new List<GameObject>();
+
+            // populate the platforms and enemies lists
+            foreach (GameObject gObj in gameObjs)
+            {
+                if (gObj is Environment)
+                    platforms.Add(gObj);
+                if (gObj is Enemy)
+                    enemies.Add(gObj);
+            }
 
             keyState = Keyboard.GetState();
 
@@ -96,6 +107,15 @@ namespace JungleScape
             if (speedY < MAX_FALL_SPEED)
             {
                 speedY = MAX_FALL_SPEED;
+            }
+
+            // Check for enemy Collision. If true, take damage.
+            foreach(GameObject enemy in enemies)
+            {
+                if(DetectCollision(enemy))
+                {
+                    TakeDamage(this);
+                }
             }
         }
 
