@@ -13,8 +13,8 @@ namespace PlatformerEditor
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D bg;
-        Texture2D sp;
+        Texture2D background;
+        Texture2D brick;
         int currentX;
         int lvlX;
         List<Tile> platforms;
@@ -22,10 +22,12 @@ namespace PlatformerEditor
         KeyboardState previousKbState;
         MouseState mState;
         MouseState previousMState;
+        const int GRID_SIZE = 50;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
 
@@ -52,8 +54,8 @@ namespace PlatformerEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            bg = Content.Load<Texture2D>("leftImage");
-            sp = Content.Load<Texture2D>("background");
+            background = Content.Load<Texture2D>("BasicBackground");
+            brick = Content.Load<Texture2D>("PlatformerBrick");
             // TODO: use this.Content to load your game content here
         }
 
@@ -99,7 +101,7 @@ namespace PlatformerEditor
 
             if (SingleMouseClick())
             {
-                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(100, 100)), sp));
+                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), brick));
             }
 
             base.Update(gameTime);
@@ -115,11 +117,11 @@ namespace PlatformerEditor
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(bg, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(bg, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            spriteBatch.Draw(bg, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            spriteBatch.Draw(sp, new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(100, 100)), Color.White);
+            spriteBatch.Draw(brick, new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
             foreach (var item in platforms)
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
@@ -154,12 +156,12 @@ namespace PlatformerEditor
         /// </summary>
         public Point getGridCoord(int givenX, int givenY)
         {
-            int x = (int)Math.Round((double)(givenX / 100)) * 100;
-            int y = (int)Math.Round((double)(givenY / 100)) * 100;
+            int x = (int)Math.Round((double)(givenX / GRID_SIZE)) * GRID_SIZE;
+            int y = (int)Math.Round((double)(givenY / GRID_SIZE)) * GRID_SIZE;
             if (x > givenX)
-                x -= 100;
+                x -= GRID_SIZE;
             if (y > givenY)
-                y -= 100;
+                y -= GRID_SIZE;
 
             return new Point(x, y);
         }
