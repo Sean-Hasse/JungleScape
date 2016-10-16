@@ -27,7 +27,7 @@ namespace JungleScape
         {
             keyState = new KeyboardState();
             aimDirection = AimDirection.Forward;
-            speedX = 5;
+            speedX = 8;
             speedY = 0;
         }
 
@@ -181,25 +181,25 @@ namespace JungleScape
                 }
                 if (direction == "right")
                 {
-                    Arrow arrow = new Arrow(8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
                     timer = 0;
                 }
                 if (direction == "left")
                 {
-                    Arrow arrow = new Arrow(-8, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
                     timer = 0;
                 }
                 if (direction == "diagonal right")
                 {
-                    Arrow arrow = new Arrow(4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
                     timer = 0;
                 }
                 if (direction == "diagonal left")
                 {
-                    Arrow arrow = new Arrow(-4, -4, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
                     timer = 0;
                 }

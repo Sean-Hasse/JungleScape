@@ -41,7 +41,7 @@ namespace JungleScape
 
             //add enemy
             //use player sprite for now
-            objectMap.Add(new Enemy(new Rectangle(GRID_SCALE * 8, (int)(GRID_SCALE * 6.5), (GRID_SCALE * 2), (int)(GRID_SCALE * 1.5)), objectMap.ElementAt(2), textures.ElementAt(2)));
+            objectMap.Add(new Enemy(new Rectangle(GRID_SCALE * 8, (int)(GRID_SCALE * 6.5), (GRID_SCALE * 2), (int)(GRID_SCALE * 1.5)), objectMap, textures.ElementAt(2)));
         }
 
         public void drawMap(SpriteBatch spriteBatch)
