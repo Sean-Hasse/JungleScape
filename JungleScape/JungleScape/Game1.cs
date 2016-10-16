@@ -86,9 +86,8 @@ namespace JungleScape
 
             //order of adding textures is important for map loading
             textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
-            textures.Add(Content.Load<Texture2D>("BasicPlayer"));
+            textures.Add(Content.Load<Texture2D>("BasicPlayer0"));
             textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
-
             testFont = Content.Load<SpriteFont>("testFont");
             testFont2 = Content.Load<SpriteFont>("testFont2");
 
@@ -161,13 +160,7 @@ namespace JungleScape
                         if (chara is Player)
                         {
                             Player player1 = (Player)chara;
-                            List<GameObject> platforms = new List<GameObject>();
-                            foreach(GameObject obj in levelMap.objectMap)
-                            {
-                                if (obj is Environment)
-                                    platforms.Add(obj);
-                            }
-                            player1.Move(platforms);
+                            player1.Move(levelMap.objectMap);
                             player1.FireArrow(textures[1], levelMap.objectMap);
                         }
                         else
