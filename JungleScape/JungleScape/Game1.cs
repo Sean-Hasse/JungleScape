@@ -268,14 +268,23 @@ namespace JungleScape
 
                 case GameState.Instructions:
                     spriteBatch.DrawString(testFont, "These are Instructions", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "How To Use The Map Editor", new Vector2(0, 50), Color.White);
-                    spriteBatch.DrawString(testFont, "Begin by creating a new instance of the map editor in order to go to the screen.", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Place the game objects into the game by left clicking on your mouse.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "You can scroll through the options by clicking on the up and down keys on your keyboard.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "If you make a mistake, just overwrite by clicking a different object into place.", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Do keep in mind in order to play you must include a player..", new Vector2(0, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "Once you are done press enter, the next time you run the game the map you have selected will appear. Enjoy!", new Vector2(0, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 50), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the A key to move left ", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the D key to move right ", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the W key to move to jump", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the spacebar to shoot.", new Vector2(0, 250), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
+                    break;
+
+                case GameState.Editor:
+                    spriteBatch.DrawString(testFont, "How To Use The Map Editor", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "Begin by creating a new instance of the map editor in order to go to the screen.", new Vector2(0, 50), Color.White);
+                    spriteBatch.DrawString(testFont, "Place the game objects into the game by left clicking on your mouse.", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "You can scroll through the options by clicking on the up and down keys on your keyboard.", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "If you make a mistake, just overwrite by clicking a different object into place.", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "Do keep in mind in order to play you must include a player..", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Once you are done press enter, the next time you run the game the map you have selected will appear. Enjoy!", new Vector2(0, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'P' to return", new Vector2(0, 400), Color.White);
                     break;
 
                 case GameState.Game:
