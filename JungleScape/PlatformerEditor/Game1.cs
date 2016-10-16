@@ -47,7 +47,7 @@ namespace PlatformerEditor
             lvlX = 0;
             tiles = new List<Tile>();
             tileDict = new Dictionary<ObjectType, Texture2D>();
-            currentType = ObjectType.TopBrick;
+            currentType = ObjectType.Delete;
             base.Initialize();
         }
 
@@ -113,9 +113,15 @@ namespace PlatformerEditor
             //list order loops in order of coded case sequence
             switch (currentType)
             {
-                case ObjectType.TopBrick:
+                case ObjectType.Delete:
                     if (SingleKeyPress(Keys.Up))
                         currentType = ObjectType.Enemy;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.TopBrick;
+                    break;
+                case ObjectType.TopBrick:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Delete;
                     if (SingleKeyPress(Keys.Down))
                         currentType = ObjectType.PlainBrick;
                     break;
@@ -135,10 +141,10 @@ namespace PlatformerEditor
                     if (SingleKeyPress(Keys.Up))
                         currentType = ObjectType.Player;
                     if (SingleKeyPress(Keys.Down))
-                        currentType = ObjectType.TopBrick;
+                        currentType = ObjectType.Delete;
                     break;
                 default:
-                    currentType = ObjectType.TopBrick;
+                    currentType = ObjectType.Delete;
                     break;
             }
 
@@ -155,9 +161,9 @@ namespace PlatformerEditor
                         tiles.Remove(tile);
                         break;
                     }
-
                 }
-                tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                if(currentType != ObjectType.Delete)
+                    tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
             }
 
             //saves current list of Tiles into JungleScape's Content folder
@@ -189,7 +195,8 @@ namespace PlatformerEditor
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
             }
-            spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+            if(currentType != ObjectType.Delete)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
