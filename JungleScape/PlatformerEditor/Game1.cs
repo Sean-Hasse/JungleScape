@@ -14,7 +14,6 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
-        Texture2D brick;
         int currentX;
         int lvlX;
         List<Tile> platforms;
@@ -23,6 +22,8 @@ namespace PlatformerEditor
         MouseState mState;
         MouseState previousMState;
         const int GRID_SIZE = 50;
+        Dictionary<ObjectType, Texture2D> tileDict;
+        ObjectType currentType;
 
         public Game1()
         {
@@ -43,6 +44,8 @@ namespace PlatformerEditor
             currentX = 0;
             lvlX = 0;
             platforms = new List<Tile>();
+            tileDict = new Dictionary<ObjectType, Texture2D>();
+            currentType = ObjectType.TopBrick;
             base.Initialize();
         }
 
@@ -54,8 +57,13 @@ namespace PlatformerEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             background = Content.Load<Texture2D>("BasicBackground");
-            brick = Content.Load<Texture2D>("PlatformerBrick");
+
+            tileDict.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
+            tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
+            tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
+            tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             // TODO: use this.Content to load your game content here
         }
 
@@ -99,9 +107,41 @@ namespace PlatformerEditor
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
 
+            switch (currentType)
+            {
+                case ObjectType.TopBrick:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Enemy;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.PlainBrick;
+                    break;
+                case ObjectType.PlainBrick:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.TopBrick;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.Player;
+                    break;
+                case ObjectType.Player:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.PlainBrick;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.Enemy;
+                    break;
+                case ObjectType.Enemy:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Player;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.TopBrick;
+                    break;
+                default:
+                    currentType = ObjectType.TopBrick;
+                    break;
+            }
+
+
             if (SingleMouseClick())
             {
-                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), brick));
+                platforms.Add(new Tile(new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
             }
 
             base.Update(gameTime);
@@ -121,7 +161,7 @@ namespace PlatformerEditor
             spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            spriteBatch.Draw(brick, new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+            spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
             foreach (var item in platforms)
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
