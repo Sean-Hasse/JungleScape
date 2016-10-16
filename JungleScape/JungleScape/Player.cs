@@ -13,6 +13,7 @@ namespace JungleScape
     {
         // attributes
         const int MAX_FALL_SPEED = -10;
+        double timer = 0;
         Rectangle leftSide;
         Rectangle rightSide;
         Rectangle topSide;
@@ -133,15 +134,16 @@ namespace JungleScape
         }
 
         // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
-        public void FireArrow(Texture2D arrowImage, List<GameObject> objects, GameTime gameTime)
+        public void FireArrow(Texture2D arrowImage, List<GameObject> objects)
         {
             // get what direction the player is aiming in
             string direction = Aim();
-            
-            double timer = gameTime.ElapsedGameTime.TotalSeconds;
+
+            // increase the timer each update
+            timer++;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timer >= 1)
+            if (keyState.IsKeyDown(Keys.Space) && timer >= 60)
             {
                 // reset the timer
                 timer = 0;

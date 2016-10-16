@@ -167,7 +167,7 @@ namespace JungleScape
                                     platforms.Add(obj);
                             }
                             player1.Move(platforms);
-                            player1.FireArrow(textures[1], levelMap.objectMap, gameTime);
+                            player1.FireArrow(textures[1], levelMap.objectMap);
                         }
                         else
                             chara.Move();
