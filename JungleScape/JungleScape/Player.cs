@@ -13,7 +13,8 @@ namespace JungleScape
     {
         // attributes
         const int MAX_FALL_SPEED = -10;
-        double timer = 0;
+        double timerArrow = 0;
+        double timerJump = 0;
         Rectangle leftSide;
         Rectangle rightSide;
         Rectangle topSide;
@@ -35,10 +36,10 @@ namespace JungleScape
         public override void Move(List<GameObject> gameObjs)
         {
             // set rectangles for collsion detection
-            leftSide = new Rectangle(hitBox.X, hitBox.Y, -3, hitBox.Height);
-            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 3, hitBox.Height);
-            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, -3);
-            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 3);
+            leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height);
+            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height);
+            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, 1);
+            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width, 1);
             List<GameObject> platforms = new List<GameObject>();
             List<GameObject> enemies = new List<GameObject>();
 
@@ -52,6 +53,7 @@ namespace JungleScape
             }
 
             keyState = Keyboard.GetState();
+            timerJump++;
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             // if the top of the player isn't intersecting any platforms, and the bottom of the player is intersecting the platform, run jump logic
@@ -59,17 +61,21 @@ namespace JungleScape
             {
                 // first, set speedy to 0, player should no be moving in y direction when on a platform with no key press. Also set y to level with the ground
                 speedY = 0;
-                PlayerResetY(bottomSide, platforms);
+                PlayerResetY(bottomSide, platforms, "bottom");
 
                 // check if the player is colliding with a platform above them
                 if (!PlayerDetectCollision(topSide, platforms))
                 {
                     // Allow jump if these conditions are met.
-                    if (keyState.IsKeyDown(Keys.W))
+                    if (keyState.IsKeyDown(Keys.W) && timerJump >= 20)
                     {
+                        // move the player up and start gravity
                         speedY = 15;
                         hitBox.Y -= speedY;
                         speedY--;
+
+                        // reset jump timer
+                        timerJump = 0;
                     }
                 }
             }
@@ -98,9 +104,10 @@ namespace JungleScape
             }
             
             // If player hits their head on a wall, make them stop moving up.
-            if(PlayerDetectCollision(topSide, platforms))
+            if(PlayerDetectCollision(topSide, platforms) && speedY >= 0)
             {
                 speedY = 0;
+                PlayerResetY(topSide, platforms, "top");
             }
 
             // Maximum falling speed. If exceeded, resets the falling speed to the maximum. Ensures not continuous accelleration
@@ -160,13 +167,13 @@ namespace JungleScape
             string direction = Aim();
 
             // increase the timer each update
-            timer++;
+            timerArrow++;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timer >= 60)
+            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 60)
             {
                 // reset the timer
-                timer = 0;
+                timerArrow = 0;
 
                 if (direction == "up")
                 {
@@ -177,36 +184,36 @@ namespace JungleScape
                     arrow.Move(objects);
 
                     // reset timer
-                    timer = 0;
+                    timerArrow = 0;
                 }
                 if (direction == "right")
                 {
                     Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
-                    timer = 0;
+                    timerArrow = 0;
                 }
                 if (direction == "left")
                 {
                     Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
-                    timer = 0;
+                    timerArrow = 0;
                 }
                 if (direction == "diagonal right")
                 {
                     Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
-                    timer = 0;
+                    timerArrow = 0;
                 }
                 if (direction == "diagonal left")
                 {
                     Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
                     arrow.Move(objects);
-                    timer = 0;
+                    timerArrow = 0;
                 }
             }
 
             // code to stop rapid fire arrows here
-            timer++;
+            timerArrow++;
         }
 
         // specialized detect collision for each side of the player.
@@ -228,16 +235,25 @@ namespace JungleScape
         }
 
         // method for setting the Y position = to the platform being hit. Stops character from sinking.
-        private void PlayerResetY(Rectangle side, List<GameObject> platforms)
+        private void PlayerResetY(Rectangle side, List<GameObject> platforms, string stringName)
         {
             if (platforms.Count != 0)
             {
                 foreach (GameObject platform in platforms)
                 {
-                    if (side.Intersects(platform.hitBox))
+                    if (stringName == "bottom")
                     {
-                        // set the Y value of the player hitbox equal to the top of the platform
-                        hitBox.Y = platform.hitBox.Y - hitBox.Height;
+                        if (side.Intersects(platform.hitBox))
+                        {
+                            // set the Y value of the player hitbox equal to the top of the platform
+                            hitBox.Y = platform.hitBox.Y - hitBox.Height;
+                        }
+                    }
+                    if(stringName == "top")
+                    {
+                        if (side.Intersects(platform.hitBox))
+                            // set the Y value of the player hitbox equal to the bottom of the platform
+                            hitBox.Y = platform.hitBox.Y + hitBox.Height;
                     }
                 }
                 
