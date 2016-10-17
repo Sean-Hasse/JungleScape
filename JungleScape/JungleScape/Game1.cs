@@ -269,7 +269,7 @@ namespace JungleScape
                     else if (menuIndex == 1)
                         spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.Yellow);
                     else if (menuIndex == 2)
-                        spriteBatch.DrawString(testFont, "Map Editor Instructions", new Vector2(20, 300), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.Yellow);
                     else
                         spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.Yellow);
                     break;
