@@ -43,6 +43,7 @@ namespace JungleScape
         SpriteFont testFont;
         SpriteFont testFont2;
         MapEditor editor;
+        Texture2D background;
         
 
         public Game1()
@@ -91,6 +92,7 @@ namespace JungleScape
             textures.Add(Content.Load<Texture2D>("PlainPlatformerBrick"));
             testFont = Content.Load<SpriteFont>("testFont");
             testFont2 = Content.Load<SpriteFont>("testFont2");
+            background = Content.Load<Texture2D>("BasicBackground");
 
             levelMap.loadMap(textures);
         }
@@ -259,7 +261,7 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
-                    spriteBatch.DrawString(testFont, "Map Editor Instructions", new Vector2(20, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.White);
                     spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.White);
 
                     if (menuIndex == 0)
