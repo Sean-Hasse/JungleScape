@@ -43,7 +43,7 @@ namespace JungleScape
         SpriteFont testFont;
         SpriteFont testFont2;
         MapEditor editor;
-        Texture2D background;
+        //Texture2D background;
         
 
         public Game1()
@@ -92,7 +92,7 @@ namespace JungleScape
             textures.Add(Content.Load<Texture2D>("PlainPlatformerBrick"));
             testFont = Content.Load<SpriteFont>("testFont");
             testFont2 = Content.Load<SpriteFont>("testFont2");
-            background = Content.Load<Texture2D>("BasicBackground");
+            //background = Content.Load<Texture2D>("BasicBackground");
 
             levelMap.loadMap(textures);
         }
@@ -302,6 +302,7 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
+                    //spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
                     break;
 
                 case GameState.Pause:
