@@ -295,26 +295,29 @@ namespace JungleScape
                     break;
 
                 case GameState.Instructions:
-                    spriteBatch.DrawString(testFont, "These are Instructions:", new Vector2(0, 0), Color.White);
-                    //spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the W key to move to jump.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the spacebar to shoot.", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Can't shoot right now. :(", new Vector2(0, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
+                    spriteBatch.DrawString(testFont, "How To Play The Game:", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the W key to jump.", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Combine the keys to move and jump at the same time in one direction.", new Vector2(0, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "Press the spacebar to shoot at an enemy spider.", new Vector2(0, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "To Win:", new Vector2(0, 450), Color.White);
+                    spriteBatch.DrawString(testFont, "Reach the end of the level without dying, there are no checkpoints.", new Vector2(0, 500), Color.White);
+                    spriteBatch.DrawString(testFont, "Be prepared to fight the boss at the end of the game.", new Vector2(0, 550), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 600), Color.White);
                     break;
 
                 case GameState.Editor:
                     spriteBatch.DrawString(testFont, "How To Use The Map Editor:", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "Create new instance of the editor.", new Vector2(0, 50), Color.White);
-                    spriteBatch.DrawString(testFont, "Left click to place game objects.", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Press up/down keys to pick options.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "Left click on 'nothing' to delete.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "You must include a player.", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Once you are done press 'Enter'.", new Vector2(0, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "Run the game again.", new Vector2(0, 350), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 400), Color.White);
+                    spriteBatch.DrawString(testFont, "Begin by starting a new instance of the editor to view the screen.", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Place the game objects into the game by left clicking on your mouse.", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "Scroll through the options by clicking on the up and down keys.", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Overwrite your mistake by clicking a different object into place.", new Vector2(0, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "The default option is 'nothing' and will delete anything you do not want.", new Vector2(0, 400), Color.White);
+                    spriteBatch.DrawString(testFont, "Do keep in mind in order to play you must include a player.", new Vector2(0, 500), Color.White);
+                    spriteBatch.DrawString(testFont, "When you are done press enter, and run the game. Enjoy!", new Vector2(0, 600), Color.White);
+                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 700), Color.White);
                     break;
 
                 case GameState.Game:
