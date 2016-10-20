@@ -14,6 +14,8 @@ namespace JungleScape
     {
         Menu,
         Instructions,
+        Story,
+        Options,
         Game,
         Pause,
         Editor,
@@ -148,13 +150,13 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
                         menuIndex -= 1;
 
-                    if (menuIndex >= 4)
+                    if (menuIndex >= 5)
                         menuIndex = 0;
                     else if (menuIndex < 0)
-                        menuIndex = 3;
+                        menuIndex = 4;
 
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 0)
-                        myState = GameState.Game;
+                        myState = GameState.Story;
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 1)
                     {
                         previousGameState = GameState.Menu;
@@ -164,8 +166,9 @@ namespace JungleScape
                     {
                         myState = GameState.Editor;
                     }
-                        
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 3)
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && menuIndex == 3)
+                        myState = GameState.Options;
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && menuIndex == 4)
                         Exit();
 
                     break;
@@ -177,6 +180,18 @@ namespace JungleScape
                         else
                             myState = GameState.Pause;
                     break;
+
+
+                case GameState.Story:
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
+                        myState = GameState.Game;
+                    break;
+
+                case GameState.Options:
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
+                        myState = GameState.Menu;
+                    break;
+
 
                 case GameState.Game:
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
@@ -197,7 +212,7 @@ namespace JungleScape
 
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
                         myState = GameState.Pause;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.G))
+                    else if (SingleKeyPress(Keys.G, kbState, previousKbState))
                         myState = GameState.GameOver;
                     break;
 
@@ -247,7 +262,10 @@ namespace JungleScape
                         gameOverIndex = 2;
 
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 0)
+                    {
+                        Initialize();
                         myState = GameState.Game;
+                    }
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
                         myState = GameState.Menu;
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 2)
@@ -282,7 +300,8 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
                     spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.White);
+                    spriteBatch.DrawString(testFont, "Options", new Vector2(20, 375), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 450), Color.White);
 
                     if (menuIndex == 0)
                         spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.Yellow);
@@ -290,8 +309,14 @@ namespace JungleScape
                         spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.Yellow);
                     else if (menuIndex == 2)
                         spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.Yellow);
+                    else if (menuIndex == 3)
+                        spriteBatch.DrawString(testFont, "Options", new Vector2(20, 375), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 375), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 450), Color.Yellow);
+                    break;
+
+                case GameState.Options:
+                    spriteBatch.DrawString(testFont, "Hit Enter to go back to menu", new Vector2(0, 0), Color.White);
                     break;
 
                 case GameState.Instructions:
@@ -308,6 +333,10 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 600), Color.White);
                     break;
 
+                case GameState.Story:
+                    spriteBatch.DrawString(testFont, "Placeholder story, hit ENTER to advance to game", new Vector2(0, 0), Color.White);
+                    break;
+
                 case GameState.Editor:
                     spriteBatch.DrawString(testFont, "How To Use The Map Editor:", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Begin by starting a new instance of the editor to view the screen.", new Vector2(0, 100), Color.White);
@@ -321,14 +350,17 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
+                    spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
-                    //spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+                    
                     break;
 
                 case GameState.Pause:
+                    spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
+                    levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont2, "Paused", new Vector2(230, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.White);
@@ -347,14 +379,14 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont2, "Oops", new Vector2(280, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.White);
                     spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "Quit Game", new Vector2(285, 350), Color.White);
 
                     if (gameOverIndex == 0)
                         spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.Yellow);
                     else if (gameOverIndex == 1)
                         spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.Yellow);
                     else if (gameOverIndex == 2)
-                        spriteBatch.DrawString(testFont, "Forget It.", new Vector2(285, 350), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Quit Game", new Vector2(285, 350), Color.Yellow);
 
                     break;
 
