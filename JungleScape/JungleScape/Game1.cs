@@ -316,7 +316,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    levelMap.drawMap(spriteBatch, textures, aimState);
+                    levelMap.drawMap(spriteBatch);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);

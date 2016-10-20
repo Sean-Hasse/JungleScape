@@ -71,10 +71,11 @@ namespace JungleScape
             }
         }
 
-        public void drawMap(SpriteBatch spriteBatch, List<Texture2D> textures, KeyboardState kbState)
+        public void drawMap(SpriteBatch spriteBatch /*, List<Texture2D> textures, KeyboardState kbState */)
         {
             foreach (GameObject obj in objectMap)
             {
+                /*
                 if (obj is Player)
                 {
                     if (kbState.IsKeyDown(Keys.Left))
@@ -85,7 +86,8 @@ namespace JungleScape
                         spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
                 }
                 else
-                    spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
+                */
+                spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
         }
     }
