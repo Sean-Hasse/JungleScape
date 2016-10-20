@@ -46,6 +46,8 @@ namespace JungleScape
         SpriteFont testFont2;
         MapEditor editor;
         Texture2D background;
+        private int desiredBBWidth = 1920;
+        private int desiredBBHeight = 1080;
         
 
         //Texture2D background;
@@ -58,12 +60,18 @@ namespace JungleScape
             Content.RootDirectory = "Content";
 
             //change the screen resolution
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = desiredBBWidth;
+            graphics.PreferredBackBufferHeight = desiredBBHeight;
             this.Window.AllowUserResizing = true;
-
         }
 
+        /* possible fix to updating the screen res
+        internal void ChangeClientBounds(Rectangle clientBounds)
+        {
+            updateClientBounds = true;
+            this.clientBounds = clientBounds;
+        }
+        */
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
