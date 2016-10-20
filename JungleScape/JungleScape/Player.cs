@@ -70,7 +70,7 @@ namespace JungleScape
                     if (keyState.IsKeyDown(Keys.W) && timerJump >= 20)
                     {
                         // move the player up and start gravity
-                        speedY = 15;
+                        speedY = 18;
                         hitBox.Y -= speedY;
                         speedY--;
 
