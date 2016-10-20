@@ -32,6 +32,11 @@ namespace PlatformerEditor
             graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
             Content.RootDirectory = "Content";
+            
+            //change the screen reolution
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            this.Window.AllowUserResizing = true;
         }
 
         /// <summary>
