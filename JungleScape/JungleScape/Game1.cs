@@ -50,6 +50,11 @@ namespace JungleScape
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            this.Window.AllowUserResizing = true;
+
         }
 
         /// <summary>
