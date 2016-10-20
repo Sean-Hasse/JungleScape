@@ -29,6 +29,7 @@ namespace JungleScape
         {
             // move the arrow according to the speed.
             hitBox.X += speedX;
+            hitBox.Y += speedY;
 
             // check for collisions with the game objects, and execute logic based on what type of object is hit.
             foreach (GameObject gObject in gObj)
@@ -52,8 +53,6 @@ namespace JungleScape
                         alive = false;
                     }
                 }
-                else
-                    speedY = 0;
             }
         }
 
