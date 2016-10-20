@@ -24,7 +24,7 @@ namespace JungleScape
         // method
         public bool DetectCollision(GameObject go)      // detects collision between this object and the object passed in.
         {
-            if (hitBox.Intersects(go.hitBox))
+            if (this.hitBox.Intersects(go.hitBox))
             {
                 return true;
             }

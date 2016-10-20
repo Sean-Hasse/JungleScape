@@ -12,7 +12,6 @@ namespace JungleScape
     class Arrow : Character
     {
         // attributes
-        string direction;
 
         // constructor
         public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture) : base(hBox, texture)
@@ -20,6 +19,8 @@ namespace JungleScape
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
+            speedX = spdX;
+            speedY = spdY;
         }
 
         // methods
@@ -28,23 +29,22 @@ namespace JungleScape
         {
             // move the arrow according to the speed.
             hitBox.X += speedX;
-            hitBox.Y += speedY;
 
             // check for collisions with the game objects, and execute logic based on what type of object is hit.
-            foreach(GameObject gObject in gObj)
+            foreach (GameObject gObject in gObj)
             {
-                if(DetectCollision(gObject))
+                if (DetectCollision(gObject))
                 {
-                    if(gObject is Enemy)
+                    if (gObject is Enemy)
                     {
                         speedX = 0;
                         speedY = 0;
-                        DealDamage((Enemy)gObject);
+                        TakeDamage((Enemy)gObject);
 
                         alive = false;
                     }
 
-                    if(gObject is Environment)
+                    if (gObject is Environment)
                     {
                         speedX = 0;
                         speedY = 0;
@@ -52,18 +52,8 @@ namespace JungleScape
                         alive = false;
                     }
                 }
-            }
-        }
-
-        // checks if there is a collision. Then checks if the collision is an enemy, dealing damage to them.
-        public void ArrowHit(GameObject collisionObj)
-        {
-            if(DetectCollision(collisionObj))
-            {
-                if(collisionObj is Enemy)
-                {
-                    DealDamage((Enemy)collisionObj);
-                }
+                else
+                    speedY = 0;
             }
         }
 
