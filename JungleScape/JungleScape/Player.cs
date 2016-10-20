@@ -131,31 +131,36 @@ namespace JungleScape
         {
             keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Up))
-            {
-                aimDirection = AimDirection.Up;
-                return "up";
-            }      
-            if (keyState.IsKeyDown(Keys.Right))
-            {
-                aimDirection = AimDirection.Forward;
-                return "right";
-            }
-            if (keyState.IsKeyDown(Keys.Left))
-            {
-                aimDirection = AimDirection.Forward;
-                return "left";
-            }
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
             {
                 aimDirection = AimDirection.Diagonal;
                 return "diagonal right";
             }
+
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
             {
                 aimDirection = AimDirection.Diagonal;
                 return "diagonal left";
             }
+
+            if (keyState.IsKeyDown(Keys.Up))
+            {
+                aimDirection = AimDirection.Up;
+                return "up";
+            }
+
+            if (keyState.IsKeyDown(Keys.Right))
+            {
+                aimDirection = AimDirection.Forward;
+                return "right";
+            }
+
+            if (keyState.IsKeyDown(Keys.Left))
+            {
+                aimDirection = AimDirection.Forward;
+                return "left";
+            }
+
             else
                 return null;
         }
@@ -170,7 +175,7 @@ namespace JungleScape
             timerArrow++;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 60)
+            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 30)
             {
                 // reset the timer
                 timerArrow = 0;
@@ -178,7 +183,7 @@ namespace JungleScape
                 if (direction == "up")
                 {
                     // creates an arrow, 0 horizontal speed, 8 verticle, starts in player center with dimesnions 20x5, and uses the passed in image
-                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
 
                     // make the arrow move 
                     arrow.Move(objects);
@@ -188,25 +193,25 @@ namespace JungleScape
                 }
                 if (direction == "right")
                 {
-                    Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
                 if (direction == "left")
                 {
-                    Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
                 if (direction == "diagonal right")
                 {
-                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
                 if (direction == "diagonal left")
                 {
-                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.Center, new Point(20, 5)), arrowImage);
+                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }

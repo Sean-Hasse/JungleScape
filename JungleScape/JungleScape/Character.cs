@@ -32,12 +32,5 @@ namespace JungleScape
         {
             char1.alive = false;
         }
-
-        // dealDamage, when called, checks to see if there is an intersecting hitbox, and if true, calls takeDamage
-        public void DealDamage(Character otherChar)
-        {
-            if (DetectCollision(otherChar))
-                TakeDamage(otherChar);
-        }
     }
 }       

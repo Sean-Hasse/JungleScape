@@ -48,6 +48,8 @@ namespace JungleScape
         SpriteFont testFont2;
         MapEditor editor;
         Texture2D background;
+        public static int desiredBBWidth = 1920;
+        public static int desiredBBHeight = 1080;
         
 
         //Texture2D background;
@@ -60,12 +62,18 @@ namespace JungleScape
             Content.RootDirectory = "Content";
 
             //change the screen resolution
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = desiredBBWidth;
+            graphics.PreferredBackBufferHeight = desiredBBHeight;
             this.Window.AllowUserResizing = true;
-
         }
 
+        /* possible fix to updating the screen res
+        internal void ChangeClientBounds(Rectangle clientBounds)
+        {
+            updateClientBounds = true;
+            this.clientBounds = clientBounds;
+        }
+        */
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -350,7 +358,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+                    spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth,desiredBBHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
