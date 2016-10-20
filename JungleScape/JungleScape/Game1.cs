@@ -54,6 +54,7 @@ namespace JungleScape
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            IsMouseVisible = true;
             Content.RootDirectory = "Content";
 
             //change the screen resolution
