@@ -178,10 +178,6 @@ namespace JungleScape
                     break;
 
                 case GameState.Editor:
-                    //You can get rid of this if statement if you put in another way to break out of the editor
-                    // if (SingleKeyPress(Keys.P, kbState, previousKbState))
-                    //myState = GameState.Menu;
-                    //break;
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) || SingleKeyPress(Keys.Back, kbState, previousKbState))
                         if (previousGameState == GameState.Menu)
                             myState = GameState.Menu;
@@ -211,7 +207,7 @@ namespace JungleScape
                         myState = GameState.Instructions;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && pauseIndex == 2)
-                        Exit();
+                        myState = GameState.Menu;
 
                     break;
 
@@ -309,14 +305,14 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont2, "Paused", new Vector2(230, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Give Up", new Vector2(300, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "Return to Menu", new Vector2(225, 350), Color.White);
 
                     if (pauseIndex == 0)
                         spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.Yellow);
                     else if (pauseIndex == 1)
                         spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Give Up", new Vector2(300, 350), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Return to Menu", new Vector2(225, 350), Color.Yellow);
 
                     break;
 
