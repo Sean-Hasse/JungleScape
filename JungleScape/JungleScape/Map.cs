@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Microsoft.Xna.Framework.Input;
 
 namespace JungleScape
 {
@@ -14,6 +15,7 @@ namespace JungleScape
     {
         public List<GameObject> objectMap { get; set; }
         public static int GRID_SCALE = 50;
+        private Player player1;
 
         public Map()
         {
@@ -61,7 +63,7 @@ namespace JungleScape
                         objectMap.Add(new Environment(tile.bounds, textures.ElementAt(3)));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(new Player(tile.bounds, textures.ElementAt(1)));
+                        objectMap.Add(player1 = new Player(tile.bounds, textures.ElementAt(1)));
                         break;
                     case ObjectType.Enemy:
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures.ElementAt(2)));
@@ -70,15 +72,21 @@ namespace JungleScape
             }
         }
 
-        public void drawMap(SpriteBatch spriteBatch)
+        public void drawMap(SpriteBatch spriteBatch, List<Texture2D> textures, KeyboardState kbState)
         {
             foreach (GameObject obj in objectMap)
             {
-                if (obj is Character)
+                if (obj is Player)
                 {
-                    
+                    if (kbState.IsKeyDown(Keys.Left))
+                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0,0), SpriteEffects.FlipHorizontally, 0f);
+                    else if (kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Left))
+                        spriteBatch.Draw(textures[4], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0f);
+                    else
+                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
                 }
-                spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
+                else
+                    spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
         }
     }
