@@ -46,6 +46,9 @@ namespace JungleScape
         SpriteFont testFont2;
         MapEditor editor;
         Texture2D background;
+
+        public const int WIDTH = 1920;
+        public const int HEIGHT = 1080;
         
 
         //Texture2D background;
@@ -58,8 +61,8 @@ namespace JungleScape
             Content.RootDirectory = "Content";
 
             //change the screen resolution
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = WIDTH;
+            graphics.PreferredBackBufferHeight = HEIGHT;
             this.Window.AllowUserResizing = true;
 
         }
@@ -318,6 +321,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
+                    graphics.
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
