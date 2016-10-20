@@ -32,7 +32,7 @@ namespace JungleScape
         // call spider in LoadContent
 
         Map levelMap;
-        List<Texture2D> textures;
+        Dictionary<ObjectType, Texture2D> textures;
         GameState myState;
         GameState previousGameState;
         int menuIndex;
@@ -63,7 +63,7 @@ namespace JungleScape
             // TODO: Add your initialization logic here
             levelMap = new Map();
             editor = new MapEditor();
-            textures = new List<Texture2D>();
+            textures = new Dictionary<ObjectType, Texture2D>();
             myState = GameState.Menu;
             menuIndex = 0;
 
@@ -86,8 +86,8 @@ namespace JungleScape
             //spider.Move(spider.speed, 0);
 
             //order of adding textures is important for map loading
-            textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
-            textures.Add(Content.Load<Texture2D>("BasicPlayer0"));
+            textures.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
+            textures.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
             textures.Add(Content.Load<Texture2D>("PlainPlatformerBrick"));
             testFont = Content.Load<SpriteFont>("testFont");

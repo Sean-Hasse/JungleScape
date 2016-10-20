@@ -25,7 +25,7 @@ namespace JungleScape
         /// For now it creates a hard-coded map, but will eventually
         /// load objects from an external Json file created from the map editor.
         /// </summary>
-        public void loadMap(List<Texture2D> textures)
+        public void loadMap(Dictionary<ObjectType, Texture2D> textures)
         {
             objectMap.Clear();
 
