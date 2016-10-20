@@ -32,7 +32,8 @@ namespace JungleScape
         // call spider in LoadContent
 
         Map levelMap;
-        List<Texture2D> textures;
+        Dictionary<ObjectType, Texture2D> textures;
+        List<Texture2D> playerTextures;
         GameState myState;
         GameState previousGameState;
         int menuIndex;
@@ -44,8 +45,7 @@ namespace JungleScape
         SpriteFont testFont;
         SpriteFont testFont2;
         MapEditor editor;
-        Texture2D player45;
-        Texture2D player90;
+        Texture2D background;
         
 
         //Texture2D background;
@@ -74,7 +74,8 @@ namespace JungleScape
             // TODO: Add your initialization logic here
             levelMap = new Map();
             editor = new MapEditor();
-            textures = new List<Texture2D>();
+            playerTextures = new List<Texture2D>();
+            textures = new Dictionary<ObjectType, Texture2D>();
             myState = GameState.Menu;
             menuIndex = 0;
 
@@ -96,16 +97,23 @@ namespace JungleScape
             //spider = new Enemy(new Point(0, 0), new Rectangle(0, 0, 20, 20), 5);
             //spider.Move(spider.speed, 0);
 
-            //order of adding textures is important for map loading
-            textures.Add(Content.Load<Texture2D>("PlatformerBrick"));
-            textures.Add(Content.Load<Texture2D>("BasicPlayer0"));
-            textures.Add(Content.Load<Texture2D>("SpiderEnemy"));
-            textures.Add(Content.Load<Texture2D>("PlainPlatformerBrick"));
+            Texture2D basePlayer = Content.Load<Texture2D>("BasicPlayer0");
+
+            //all initial object textures
+            textures.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
+            textures.Add(ObjectType.Player, basePlayer);
+            textures.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
+            textures.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
+
+            //fonts
             testFont = Content.Load<SpriteFont>("testFont");
             testFont2 = Content.Load<SpriteFont>("testFont2");
-            textures.Add(Content.Load<Texture2D>("BasicPlayer45"));
-            textures.Add(Content.Load<Texture2D>("BasicPlayer90"));
-            //background = Content.Load<Texture2D>("BasicBackground");
+
+            //list of player sprites
+            playerTextures.Add(basePlayer);
+            playerTextures.Add(Content.Load<Texture2D>("BasicPlayer45"));
+            playerTextures.Add(Content.Load<Texture2D>("BasicPlayer90"));
+            background = Content.Load<Texture2D>("BasicBackground");
 
             levelMap.loadMap(textures);
         }
@@ -177,7 +185,7 @@ namespace JungleScape
                         {
                             Player player1 = (Player)chara;
                             player1.Move(levelMap.objectMap);
-                            player1.FireArrow(textures[1], levelMap.objectMap);
+                            player1.FireArrow(textures[ObjectType.Player], levelMap.objectMap);
                         }
                         else
                             chara.Move();
@@ -309,7 +317,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    levelMap.drawMap(spriteBatch, textures, aimState);
+                    levelMap.drawMap(spriteBatch);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);

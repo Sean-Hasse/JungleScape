@@ -24,10 +24,9 @@ namespace JungleScape
 
         /// <summary>
         /// Loads GameObjects into the object map.
-        /// For now it creates a hard-coded map, but will eventually
-        /// load objects from an external Json file created from the map editor.
+        /// Loads objects from an external Json file created from the map editor.
         /// </summary>
-        public void loadMap(List<Texture2D> textures)
+        public void loadMap(Dictionary<ObjectType, Texture2D> textures)
         {
             objectMap.Clear();
 
@@ -57,25 +56,26 @@ namespace JungleScape
                 switch (tile.type)
                 {
                     case ObjectType.TopBrick:
-                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(0)));
+                        objectMap.Add(new Environment(tile.bounds, textures[ObjectType.TopBrick]));
                         break;
                     case ObjectType.PlainBrick:
-                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(3)));
+                        objectMap.Add(new Environment(tile.bounds, textures[ObjectType.PlainBrick]));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(player1 = new Player(tile.bounds, textures.ElementAt(1)));
+                        objectMap.Add(player1 = new Player(tile.bounds, textures[ObjectType.Player]));
                         break;
                     case ObjectType.Enemy:
-                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures.ElementAt(2)));
+                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy]));
                         break;
                 }
             }
         }
 
-        public void drawMap(SpriteBatch spriteBatch, List<Texture2D> textures, KeyboardState kbState)
+        public void drawMap(SpriteBatch spriteBatch /*, List<Texture2D> textures, KeyboardState kbState */)
         {
             foreach (GameObject obj in objectMap)
             {
+                /*
                 //If map object is the player, it takes the keyboard state and draws where the player is currently aiming
                 if (obj is Player)
                 {
@@ -91,7 +91,8 @@ namespace JungleScape
                         spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
                 }
                 else
-                    spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
+                */
+                spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
         }
     }
