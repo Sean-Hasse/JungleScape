@@ -26,16 +26,18 @@ namespace PlatformerEditor
         const int GRID_SIZE = 50;
         Dictionary<ObjectType, Texture2D> tileDict;
         ObjectType currentType;
+        private int desiredBBWidth = 1920;
+        private int desiredBBHeight = 1080;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
             Content.RootDirectory = "Content";
-            
+
             //change the screen reolution
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = desiredBBWidth;
+            graphics.PreferredBackBufferHeight = desiredBBHeight;
             this.Window.AllowUserResizing = true;
         }
 
