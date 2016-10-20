@@ -24,8 +24,7 @@ namespace JungleScape
 
         /// <summary>
         /// Loads GameObjects into the object map.
-        /// For now it creates a hard-coded map, but will eventually
-        /// load objects from an external Json file created from the map editor.
+        /// Loads objects from an external Json file created from the map editor.
         /// </summary>
         public void loadMap(Dictionary<ObjectType, Texture2D> textures)
         {
@@ -57,16 +56,16 @@ namespace JungleScape
                 switch (tile.type)
                 {
                     case ObjectType.TopBrick:
-                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(0)));
+                        objectMap.Add(new Environment(tile.bounds, textures[ObjectType.TopBrick]));
                         break;
                     case ObjectType.PlainBrick:
-                        objectMap.Add(new Environment(tile.bounds, textures.ElementAt(3)));
+                        objectMap.Add(new Environment(tile.bounds, textures[ObjectType.PlainBrick]));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(player1 = new Player(tile.bounds, textures.ElementAt(1)));
+                        objectMap.Add(player1 = new Player(tile.bounds, textures[ObjectType.Player]));
                         break;
                     case ObjectType.Enemy:
-                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures.ElementAt(2)));
+                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy]));
                         break;
                 }
             }
