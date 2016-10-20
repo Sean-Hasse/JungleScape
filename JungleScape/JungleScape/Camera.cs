@@ -13,7 +13,7 @@ namespace JungleScape
 
         public Camera(Player player)
         {
-            position = new Vector2(Game1.WIDTH / 2 - player.hitBox.X, Game1.HEIGHT / 2 - player.hitBox.Y);
+            position = new Vector2(Game1.desiredBBWidth / 2 - player.hitBox.X, Game1.desiredBBHeight / 2 - player.hitBox.Y);
         }
     }
 }

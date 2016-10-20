@@ -46,8 +46,8 @@ namespace JungleScape
         SpriteFont testFont2;
         MapEditor editor;
         Texture2D background;
-        private int desiredBBWidth = 1920;
-        private int desiredBBHeight = 1080;
+        public static int desiredBBWidth = 1920;
+        public static int desiredBBHeight = 1080;
         
 
         //Texture2D background;
@@ -329,12 +329,12 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    graphics.
+                    spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth,desiredBBHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
-                    //spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+                    
                     break;
 
                 case GameState.Pause:
