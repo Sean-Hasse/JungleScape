@@ -367,7 +367,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Pause:
-                    spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.Gray);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont2, "Paused", new Vector2(230, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.White);
