@@ -345,7 +345,17 @@ namespace JungleScape
                     break;
 
                 case GameState.Story:
-                    spriteBatch.DrawString(testFont, "Placeholder story, hit ENTER to advance to game", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "JungleScape Storyline:", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "The player was going to a professional archery competition in South America.", new Vector2(0, 100), Color.White);
+                    spriteBatch.DrawString(testFont, "Suddenly his plane crashes in the middle of wild, unexplored jungle.", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "The player has to survive huge bugs and wild animals.", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "All while solving puzzles to find his way out.", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Creators:", new Vector2(0, 350), Color.White);
+                    spriteBatch.DrawString(testFont, "Project Manager: Alexia Bernardo", new Vector2(0, 400), Color.White);
+                    spriteBatch.DrawString(testFont, "Architect: Sean Hasse", new Vector2(0, 450), Color.White);
+                    spriteBatch.DrawString(testFont, "Game Designer: Brady Murren", new Vector2(0, 500), Color.White);
+                    spriteBatch.DrawString(testFont, "Interface Designer: Max Kaiser", new Vector2(0, 550), Color.White);
+                    spriteBatch.DrawString(testFont, "hit ENTER to advance to game", new Vector2(0, 650), Color.White);
                     break;
 
                 case GameState.Editor:
@@ -387,6 +397,7 @@ namespace JungleScape
                     break;
 
                 case GameState.GameOver:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.Red);
                     spriteBatch.DrawString(testFont2, "Oops", new Vector2(280, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.White);
                     spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.White);

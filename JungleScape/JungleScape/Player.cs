@@ -12,7 +12,7 @@ namespace JungleScape
     public class Player : Character
     {
         // attributes
-        const int MAX_FALL_SPEED = -13;
+        const int MAX_FALL_SPEED = -11;
         double timerArrow = 0;
         double timerJump = 0;
         Rectangle leftSide;
@@ -21,14 +21,12 @@ namespace JungleScape
         Rectangle bottomSide;
         KeyboardState keyState;
         enum AimDirection { Forward, Diagonal, Up };
-        AimDirection aimDirection;
 
         // constructor
         public Player(Rectangle hBox, Texture2D texture) : base(hBox, texture)
         {
             keyState = new KeyboardState();
-            aimDirection = AimDirection.Forward;
-            speedX = 8;
+            speedX = 6;
             speedY = 0;
         }
 
@@ -38,8 +36,8 @@ namespace JungleScape
             // set rectangles for collsion detection
             leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height);
             rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height);
-            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width - 25, 1);
-            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width - 25, 1);
+            topSide = new Rectangle(hitBox.X + 8, hitBox.Y, hitBox.Width - 25, 1);
+            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 25, 1);
             List<GameObject> platforms = new List<GameObject>();
             List<GameObject> enemies = new List<GameObject>();
 
@@ -79,6 +77,7 @@ namespace JungleScape
                     }
                 }
             }
+            // falling when not on a platform
             else
             {
                 hitBox.Y -= speedY;
@@ -126,50 +125,9 @@ namespace JungleScape
             }
         }
 
-        // Aim will determine which direction the player in inputting to aim in
-        public string Aim()
-        {
-            keyState = Keyboard.GetState();
-
-            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
-            {
-                aimDirection = AimDirection.Diagonal;
-                return "diagonal right";
-            }
-
-            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
-            {
-                aimDirection = AimDirection.Diagonal;
-                return "diagonal left";
-            }
-
-            if (keyState.IsKeyDown(Keys.Up))
-            {
-                aimDirection = AimDirection.Up;
-                return "up";
-            }
-
-            if (keyState.IsKeyDown(Keys.Right))
-            {
-                aimDirection = AimDirection.Forward;
-                return "right";
-            }
-
-            if (keyState.IsKeyDown(Keys.Left))
-            {
-                aimDirection = AimDirection.Forward;
-                return "left";
-            }
-
-            else
-                return null;
-        }
-
         // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
         public void FireArrow(Texture2D arrowImage, List<GameObject> objects)
         {
-            // get what direction the player is aiming in
-            string direction = Aim();
 
             // increase the timer each update
             timerArrow++;
@@ -180,10 +138,12 @@ namespace JungleScape
                 // reset the timer
                 timerArrow = 0;
 
-                if (direction == "up")
+                // get what direction the player is aiming in
+                // aiming diagonal right
+                if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
                 {
-                    // creates an arrow, 0 horizontal speed, 8 verticle, starts in player center with dimesnions 20x5, and uses the passed in image
-                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
+                    // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
+                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
 
                     // make the arrow move 
                     arrow.Move(objects);
@@ -191,27 +151,35 @@ namespace JungleScape
                     // reset timer
                     timerArrow = 0;
                 }
-                if (direction == "right")
+
+                // aiming diagonal left
+                else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+                {
+                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
+                    arrow.Move(objects);
+                    timerArrow = 0;
+                }
+
+                // aiming up
+                else if (keyState.IsKeyDown(Keys.Up))
+                {
+                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
+                    arrow.Move(objects);
+                    timerArrow = 0;
+                }
+
+                // aiming right
+                else if (keyState.IsKeyDown(Keys.Right))
                 {
                     Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
-                if (direction == "left")
+
+                // aiming left
+                else if (keyState.IsKeyDown(Keys.Left))
                 {
                     Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
-                    arrow.Move(objects);
-                    timerArrow = 0;
-                }
-                if (direction == "diagonal right")
-                {
-                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
-                    arrow.Move(objects);
-                    timerArrow = 0;
-                }
-                if (direction == "diagonal left")
-                {
-                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
