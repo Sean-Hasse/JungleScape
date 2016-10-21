@@ -15,7 +15,8 @@ namespace JungleScape
     {
         public List<GameObject> objectMap { get; set; }
         public static int GRID_SCALE = 50;
-        public Player player1;
+        //public Player playerCamRef;
+        public Camera cam;
 
         public Map()
         {
@@ -29,23 +30,6 @@ namespace JungleScape
         public void loadMap(Dictionary<ObjectType, Texture2D> textures)
         {
             objectMap.Clear();
-
-            /*
-            //add environment blocks
-            for (int i=0; i<10; i++)
-            {
-                //block sprite is at first index of texure list
-                objectMap.Add(new Environment(new Rectangle(i * GRID_SCALE * 2, GRID_SCALE * 8, GRID_SCALE * 2, GRID_SCALE), textures.ElementAt(0)));
-            }
-
-            //add player
-            //player sprite is at first index of texure list
-            objectMap.Add(new Player(new Rectangle(GRID_SCALE * 2, GRID_SCALE * 6, (int)(GRID_SCALE * 1.5), GRID_SCALE * 2), textures.ElementAt(1)));
-
-            //add enemy
-            //use player sprite for now
-            objectMap.Add(new Enemy(new Rectangle(GRID_SCALE * 8, (int)(GRID_SCALE * 6.5), (GRID_SCALE * 2), (int)(GRID_SCALE * 1.5)), objectMap, textures.ElementAt(2)));
-            */
 
             StreamReader jinput = new StreamReader("../../../../Content/level.json");
             List<Tile> inputList = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
@@ -62,13 +46,14 @@ namespace JungleScape
                         objectMap.Add(new Environment(tile.bounds, textures[ObjectType.PlainBrick]));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(player1 = new Player(tile.bounds, textures[ObjectType.Player]));
+                        objectMap.Add(new Player(tile.bounds, textures[ObjectType.Player]));
                         break;
                     case ObjectType.Enemy:
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy]));
                         break;
                 }
             }
+            cam = new Camera(findPlayer());
         }
 
         public void drawMap(SpriteBatch spriteBatch, List<Texture2D> textures, KeyboardState kbState )
@@ -79,19 +64,25 @@ namespace JungleScape
                 if (obj is Player)
                 {
                     if (kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up))
-                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0f);
-                    else if (kbState.IsKeyDown(Keys.Left) || kbState.IsKeyDown(Keys.A))
-                        spriteBatch.Draw(textures[0], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0f);
+                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
+                    else if (kbState.IsKeyDown(Keys.Left))
+                        spriteBatch.Draw(textures[0], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
                     else if (kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right))
-                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
+                        spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
                     else if (kbState.IsKeyDown(Keys.Up))
-                        spriteBatch.Draw(textures[2], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
+                        spriteBatch.Draw(textures[2], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
                     else
-                        spriteBatch.Draw(textures[0], obj.hitBox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0f);
+                        spriteBatch.Draw(textures[0], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
                 }
                 else
                     spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
             }
+        }
+
+        public Player findPlayer()
+        {
+            Player pref = new Player(new Rectangle(), null);
+            return (Player)objectMap.Find(p => p.GetType() == pref.GetType());
         }
     }
 }

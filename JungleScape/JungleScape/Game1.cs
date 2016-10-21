@@ -10,7 +10,7 @@ namespace JungleScape
     /// <summary>
     /// Available GameStates
     /// </summary>
-    enum GameState
+    public enum GameState
     {
         Menu,
         Instructions,
@@ -29,14 +29,10 @@ namespace JungleScape
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        // attempting to make an enemy
-        Enemy spider;
-        // call spider in LoadContent
-
         Map levelMap;
         Dictionary<ObjectType, Texture2D> textures;
         List<Texture2D> playerTextures;
-        GameState myState;
+        public static GameState myState;
         GameState previousGameState;
         int menuIndex;
         int pauseIndex;
@@ -50,7 +46,10 @@ namespace JungleScape
         Texture2D background;
         public static int desiredBBWidth = 1920;
         public static int desiredBBHeight = 1080;
-        Camera cam;
+        //public static int desiredBBWidth = 500;
+        //public static int desiredBBHeight = 500;
+
+        public Player playerCamRef;
 
         //Texture2D background;
 
@@ -126,8 +125,9 @@ namespace JungleScape
             playerTextures.Add(Content.Load<Texture2D>("BasicPlayer90"));
             background = Content.Load<Texture2D>("BasicBackground");
 
+            //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
-            cam = new Camera(levelMap.player1);
+            playerCamRef = new Player(new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), null);
         }
 
         /// <summary>
@@ -151,6 +151,12 @@ namespace JungleScape
             
             previousKbState = kbState;
             kbState = Keyboard.GetState();
+
+            if(myState != GameState.Game)
+            {
+                playerCamRef = new Player(new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), null);
+            }
+
             switch (myState)
             {
                 case GameState.Menu:
@@ -197,12 +203,15 @@ namespace JungleScape
                     break;
 
                 case GameState.Options:
+                    playerCamRef = new Player(new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), null);
+
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
                         myState = GameState.Menu;
                     break;
 
 
                 case GameState.Game:
+                    playerCamRef = levelMap.findPlayer();
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
                         
@@ -218,6 +227,7 @@ namespace JungleScape
                         aimState = Keyboard.GetState();
 
                     }
+                    
 
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
                         myState = GameState.Pause;
@@ -300,8 +310,8 @@ namespace JungleScape
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,null,cam.translation());
-
+            spriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,null,levelMap.cam.translation(playerCamRef));
+            
             switch (myState)
             {
                 case GameState.Menu:

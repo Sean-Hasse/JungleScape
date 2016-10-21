@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JungleScape
 {
-    class Camera
+    public class Camera
     {
         public Vector2 position { get; set; }
 
@@ -16,9 +16,11 @@ namespace JungleScape
             position = new Vector2(Game1.desiredBBWidth / 2 - player.hitBox.X, Game1.desiredBBHeight / 2 - player.hitBox.Y);
         }
 
-        public Matrix translation()
+        public Matrix translation(Player player)
         {
-            return Matrix.CreateTranslation(new Vector3(position, 0));
+            position = new Vector2(player.hitBox.X - Game1.desiredBBWidth / 2, player.hitBox.Y - Game1.desiredBBHeight / 2);
+
+            return Matrix.CreateTranslation(new Vector3(-position, 0));
         }
     }
 }
