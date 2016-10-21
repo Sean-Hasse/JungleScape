@@ -46,8 +46,6 @@ namespace JungleScape
         Texture2D background;
         public static int desiredBBWidth = 1920;
         public static int desiredBBHeight = 1080;
-        //public static int desiredBBWidth = 500;
-        //public static int desiredBBHeight = 500;
 
         public Player playerCamRef;
 
@@ -127,7 +125,7 @@ namespace JungleScape
 
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
-            playerCamRef = new Player(new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), null);
+            playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null);
         }
 
         /// <summary>
@@ -154,7 +152,7 @@ namespace JungleScape
 
             if(myState != GameState.Game)
             {
-                playerCamRef = new Player(new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), null);
+                playerCamRef = new Player(new Rectangle(desiredBBWidth/2, desiredBBHeight/2, 0, 0), null);
             }
 
             switch (myState)
