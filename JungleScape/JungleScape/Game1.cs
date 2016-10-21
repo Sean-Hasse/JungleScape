@@ -254,7 +254,10 @@ namespace JungleScape
                         myState = GameState.Instructions;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && pauseIndex == 2)
+                    {
                         myState = GameState.Menu;
+                        Initialize();
+                    }
 
                     break;
 
