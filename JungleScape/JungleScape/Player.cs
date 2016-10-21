@@ -38,8 +38,8 @@ namespace JungleScape
             // set rectangles for collsion detection
             leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height);
             rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height);
-            topSide = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width - 25, 1);
-            bottomSide = new Rectangle(hitBox.X, (hitBox.Y + hitBox.Height), hitBox.Width - 25, 1);
+            topSide = new Rectangle(hitBox.X + 8, hitBox.Y, hitBox.Width - 25, 1);
+            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 25, 1);
             List<GameObject> platforms = new List<GameObject>();
             List<GameObject> enemies = new List<GameObject>();
 
