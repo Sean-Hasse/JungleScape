@@ -25,8 +25,8 @@ namespace JungleScape
         public bool CheckLedges()
         {
             // how I want to do this: make 2 new Rectangles on the Left and Right edge of the enemy 1 pixel taller than it, and when one of them isn't colliding, reverse the speed
-            Rectangle leftRect = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height + 1);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
-            Rectangle rightRect = new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 1, hitBox.Height + 1);       // creates a the same type of rectange in the top right
+            Rectangle leftRect = new Rectangle(hitBox.X + 1, hitBox.Y, 1, hitBox.Height + 2);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
+            Rectangle rightRect = new Rectangle(hitBox.X + hitBox.Width - 1, hitBox.Y, 1, hitBox.Height + 2);       // creates a the same type of rectange in the top right
 
             List<Environment> ledges = new List<Environment>();
             foreach(GameObject obj in environmentObjs)

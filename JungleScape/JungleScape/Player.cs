@@ -79,6 +79,7 @@ namespace JungleScape
                     }
                 }
             }
+            // falling when not on a platform
             else
             {
                 hitBox.Y -= speedY;
