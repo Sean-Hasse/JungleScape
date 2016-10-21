@@ -384,6 +384,7 @@ namespace JungleScape
                     break;
 
                 case GameState.GameOver:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.Red);
                     spriteBatch.DrawString(testFont2, "Oops", new Vector2(280, 10), Color.White);
                     spriteBatch.DrawString(testFont, "Try Again?", new Vector2(270, 150), Color.White);
                     spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.White);
