@@ -15,7 +15,7 @@ namespace JungleScape
     {
         public List<GameObject> objectMap { get; set; }
         public static int GRID_SCALE = 50;
-        private Player player1;
+        public Player player1;
 
         public Map()
         {

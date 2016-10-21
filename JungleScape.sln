@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JungleScape", "JungleScape\JungleScape.csproj", "{31211C03-D73E-4C0B-A2A0-5475E0AC175C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerEditor", "PlatformerEditor\PlatformerEditor.csproj", "{39C3B537-0B2A-4C56-BDBA-1B255134247F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Debug|x86.ActiveCfg = Debug|x86
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Debug|x86.Build.0 = Debug|x86
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|Any CPU.ActiveCfg = Release|x86
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|x86.ActiveCfg = Release|x86
+		{31211C03-D73E-4C0B-A2A0-5475E0AC175C}.Release|x86.Build.0 = Release|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Debug|x86.ActiveCfg = Debug|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Debug|x86.Build.0 = Debug|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Release|Any CPU.ActiveCfg = Release|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Release|x86.ActiveCfg = Release|x86
+		{39C3B537-0B2A-4C56-BDBA-1B255134247F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
