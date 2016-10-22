@@ -37,6 +37,7 @@ namespace JungleScape
         int menuIndex;
         int pauseIndex;
         int gameOverIndex;
+        int optionsIndex;
         KeyboardState previousKbState;
         KeyboardState kbState;
         KeyboardState aimState;
@@ -336,7 +337,21 @@ namespace JungleScape
                     break;
 
                 case GameState.Options:
-                    spriteBatch.DrawString(testFont, "Hit Enter to go back to menu", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "Set Your Screen Resolution ", new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 225), Color.White);
+                    spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 300), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Menu", new Vector2(0, 450), Color.White);
+
+                    if (pauseIndex == 0)
+                        spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 150), Color.Yellow);
+                    else if (pauseIndex == 1)
+                        spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 225), Color.Yellow);
+                    else if (pauseIndex == 2)
+                        spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 300), Color.Yellow);
+                    else
+                        spriteBatch.DrawString(testFont, "Exit Menu", new Vector2(0, 450), Color.Yellow);
+
                     break;
 
                 case GameState.Instructions:
