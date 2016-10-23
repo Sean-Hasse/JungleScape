@@ -75,6 +75,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             // TODO: use this.Content to load your game content here
+            
             //Load the background images
             Backgrounds = new List<Background>();
             Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(300, 300), 0.6f));
@@ -110,13 +111,13 @@ namespace PlatformerEditor
 
             //Get directional vector based on keyboard input
             Vector2 direction = Vector2.Zero;
-            if (kbState.IsKeyDown(Keys.Up))
+            if (kbState.IsKeyDown(Keys.W))
                 direction = new Vector2(0, -1);
-            else if (kbState.IsKeyDown(Keys.Down))
+            else if (kbState.IsKeyDown(Keys.S))
                 direction = new Vector2(0, 1);
-            if (kbState.IsKeyDown(Keys.Left))
+            if (kbState.IsKeyDown(Keys.A))
                 direction += new Vector2(-1, 0);
-            else if (kbState.IsKeyDown(Keys.Right))
+            else if (kbState.IsKeyDown(Keys.D))
                 direction += new Vector2(1, 0);
 
             //Update backgrounds
@@ -219,6 +220,8 @@ namespace PlatformerEditor
             //spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            foreach (Background bg in Backgrounds)
+                bg.Draw(spriteBatch);
 
             foreach (var item in tiles)
             {
