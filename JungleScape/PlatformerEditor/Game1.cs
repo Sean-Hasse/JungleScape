@@ -16,6 +16,7 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        List<Background> Backgrounds;
         int currentX;
         int lvlX;
         List<Tile> tiles;
@@ -74,6 +75,12 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             // TODO: use this.Content to load your game content here
+            //Load the background images
+            Backgrounds = new List<Background>();
+            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(300, 300), 0.6f));
+            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(500, 500), 0.8f));
+            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(700, 700), 1.1f));
+
         }
 
         /// <summary>
@@ -100,6 +107,21 @@ namespace PlatformerEditor
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            //Get directional vector based on keyboard input
+            Vector2 direction = Vector2.Zero;
+            if (kbState.IsKeyDown(Keys.Up))
+                direction = new Vector2(0, -1);
+            else if (kbState.IsKeyDown(Keys.Down))
+                direction = new Vector2(0, 1);
+            if (kbState.IsKeyDown(Keys.Left))
+                direction += new Vector2(-1, 0);
+            else if (kbState.IsKeyDown(Keys.Right))
+                direction += new Vector2(1, 0);
+
+            //Update backgrounds
+            foreach (Background bg in Backgrounds)
+                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
 
             // TODO: Add your update logic here
             /* if (Keyboard.GetState().IsKeyDown(Keys.Right))
@@ -193,10 +215,10 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+            //spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
             foreach (var item in tiles)
             {
