@@ -282,6 +282,9 @@ namespace JungleScape
                                     arrows.Remove(arrow);
                                     break;
                                 }
+
+                                // make the arrow move 
+                                arrow.Move(levelMap.objectMap);
                             }
                         }
                         else

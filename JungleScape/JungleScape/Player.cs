@@ -148,8 +148,8 @@ namespace JungleScape
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
                     arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
 
-                    // make the arrow move 
-                    arrow.Move(objects);
+                    // tell arrow what direction it is moving
+                    arrow.direction = "diagonal right";
 
                     // reset timer
                     timerArrow = 0;
@@ -158,32 +158,32 @@ namespace JungleScape
                 // aiming diagonal left
                 else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
                 {
-                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
-                    arrow.Move(objects);
+                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage);
+                    arrow.direction = "diagonal left";
                     timerArrow = 0;
                 }
 
                 // aiming up
                 else if (keyState.IsKeyDown(Keys.Up))
                 {
-                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
-                    arrow.Move(objects);
+                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 20, 10), arrowImage);
+                    arrow.direction = "up";
                     timerArrow = 0;
                 }
 
                 // aiming right
                 else if (keyState.IsKeyDown(Keys.Right))
                 {
-                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
-                    arrow.Move(objects);
+                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage);
+                    arrow.direction = "right";
                     timerArrow = 0;
                 }
 
                 // aiming left
                 else if (keyState.IsKeyDown(Keys.Left))
                 {
-                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
-                    arrow.Move(objects);
+                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage);
+                    arrow.direction = "left";
                     timerArrow = 0;
                 }
             
@@ -192,9 +192,11 @@ namespace JungleScape
             // code to stop rapid fire arrows here
             timerArrow++;
 
-            // set the sprite of the arrow
+            // deal with arrow logic, for non-null arrows
             if (arrow != null)
+            {
                 arrow.Sprite = arrowImage;
+            }
 
             // return the arrow. Will be null if error occurs
             return arrow;

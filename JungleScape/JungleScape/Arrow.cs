@@ -12,6 +12,7 @@ namespace JungleScape
     public class Arrow : Character
     {
         // attributes
+        public string direction;
 
         // properties
         public Texture2D Sprite
@@ -68,6 +69,8 @@ namespace JungleScape
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(sprite, hitBox, Color.White);
+
+            // logic for which way the arrow faces
         }
 
         // Standard Move(). Not used.
