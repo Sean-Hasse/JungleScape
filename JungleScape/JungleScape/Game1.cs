@@ -277,7 +277,7 @@ namespace JungleScape
 
                             foreach(Arrow arrow in arrows)
                             {
-                                if (arrow.alive == false)
+                                if (!arrow.alive)
                                 {
                                     arrows.Remove(arrow);
                                     break;
@@ -292,6 +292,16 @@ namespace JungleScape
 
                         aimState = Keyboard.GetState();
 
+                    }
+
+                    //check if any enemies have been killed and remove them
+                    foreach(Enemy enemy in levelMap.objectMap.OfType<Enemy>())
+                    {
+                        if (!enemy.alive)
+                        {
+                            levelMap.objectMap.Remove(enemy);
+                            break;
+                        }
                     }
                     
 
