@@ -68,9 +68,17 @@ namespace JungleScape
         // Draw method, for drawing the arrow after it is fired
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(sprite, hitBox, Color.White);
-
-            // logic for which way the arrow faces
+            // Draw the arrow rotated differently for which way the player aims
+            if (direction == "diagonal right")
+                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 7/4, Vector2.Zero, SpriteEffects.None, 0f);
+            if(direction == "diagonal left")
+                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 5/4, Vector2.Zero, SpriteEffects.None, 0f);
+            if(direction == "up")
+                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 3/2, Vector2.Zero, SpriteEffects.None, 0f);
+            if (direction == "right")
+                sb.Draw(sprite, hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
+            if(direction == "left")
+                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI, Vector2.Zero, SpriteEffects.None, 0f);
         }
 
         // Standard Move(). Not used.

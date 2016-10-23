@@ -132,21 +132,23 @@ namespace JungleScape
             // prepare to create arrow
             Arrow arrow = null;
 
+            // get what direction the player is aiming in
+            string aimDir = Aim();
+
             // increase the timer each update
             timerArrow++;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 30)
+            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 60)
             {
                 // reset the timer
                 timerArrow = 0;
 
-                // get what direction the player is aiming in
                 // aiming diagonal right
-                if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
+                if (aimDir == "diagonal right")
                 {
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
-                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
+                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 20, 10), arrowImage);
 
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
@@ -156,7 +158,7 @@ namespace JungleScape
                 }
 
                 // aiming diagonal left
-                else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+                if (aimDir == "diagonal left")
                 {
                     arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage);
                     arrow.direction = "diagonal left";
@@ -164,7 +166,7 @@ namespace JungleScape
                 }
 
                 // aiming up
-                else if (keyState.IsKeyDown(Keys.Up))
+                if (aimDir == "up")
                 {
                     arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 20, 10), arrowImage);
                     arrow.direction = "up";
@@ -172,15 +174,15 @@ namespace JungleScape
                 }
 
                 // aiming right
-                else if (keyState.IsKeyDown(Keys.Right))
+                if (aimDir == "right")
                 {
-                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage);
+                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 10, 20, 10), arrowImage);
                     arrow.direction = "right";
                     timerArrow = 0;
                 }
 
                 // aiming left
-                else if (keyState.IsKeyDown(Keys.Left))
+                if (aimDir == "left")
                 {
                     arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage);
                     arrow.direction = "left";
@@ -200,6 +202,23 @@ namespace JungleScape
 
             // return the arrow. Will be null if error occurs
             return arrow;
+        }
+
+        // Aim method, for checking what direction the player is aiming.
+        private string Aim()
+        {
+            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
+                return "diagonal right";
+            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+                return "diagonal left";
+            if (keyState.IsKeyDown(Keys.Right))
+                return "right";
+            if (keyState.IsKeyDown(Keys.Left))
+                return "left";
+            else if (keyState.IsKeyDown(Keys.Up))
+                return "up";
+            else
+                return null;
         }
 
         // specialized detect collision for each side of the player.
