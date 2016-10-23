@@ -42,6 +42,8 @@ namespace JungleScape
         KeyboardState aimState;
         SpriteFont testFont;
         SpriteFont testFont2;
+        public Texture2D arrowImage;
+        List<Arrow> arrows;
         MapEditor editor;
         Texture2D background;
         public static int desiredBBWidth = 1920;
@@ -87,6 +89,9 @@ namespace JungleScape
             myState = GameState.Menu;
             menuIndex = 0;
 
+            // create a list of arrows to be drawn
+            arrows = new List<Arrow>();
+
             base.Initialize();
         }
 
@@ -112,6 +117,9 @@ namespace JungleScape
             textures.Add(ObjectType.Player, basePlayer);
             textures.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             textures.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
+
+            // load the sprite for the arrow
+            arrowImage = Content.Load<Texture2D>("Arrow");
 
             //fonts
             testFont = Content.Load<SpriteFont>("testFont");
@@ -217,7 +225,23 @@ namespace JungleScape
                         {
                             Player player1 = (Player)chara;
                             player1.Move(levelMap.objectMap);
-                            player1.FireArrow(textures[ObjectType.Player], levelMap.objectMap);
+
+                            // populate the list of arrows with valid arrows to be drawn later
+                            Arrow firedArrow = player1.FireArrow(arrowImage, levelMap.objectMap);
+
+                            if (firedArrow != null)
+                            {
+                                arrows.Add(firedArrow);
+                            }
+
+                            foreach(Arrow arrow in arrows)
+                            {
+                                if (arrow.alive == false)
+                                {
+                                    arrows.Remove(arrow);
+                                    break;
+                                }
+                            }
                         }
                         else
                             chara.Move();
@@ -386,6 +410,11 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
                     spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
                     
+                    // draw the arrows inside of the list of arrows (the ones still valid)
+                    foreach(Arrow arrow in arrows)
+                    {
+                        arrow.Draw(spriteBatch);
+                    }
                     break;
 
                 case GameState.Pause:

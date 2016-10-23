@@ -11,7 +11,7 @@ namespace JungleScape
     public abstract class Character : GameObject
     {
         // attributes
-        protected bool alive;         // bool to determine if the character is still alive
+        public bool alive;         // bool to determine if the character is still alive
         protected int speedX;
         protected int speedY;
         

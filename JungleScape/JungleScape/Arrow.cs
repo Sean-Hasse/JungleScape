@@ -9,9 +9,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
-    class Arrow : Character
+    public class Arrow : Character
     {
         // attributes
+
+        // properties
+        public Texture2D Sprite
+        {
+            get { return sprite; }
+            set { sprite = value; }
+        }
 
         // constructor
         public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture) : base(hBox, texture)
@@ -30,6 +37,7 @@ namespace JungleScape
             // move the arrow according to the speed.
             hitBox.X += speedX;
             hitBox.Y += speedY;
+            
 
             // check for collisions with the game objects, and execute logic based on what type of object is hit.
             foreach (GameObject gObject in gObj)
@@ -54,6 +62,12 @@ namespace JungleScape
                     }
                 }
             }
+        }
+
+        // Draw method, for drawing the arrow after it is fired
+        public void Draw(SpriteBatch sb)
+        {
+            sb.Draw(sprite, hitBox, Color.White);
         }
 
         // Standard Move(). Not used.

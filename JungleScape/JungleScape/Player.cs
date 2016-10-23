@@ -126,8 +126,11 @@ namespace JungleScape
         }
 
         // FireArrow method will create an arrow with speed based on the direction passed in by Aim. Requires the image for the arrow be passed in.
-        public void FireArrow(Texture2D arrowImage, List<GameObject> objects)
+        public Arrow FireArrow(Texture2D arrowImage, List<GameObject> objects)
         {
+
+            // prepare to create arrow
+            Arrow arrow = null;
 
             // increase the timer each update
             timerArrow++;
@@ -143,7 +146,7 @@ namespace JungleScape
                 if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
                 {
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
-                    Arrow arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
+                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 10, 5), arrowImage);
 
                     // make the arrow move 
                     arrow.Move(objects);
@@ -155,7 +158,7 @@ namespace JungleScape
                 // aiming diagonal left
                 else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
                 {
-                    Arrow arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
+                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
@@ -163,7 +166,7 @@ namespace JungleScape
                 // aiming up
                 else if (keyState.IsKeyDown(Keys.Up))
                 {
-                    Arrow arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
+                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
@@ -171,7 +174,7 @@ namespace JungleScape
                 // aiming right
                 else if (keyState.IsKeyDown(Keys.Right))
                 {
-                    Arrow arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
+                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
@@ -179,14 +182,22 @@ namespace JungleScape
                 // aiming left
                 else if (keyState.IsKeyDown(Keys.Left))
                 {
-                    Arrow arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
+                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 10, 5), arrowImage);
                     arrow.Move(objects);
                     timerArrow = 0;
                 }
+            
             }
 
             // code to stop rapid fire arrows here
             timerArrow++;
+
+            // set the sprite of the arrow
+            if (arrow != null)
+                arrow.Sprite = arrowImage;
+
+            // return the arrow. Will be null if error occurs
+            return arrow;
         }
 
         // specialized detect collision for each side of the player.
