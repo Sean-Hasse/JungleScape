@@ -209,16 +209,18 @@ namespace JungleScape
         {
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
                 return "diagonal right";
-            if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
+            else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
                 return "diagonal left";
-            if (keyState.IsKeyDown(Keys.Right))
+            else if (keyState.IsKeyDown(Keys.Right))
                 return "right";
-            if (keyState.IsKeyDown(Keys.Left))
+            else if (keyState.IsKeyDown(Keys.A) && !keyState.IsKeyDown(Keys.Right))
+                return "left";
+            else if (keyState.IsKeyDown(Keys.Left))
                 return "left";
             else if (keyState.IsKeyDown(Keys.Up))
                 return "up";
             else
-                return null;
+                return "right";
         }
 
         // specialized detect collision for each side of the player.
