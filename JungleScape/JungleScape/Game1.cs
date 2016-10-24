@@ -1,4 +1,4 @@
-﻿using LevelEditor;
+﻿//using LevelEditor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -45,7 +45,7 @@ namespace JungleScape
         SpriteFont testFont2;
         public Texture2D arrowImage;
         List<Arrow> arrows;
-        MapEditor editor;
+        //MapEditor editor;
         Texture2D background;
         public static int desiredBBWidth = 1920;
         public static int desiredBBHeight = 1080;
@@ -84,7 +84,7 @@ namespace JungleScape
         {
             // TODO: Add your initialization logic here
             levelMap = new Map();
-            editor = new MapEditor();
+            //editor = new MapEditor();
             playerTextures = new List<Texture2D>();
             textures = new Dictionary<ObjectType, Texture2D>();
             myState = GameState.Menu;
@@ -240,7 +240,7 @@ namespace JungleScape
                         graphics.ApplyChanges();
                         myState = GameState.Menu;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && optionsIndex == 2)
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 2)
                     {
                         //change to 1600 x 900
                         desiredBBWidth = 1600;
@@ -252,7 +252,7 @@ namespace JungleScape
                     }
 
                     //go back to the main menu
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && optionsIndex == 3)
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 3)
                         myState = GameState.Menu;
                     break;
 
