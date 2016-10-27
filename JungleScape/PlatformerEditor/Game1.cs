@@ -113,23 +113,20 @@ namespace PlatformerEditor
                 Exit();
 
             //Get directiona vector based on keyboard input
-            //Vector2 direction = Vector2.Zero;
             if(kbState.IsKeyDown(Keys.W))
                 yPos = yPos - 10;
-            //direction = new Vector2(0, -1);
+      
             else if (kbState.IsKeyDown(Keys.S))
                 yPos = yPos + 10;
-            //direction = new Vector2(0, 1);
+       
             if (kbState.IsKeyDown(Keys.A))
                 xPos = xPos - 10;
-            //direction += new Vector2(-1, 0);
+
             else if (kbState.IsKeyDown(Keys.D))
                 xPos = xPos + 10;
-            //direction += new Vector2(1, 0);
-
-
+ 
             // TODO: Add your update logic here
-            /* if (Keyboard.GetState().IsKeyDown(Keys.Right))
+             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 currentX += 2;
                 lvlX += 2;
@@ -141,7 +138,8 @@ namespace PlatformerEditor
             }
             if (currentX < 0)
                 currentX = 0;
-            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
+
+            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;
 
             //scrolling background
             // The time since Update was called last.
@@ -205,11 +203,11 @@ namespace PlatformerEditor
                 }
 
                 if (currentType == ObjectType.Player)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X - currentX, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
 
                 else if (currentType == ObjectType.Enemy)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
-
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X - currentX, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+                 
                 else if (currentType != ObjectType.Delete)
                     tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
                 
