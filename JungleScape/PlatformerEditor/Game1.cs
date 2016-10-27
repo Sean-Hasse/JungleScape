@@ -77,6 +77,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             // TODO: use this.Content to load your game content here
+            loadCurrentMap();
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace PlatformerEditor
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            /*//define keyboard and mouse states
+            //define keyboard and mouse states
             previousKbState = kbState;
             kbState = Keyboard.GetState();
             previousMState = mState;
@@ -103,7 +104,8 @@ namespace PlatformerEditor
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
+            /*
             //Get directional vector based on keyboard input
             Vector2 direction = Vector2.Zero;
             if (kbState.IsKeyDown(Keys.W))
