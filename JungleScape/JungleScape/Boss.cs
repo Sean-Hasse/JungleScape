@@ -10,7 +10,7 @@ namespace JungleScape
 {
     public class Boss : Character
     {
-        public Boss(Rectangle hBox, Texture2D texture) : base(hBox, texture)
+        public Boss(Rectangle hBox, Texture2D texture, int hp) : base(hBox, texture, hp)
         {
             speedX = 4;
         }

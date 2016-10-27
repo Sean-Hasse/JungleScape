@@ -13,6 +13,7 @@ namespace JungleScape
     {
         // attributes
         public string direction;
+        double timerDmg;
 
         // properties
         public Texture2D Sprite
@@ -22,13 +23,14 @@ namespace JungleScape
         }
 
         // constructor
-        public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture) : base(hBox, texture)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture, int hp, double timer) : base(hBox, texture, hp)
         {
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
             speedX = spdX;
             speedY = spdY;
+            timerDmg = timer;
         }
 
         // methods
@@ -38,7 +40,6 @@ namespace JungleScape
             // move the arrow according to the speed.
             hitBox.X += speedX;
             hitBox.Y += speedY;
-            
 
             // check for collisions with the game objects, and execute logic based on what type of object is hit.
             foreach (GameObject gObject in gObj)

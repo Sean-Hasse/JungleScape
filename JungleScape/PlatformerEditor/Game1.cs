@@ -16,7 +16,6 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
-        private Background myBackground;
         int currentX;
         int lvlX;
         List<Tile> tiles;
@@ -27,8 +26,8 @@ namespace PlatformerEditor
         const int GRID_SIZE = 50;
         Dictionary<ObjectType, Texture2D> tileDict;
         ObjectType currentType;
-        public int desiredBBWidth = 1920;
-        public int desiredBBHeight = 1080;
+        private int desiredBBWidth = 1920;
+        private int desiredBBHeight = 1080;
 
         public Game1()
         {
@@ -54,6 +53,9 @@ namespace PlatformerEditor
             currentX = 0;
             lvlX = 0;
             tiles = new List<Tile>();
+
+            
+
             tileDict = new Dictionary<ObjectType, Texture2D>();
             currentType = ObjectType.Delete;
             base.Initialize();
@@ -67,11 +69,8 @@ namespace PlatformerEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            //scrolling background
-            myBackground = new Background();
+
             background = Content.Load<Texture2D>("BasicBackground");
-            myBackground.Load(GraphicsDevice, background);
 
             tileDict.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
             tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
@@ -131,13 +130,6 @@ namespace PlatformerEditor
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
 
-
-            //scrolling background
-
-            //the time since the update was called lat
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            myBackground.Update(elapsed * 100);
-            
             //change currently selected object type with up/down arrow keys
             //list order loops in order of coded case sequence
             switch (currentType)
@@ -175,7 +167,6 @@ namespace PlatformerEditor
                 default:
                     currentType = ObjectType.Delete;
                     break;
-
             }
 
             //on single mouse click, add a new tile object to the selected location
@@ -192,8 +183,16 @@ namespace PlatformerEditor
                         break;
                     }
                 }
-                if(currentType != ObjectType.Delete)
+
+                if (currentType == ObjectType.Player)
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
+
+                else if (currentType == ObjectType.Enemy)
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+
+                else if (currentType != ObjectType.Delete)
                     tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                
             }
 
             //saves current list of Tiles into JungleScape's Content folder
@@ -216,20 +215,20 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            //scrollling background 
             spriteBatch.Begin();
-            myBackground.Draw(spriteBatch);
-
-            //spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-
+            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             foreach (var item in tiles)
-            {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
-            }
 
-            if(currentType != ObjectType.Delete)
+            if(currentType == ObjectType.Player)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), Color.White);
+
+            else if(currentType == ObjectType.Enemy)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
+
+            else if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
@@ -278,6 +277,16 @@ namespace PlatformerEditor
                 y -= GRID_SIZE;
 
             return new Point(x, y);
+        }
+
+        private void loadCurrentMap()
+        {
+            StreamReader jinput = new StreamReader("../../../../../JungleScape/Content/level.json");
+            tiles = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
+            jinput.Close();
+
+            foreach(Tile tile in tiles)
+                tile.texture = tileDict[tile.type];
         }
     }
 }
