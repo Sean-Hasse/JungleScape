@@ -54,6 +54,9 @@ namespace PlatformerEditor
             currentX = 0;
             lvlX = 0;
             tiles = new List<Tile>();
+
+            
+
             tileDict = new Dictionary<ObjectType, Texture2D>();
             currentType = ObjectType.Delete;
             base.Initialize();
@@ -82,6 +85,7 @@ namespace PlatformerEditor
             Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(500, 500), 0.8f));
             Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(700, 700), 1.1f));
 
+            loadCurrentMap();
         }
 
         /// <summary>
@@ -192,8 +196,16 @@ namespace PlatformerEditor
                         break;
                     }
                 }
-                if(currentType != ObjectType.Delete)
+
+                if (currentType == ObjectType.Player)
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
+
+                else if (currentType == ObjectType.Enemy)
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+
+                else if (currentType != ObjectType.Delete)
                     tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                
             }
 
             //saves current list of Tiles into JungleScape's Content folder
@@ -224,10 +236,15 @@ namespace PlatformerEditor
                 bg.Draw(spriteBatch);
 
             foreach (var item in tiles)
-            {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
-            }
-            if(currentType != ObjectType.Delete)
+
+            if(currentType == ObjectType.Player)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), Color.White);
+
+            else if(currentType == ObjectType.Enemy)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
+
+            else if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
@@ -276,6 +293,16 @@ namespace PlatformerEditor
                 y -= GRID_SIZE;
 
             return new Point(x, y);
+        }
+
+        private void loadCurrentMap()
+        {
+            StreamReader jinput = new StreamReader("../../../../../JungleScape/Content/level.json");
+            tiles = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
+            jinput.Close();
+
+            foreach(Tile tile in tiles)
+                tile.texture = tileDict[tile.type];
         }
     }
 }
