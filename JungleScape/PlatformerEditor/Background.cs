@@ -33,7 +33,7 @@ namespace PlatformerEditor
 
         }
 
-        public void Update( float deltaX)
+        public void Update(float deltaX)
         {
             //The X value is kept no larger than the texture width
             screenPos.X += deltaX;
