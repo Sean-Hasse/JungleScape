@@ -139,11 +139,8 @@ namespace JungleScape
             timerArrow++;
 
             // check to see if the player has pressed spacebar to fire
-            if (keyState.IsKeyDown(Keys.Space) && timerArrow >= 60)
+            if (timerArrow >= 60)
             {
-                // reset the timer
-                timerArrow = 0;
-
                 // aiming diagonal right
                 if (aimDir == "diagonal right")
                 {
@@ -213,14 +210,12 @@ namespace JungleScape
                 return "diagonal left";
             else if (keyState.IsKeyDown(Keys.Right))
                 return "right";
-            else if (keyState.IsKeyDown(Keys.A) && !keyState.IsKeyDown(Keys.Right))
-                return "left";
             else if (keyState.IsKeyDown(Keys.Left))
                 return "left";
             else if (keyState.IsKeyDown(Keys.Up))
                 return "up";
             else
-                return "right";
+                return null;
         }
 
         // specialized detect collision for each side of the player.
