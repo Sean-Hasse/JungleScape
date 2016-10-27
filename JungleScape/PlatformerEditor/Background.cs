@@ -9,7 +9,7 @@ namespace PlatformerEditor
 {
     class Background
     {
-        //attributes
+        /*//attributes
         private Vector2 screenPos, origin, textureSize;
         private Texture2D mytexture;
         private int screenHeight;
@@ -37,8 +37,6 @@ namespace PlatformerEditor
         {
             //The X value is kept no larger than the texture width
             screenPos.X += deltaX;
-            screenPos.X = screenPos.X % mytexture.Width;
-
         }
 
         public void Draw( SpriteBatch batch)
@@ -56,6 +54,21 @@ namespace PlatformerEditor
             //subtracts the texture width from the screen position using the texturesize vector to create the illusion of a loop
             batch.Draw(mytexture, screenPos - textureSize, null,
                  Color.White, 0, origin, 1, SpriteEffects.None, 0f);
+        }
+        */
+
+        public Vector2 position { get; set; }
+
+        public Background()
+        {
+            position = new Vector2(Game1.desiredBBWidth/2 , Game1.desiredBBHeight / 2 );
+        }
+
+        public Matrix translation(int xPos , int yPos)
+        {
+            position = new Vector2(xPos - Game1.desiredBBWidth / 2, yPos - Game1.desiredBBHeight / 2);
+
+            return Matrix.CreateTranslation(new Vector3(-position, 0));
         }
     }
 }

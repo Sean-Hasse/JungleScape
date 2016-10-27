@@ -16,6 +16,7 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        private Background myBackground;
         int currentX;
         int lvlX;
         List<Tile> tiles;
@@ -26,8 +27,11 @@ namespace PlatformerEditor
         const int GRID_SIZE = 50;
         Dictionary<ObjectType, Texture2D> tileDict;
         ObjectType currentType;
-        private int desiredBBWidth = 1920;
-        private int desiredBBHeight = 1080;
+        public static int desiredBBWidth = 1920;
+        public static int desiredBBHeight = 1080;
+
+        public int xPos = 0;
+        public int yPos = 0;
 
         public Game1()
         {
@@ -70,7 +74,10 @@ namespace PlatformerEditor
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //scrolling background
+            myBackground = new Background();
             background = Content.Load<Texture2D>("BasicBackground");
+            //myBackground.Load(GraphicsDevice, background);
 
             tileDict.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
             tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
@@ -104,19 +111,23 @@ namespace PlatformerEditor
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
-            /*
-            //Get directional vector based on keyboard input
-            Vector2 direction = Vector2.Zero;
-            if (kbState.IsKeyDown(Keys.W))
-                direction = new Vector2(0, -1);
+
+            //Get directiona vector based on keyboard input
+            //Vector2 direction = Vector2.Zero;
+            if(kbState.IsKeyDown(Keys.W))
+                yPos = yPos - 10;
+            //direction = new Vector2(0, -1);
             else if (kbState.IsKeyDown(Keys.S))
-                direction = new Vector2(0, 1);
+                yPos = yPos + 10;
+            //direction = new Vector2(0, 1);
             if (kbState.IsKeyDown(Keys.A))
-                direction += new Vector2(-1, 0);
+                xPos = xPos - 10;
+            //direction += new Vector2(-1, 0);
             else if (kbState.IsKeyDown(Keys.D))
-                direction += new Vector2(1, 0);
-            */
+                xPos = xPos + 10;
+            //direction += new Vector2(1, 0);
+
+
             // TODO: Add your update logic here
             /* if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
@@ -131,6 +142,13 @@ namespace PlatformerEditor
             if (currentX < 0)
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
+
+            //scrolling background
+            // The time since Update was called last.
+            //float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // TODO: Add your game logic here.
+            //myBackground.Update(elapsed * 100);
 
             //change currently selected object type with up/down arrow keys
             //list order loops in order of coded case sequence
@@ -217,10 +235,14 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, myBackground.translation(xPos,yPos));
+
+            //myBackground.Draw(spriteBatch);
             spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+
             foreach (var item in tiles)
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
 
