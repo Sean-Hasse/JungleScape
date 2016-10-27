@@ -137,7 +137,7 @@ namespace JungleScape
 
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
-            playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null);
+            playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace JungleScape
 
             if(myState != GameState.Game)
             {
-                playerCamRef = new Player(new Rectangle(desiredBBWidth/2, desiredBBHeight/2, 0, 0), null);
+                playerCamRef = new Player(new Rectangle(desiredBBWidth/2, desiredBBHeight/2, 0, 0), null, 0);
             }
 
             switch (myState)

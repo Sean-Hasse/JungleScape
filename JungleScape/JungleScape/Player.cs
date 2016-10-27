@@ -15,6 +15,7 @@ namespace JungleScape
         const int MAX_FALL_SPEED = -11;
         double timerArrow = 0;
         double timerJump = 0;
+        double timerDmg = 0;
         Rectangle leftSide;
         Rectangle rightSide;
         Rectangle topSide;
@@ -23,7 +24,7 @@ namespace JungleScape
         enum AimDirection { Forward, Diagonal, Up };
 
         // constructor
-        public Player(Rectangle hBox, Texture2D texture) : base(hBox, texture)
+        public Player(Rectangle hBox, Texture2D texture, int hp) : base(hBox, texture, hp)
         {
             keyState = new KeyboardState();
             speedX = 6;
@@ -50,8 +51,10 @@ namespace JungleScape
                     enemies.Add(gObj);
             }
 
+            // get the Keystate of the player, and start the timers for this method
             keyState = Keyboard.GetState();
             timerJump++;
+            timerDmg++;
 
             // use IsKeyDown to determine if a partuclar key is being pressed. Use 4 if statesments for wasd
             // if the top of the player isn't intersecting any platforms, and the bottom of the player is intersecting the platform, run jump logic
@@ -115,12 +118,15 @@ namespace JungleScape
                 speedY = MAX_FALL_SPEED;
             }
 
-            // Check for enemy Collision. If true, take damage.
+            // Check for enemy Collision. If true, and I-frames from damage timer are done, take damage.
             foreach(GameObject enemy in enemies)
             {
-                if(DetectCollision(enemy))
+                if(DetectCollision(enemy) && timerDmg >= 60)
                 {
                     TakeDamage(this);
+
+                    // reset the damage timer
+                    timerDmg = 0;
                 }
             }
         }
@@ -145,7 +151,7 @@ namespace JungleScape
                 if (aimDir == "diagonal right")
                 {
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
-                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 20, 10), arrowImage);
+                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 20, 10), arrowImage, 1, timerDmg);
 
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
@@ -157,7 +163,7 @@ namespace JungleScape
                 // aiming diagonal left
                 if (aimDir == "diagonal left")
                 {
-                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage);
+                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage, 1, timerDmg);
                     arrow.direction = "diagonal left";
                     timerArrow = 0;
                 }
@@ -165,7 +171,7 @@ namespace JungleScape
                 // aiming up
                 if (aimDir == "up")
                 {
-                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 20, 10), arrowImage);
+                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 20, 10), arrowImage, 1, timerDmg);
                     arrow.direction = "up";
                     timerArrow = 0;
                 }
@@ -173,7 +179,7 @@ namespace JungleScape
                 // aiming right
                 if (aimDir == "right")
                 {
-                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 10, 20, 10), arrowImage);
+                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 10, 20, 10), arrowImage, 1, timerDmg);
                     arrow.direction = "right";
                     timerArrow = 0;
                 }
@@ -181,7 +187,7 @@ namespace JungleScape
                 // aiming left
                 if (aimDir == "left")
                 {
-                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage);
+                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage, 1, timerDmg);
                     arrow.direction = "left";
                     timerArrow = 0;
                 }

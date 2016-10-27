@@ -13,7 +13,7 @@ namespace JungleScape
         List<GameObject> environmentObjs;
 
         // constructor
-        public Enemy(Rectangle hBox, List<GameObject> env, Texture2D texture) : base(hBox, texture)
+        public Enemy(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp) : base(hBox, texture, hp)
         {
             environmentObjs = env;
             speedX = -2;

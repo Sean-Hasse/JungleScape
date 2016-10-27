@@ -46,10 +46,10 @@ namespace JungleScape
                         objectMap.Add(new Environment(tile.bounds, textures[ObjectType.PlainBrick]));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(new Player(tile.bounds, textures[ObjectType.Player]));
+                        objectMap.Add(new Player(tile.bounds, textures[ObjectType.Player], 3));
                         break;
                     case ObjectType.Enemy:
-                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy]));
+                        objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy], 2));
                         break;
                 }
             }
@@ -85,7 +85,7 @@ namespace JungleScape
 
         public Player findPlayer()
         {
-            Player pref = new Player(new Rectangle(), null);
+            Player pref = new Player(new Rectangle(), null, 0);
             return (Player)objectMap.Find(p => p.GetType() == pref.GetType());
         }
     }
