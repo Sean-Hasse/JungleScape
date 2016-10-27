@@ -268,7 +268,7 @@ namespace JungleScape
                     {
                         if (side.Intersects(platform.hitBox))
                             // set the Y value of the player hitbox equal to the bottom of the platform
-                            hitBox.Y = platform.hitBox.Y + hitBox.Height;
+                            hitBox.Y = platform.hitBox.Y + platform.hitBox.Height;
                     }
                 }
                 

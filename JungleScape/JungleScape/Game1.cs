@@ -306,14 +306,38 @@ namespace JungleScape
                             break;
                         }
                     }
-                    
 
-                    if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
-                        myState = GameState.Pause;
-                    else if (SingleKeyPress(Keys.G, kbState, previousKbState))
-                        myState = GameState.GameOver;
-                    else if (SingleKeyPress(Keys.V, kbState, previousKbState))
+                    List<Enemy> enemies = new List<Enemy>();
+                    // Change the gamestates based on the state of the map
+                    foreach (GameObject chara in levelMap.objectMap)
+                    {
+                        Player player1;
+                        
+
+                        // populate the list of enemies with the current list of enemies in object map
+                        if (chara is Enemy)
+                            enemies.Add((Enemy)chara);
+
+                        if (chara is Player)
+                        {
+                            player1 = (Player)chara;
+
+                            if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
+                                myState = GameState.Pause;
+                            else if (player1.alive == false)
+                                myState = GameState.GameOver;
+                        }
+                    }
+
+                    // check if the new list of enemies is empty
+                    if (enemies.Count == 0)
+                    {
                         myState = GameState.Victory;
+                    }
+
+                    // reset the enemy list to repopulate on the next update
+                    enemies.Clear();
+
                     break;
 
                 case GameState.Editor:
