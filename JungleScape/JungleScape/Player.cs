@@ -16,7 +16,6 @@ namespace JungleScape
         double timerArrow = 0;
         double timerJump = 0;
         double timerDmg = 0;
-        double timerArrowDmg = 0;
         Rectangle leftSide;
         Rectangle rightSide;
         Rectangle topSide;
@@ -144,7 +143,6 @@ namespace JungleScape
 
             // increase the timer each update
             timerArrow++;
-            timerArrowDmg++;
 
             // check to see if the player has pressed spacebar to fire
             if (timerArrow >= 60)
@@ -158,45 +156,41 @@ namespace JungleScape
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
 
-                    // reset timers
+                    // reset timer
                     timerArrow = 0;
-                    timerArrowDmg = 0;
+
                 }
 
                 // aiming diagonal left
                 if (aimDir == "diagonal left")
                 {
-                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage, 1);
+                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 40, 10), arrowImage, 1);
                     arrow.direction = "diagonal left";
                     timerArrow = 0;
-                    timerArrowDmg = 0;
                 }
 
                 // aiming up
                 if (aimDir == "up")
                 {
-                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 20, 10), arrowImage, 1);
+                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 40, 10), arrowImage, 1);
                     arrow.direction = "up";
                     timerArrow = 0;
-                    timerArrowDmg = 0;
                 }
 
                 // aiming right
                 if (aimDir == "right")
                 {
-                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 10, 20, 10), arrowImage, 1);
+                    arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 15, 40, 10), arrowImage, 1);
                     arrow.direction = "right";
                     timerArrow = 0;
-                    timerArrowDmg = 0;
                 }
 
                 // aiming left
                 if (aimDir == "left")
                 {
-                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2, 20, 10), arrowImage, 1);
+                    arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2 - 10, 40, 10), arrowImage, 1);
                     arrow.direction = "left";
                     timerArrow = 0;
-                    timerArrowDmg = 0;
                 }
             
             }
