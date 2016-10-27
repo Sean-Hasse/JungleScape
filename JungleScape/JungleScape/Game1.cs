@@ -19,6 +19,7 @@ namespace JungleScape
         Game,
         Pause,
         Editor,
+        Victory,
         GameOver
     };
     /// <summary>
@@ -38,6 +39,7 @@ namespace JungleScape
         int pauseIndex;
         int gameOverIndex;
         int optionsIndex;
+        int victoryIndex;
         KeyboardState previousKbState;
         KeyboardState kbState;
         KeyboardState aimState;
@@ -51,6 +53,7 @@ namespace JungleScape
         public static int desiredBBHeight = 1080;
 
         public Player playerCamRef;
+        
 
         //Texture2D background;
 
@@ -134,7 +137,7 @@ namespace JungleScape
 
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
-            playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null);
+            playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
         }
 
         /// <summary>
@@ -161,7 +164,7 @@ namespace JungleScape
 
             if(myState != GameState.Game)
             {
-                playerCamRef = new Player(new Rectangle(desiredBBWidth/2, desiredBBHeight/2, 0, 0), null);
+                playerCamRef = new Player(new Rectangle(desiredBBWidth/2, desiredBBHeight/2, 0, 0), null, 0);
             }
 
             switch (myState)
@@ -309,6 +312,8 @@ namespace JungleScape
                         myState = GameState.Pause;
                     else if (SingleKeyPress(Keys.G, kbState, previousKbState))
                         myState = GameState.GameOver;
+                    else if (SingleKeyPress(Keys.V, kbState, previousKbState))
+                        myState = GameState.Victory;
                     break;
 
                 case GameState.Editor:
@@ -367,6 +372,25 @@ namespace JungleScape
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
                         myState = GameState.Menu;
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 2)
+                        Exit();
+
+                    break;
+
+                case GameState.Victory:
+                    if (SingleKeyPress(Keys.Down, kbState, previousKbState))
+                        victoryIndex += 1;
+                    else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
+                        victoryIndex -= 1;
+
+                    if (victoryIndex >= 2)
+                        victoryIndex = 0;
+                    else if (victoryIndex < 0)
+                        victoryIndex = 1;
+
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && victoryIndex == 0)
+                        Initialize();
+
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && victoryIndex == 1)
                         Exit();
 
                     break;
@@ -515,6 +539,20 @@ namespace JungleScape
                         spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 250), Color.Yellow);
                     else if (gameOverIndex == 2)
                         spriteBatch.DrawString(testFont, "Quit Game", new Vector2(285, 350), Color.Yellow);
+
+                    break;
+
+                case GameState.Victory:
+
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
+                    spriteBatch.DrawString(testFont2, "Victory!", new Vector2(280, 10), Color.White);
+                    spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(285, 250), Color.White);
+
+                    if (victoryIndex == 0)
+                        spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 150), Color.Yellow);
+                    else if (victoryIndex == 1)
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(285, 250), Color.Yellow);
 
                     break;
 

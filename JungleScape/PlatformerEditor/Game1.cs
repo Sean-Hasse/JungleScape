@@ -16,7 +16,6 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
-        List<Background> Backgrounds;
         int currentX;
         int lvlX;
         List<Tile> tiles;
@@ -78,14 +77,6 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             // TODO: use this.Content to load your game content here
-            
-            //Load the background images
-            Backgrounds = new List<Background>();
-            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(300, 300), 0.6f));
-            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(500, 500), 0.8f));
-            Backgrounds.Add(new Background(Content.Load<Texture2D>(@"BasicBackground"), new Vector2(700, 700), 1.1f));
-
-            loadCurrentMap();
         }
 
         /// <summary>
@@ -104,7 +95,7 @@ namespace PlatformerEditor
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //define keyboard and mouse states
+            /*//define keyboard and mouse states
             previousKbState = kbState;
             kbState = Keyboard.GetState();
             previousMState = mState;
@@ -123,11 +114,7 @@ namespace PlatformerEditor
                 direction += new Vector2(-1, 0);
             else if (kbState.IsKeyDown(Keys.D))
                 direction += new Vector2(1, 0);
-
-            //Update backgrounds
-            foreach (Background bg in Backgrounds)
-                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
-
+            */
             // TODO: Add your update logic here
             /* if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
@@ -228,13 +215,10 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
-            //spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            foreach (Background bg in Backgrounds)
-                bg.Draw(spriteBatch);
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             foreach (var item in tiles)
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
 
