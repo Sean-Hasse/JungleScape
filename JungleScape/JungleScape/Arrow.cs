@@ -13,7 +13,6 @@ namespace JungleScape
     {
         // attributes
         public string direction;
-        double timerDmg;
 
         // properties
         public Texture2D Sprite
@@ -23,14 +22,13 @@ namespace JungleScape
         }
 
         // constructor
-        public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture, int hp, double timer) : base(hBox, texture, hp)
+        public Arrow(int spdX, int spdY, Rectangle hBox, Texture2D texture, int hp) : base(hBox, texture, hp)
         {
 
             KeyboardState keyState = new KeyboardState();
             keyState = Keyboard.GetState();
             speedX = spdX;
             speedY = spdY;
-            timerDmg = timer;
         }
 
         // methods
@@ -46,7 +44,7 @@ namespace JungleScape
             {
                 if (DetectCollision(gObject))
                 {
-                    if (gObject is Enemy)
+                    if (gObject is Enemy && this.alive)
                     {
                         speedX = 0;
                         speedY = 0;

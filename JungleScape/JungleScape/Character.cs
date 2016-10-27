@@ -32,8 +32,8 @@ namespace JungleScape
         // takeDamage, when called, sets alive to false for passed in character
         public void TakeDamage(Character char1)
         {
-            healthPoints--;
-            if(healthPoints <= 0)
+            char1.healthPoints--;
+            if(char1.healthPoints <= 0)
                 char1.alive = false;
         }
     }
