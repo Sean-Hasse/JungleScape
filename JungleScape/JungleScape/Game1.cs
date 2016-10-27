@@ -307,9 +307,13 @@ namespace JungleScape
                         }
                     }
 
+                    // let the player pause
+                    if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
+                        myState = GameState.Pause;
+
                     List<Enemy> enemies = new List<Enemy>();
                     // Change the gamestates based on the state of the map
-                    foreach (GameObject chara in levelMap.objectMap)
+                    foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
                         Player player1;
                         
@@ -322,9 +326,7 @@ namespace JungleScape
                         {
                             player1 = (Player)chara;
 
-                            if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
-                                myState = GameState.Pause;
-                            else if (player1.alive == false)
+                            if (player1.alive == false)
                                 myState = GameState.GameOver;
                         }
                     }
