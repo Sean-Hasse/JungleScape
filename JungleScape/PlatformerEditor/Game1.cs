@@ -16,6 +16,7 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        private Background myBackground;
         int currentX;
         int lvlX;
         List<Tile> tiles;
@@ -26,8 +27,8 @@ namespace PlatformerEditor
         const int GRID_SIZE = 50;
         Dictionary<ObjectType, Texture2D> tileDict;
         ObjectType currentType;
-        private int desiredBBWidth = 1920;
-        private int desiredBBHeight = 1080;
+        public int desiredBBWidth = 1920;
+        public int desiredBBHeight = 1080;
 
         public Game1()
         {
@@ -66,8 +67,11 @@ namespace PlatformerEditor
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
+            //scrolling background
+            myBackground = new Background();
             background = Content.Load<Texture2D>("BasicBackground");
+            myBackground.Load(GraphicsDevice, background);
 
             tileDict.Add(ObjectType.TopBrick, Content.Load<Texture2D>("PlatformerBrick"));
             tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
@@ -127,6 +131,13 @@ namespace PlatformerEditor
                 currentX = 0;
             currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;*/
 
+
+            //scrolling background
+
+            //the time since the update was called lat
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            myBackground.Update(elapsed * 100);
+            
             //change currently selected object type with up/down arrow keys
             //list order loops in order of coded case sequence
             switch (currentType)
@@ -164,6 +175,7 @@ namespace PlatformerEditor
                 default:
                     currentType = ObjectType.Delete;
                     break;
+
             }
 
             //on single mouse click, add a new tile object to the selected location
@@ -204,14 +216,19 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            //scrollling background 
             spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            myBackground.Draw(spriteBatch);
+
+            //spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+
             foreach (var item in tiles)
             {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
             }
+
             if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
