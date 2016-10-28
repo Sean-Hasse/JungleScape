@@ -10,7 +10,9 @@ namespace JungleScape
 {
     public class Enemy : Character
     {
+        // attributes
         List<GameObject> environmentObjs;
+        public int maxHP;
 
         // constructor
         public Enemy(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp) : base(hBox, texture, hp)
@@ -18,6 +20,7 @@ namespace JungleScape
             environmentObjs = env;
             speedX = -2;
             speedY = 0;
+            maxHP = hp;
         }
 
         // methods

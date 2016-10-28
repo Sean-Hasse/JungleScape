@@ -1,10 +1,5 @@
 ﻿This file is for planned changes, anyone can contribute
 
-- (Sean) Add Boss to Enemy, or as another class (unlikely).
-- (Max) Draw Arrows while the player fires them and make sure all the arrow code is integrated into Game1.
-- (Max) Make sure the game doesn't draw things when they're dead, and removes them from the Map (hitboxes included).
-- (Alexia) Required drawings for images: the Player aiming forward, diagonal and up; Arrows.
-- Make the Player drawn last.
-- Make the Arrow spawn from the bow.
+- (Alexia) Required drawings for images: Boss sprite and red versions of sprites
 - (Sean/Brady) Figure out how boss room will work. 
 - (Sean/Brady) Figure out how moving camera will work.
