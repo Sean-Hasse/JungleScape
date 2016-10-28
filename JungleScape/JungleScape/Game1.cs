@@ -329,7 +329,7 @@ namespace JungleScape
                         {
                             player1 = (Player)chara;
 
-                            if (player1.alive == false)
+                            if (player1.alive == false || player1.hitBox.Y >= desiredBBHeight)
                                 myState = GameState.GameOver;
                         }
                     }
