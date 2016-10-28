@@ -209,7 +209,10 @@ namespace JungleScape
 
                 case GameState.Story:
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
+                    {
+                        Initialize();
                         myState = GameState.Game;
+                    }
                     break;
 
                 case GameState.Options:
