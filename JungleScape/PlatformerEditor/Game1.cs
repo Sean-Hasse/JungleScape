@@ -17,8 +17,6 @@ namespace PlatformerEditor
         SpriteBatch spriteBatch;
         Texture2D background;
         private Background myBackground;
-        int currentX;
-        int lvlX;
         List<Tile> tiles;
         KeyboardState kbState;
         KeyboardState previousKbState;
@@ -32,6 +30,9 @@ namespace PlatformerEditor
 
         public int xPos = 0;
         public int yPos = 0;
+        int lvlY;
+        int lvlX;
+        private static int camSpeed = 10;
 
         public Game1()
         {
@@ -54,8 +55,8 @@ namespace PlatformerEditor
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            currentX = 0;
             lvlX = 0;
+            lvlY = 0;
             tiles = new List<Tile>();
 
             
@@ -113,33 +114,29 @@ namespace PlatformerEditor
                 Exit();
 
             //Get directiona vector based on keyboard input
-            if(kbState.IsKeyDown(Keys.W))
-                yPos = yPos - 10;
+            if (kbState.IsKeyDown(Keys.W))
+            {
+                yPos -= camSpeed;
+                lvlY -= camSpeed;
+            }
       
             else if (kbState.IsKeyDown(Keys.S))
-                yPos = yPos + 10;
-       
+            {
+                yPos += camSpeed;
+                lvlY += camSpeed;
+            }
+            
             if (kbState.IsKeyDown(Keys.A))
-                xPos = xPos - 10;
+            {
+                xPos -= camSpeed;
+                lvlX -= camSpeed;
+            }
 
             else if (kbState.IsKeyDown(Keys.D))
-                xPos = xPos + 10;
- 
-            // TODO: Add your update logic here
-             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                currentX += 2;
-                lvlX += 2;
+                xPos += camSpeed;
+                lvlX += camSpeed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                currentX -= 2;
-                lvlX -= 2;
-            }
-            if (currentX < 0)
-                currentX = 0;
-
-            currentX %= GraphicsDevice.Viewport.Bounds.Width * 2;
 
             //scrolling background
             // The time since Update was called last.
@@ -191,7 +188,7 @@ namespace PlatformerEditor
             //if there is a tile already there, delete it before adding the new one
             if (SingleMouseClick())
             {
-                Point currentCoord = getGridCoord(Mouse.GetState().X, Mouse.GetState().Y);
+                Point currentCoord = getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY);
                 foreach(Tile tile in tiles)
                 {
                     Point checkPoint = new Point(tile.bounds.X, tile.bounds.Y);
@@ -202,11 +199,12 @@ namespace PlatformerEditor
                     }
                 }
 
+                //add object to list of tiles
                 if (currentType == ObjectType.Player)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X - currentX, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
 
                 else if (currentType == ObjectType.Enemy)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X - currentX, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
                  
                 else if (currentType != ObjectType.Delete)
                     tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
@@ -233,25 +231,27 @@ namespace PlatformerEditor
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-            //spriteBatch.Begin();
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, myBackground.translation(xPos,yPos));
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, myBackground.translation(xPos + desiredBBWidth / 2, yPos + desiredBBHeight / 2));
 
+            //draws backgrounds
             //myBackground.Draw(spriteBatch);
-            spriteBatch.Draw(background, new Rectangle(-currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
-            spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - currentX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            //spriteBatch.Draw(background, new Rectangle(-lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
+            //draw all the tiles in the list of tiles (the current map)
             foreach (var item in tiles)
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
 
+            //draw hovering tile at the cursor
             if(currentType == ObjectType.Player)
-                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y - GRID_SIZE + lvlY), new Point(GRID_SIZE, GRID_SIZE * 2)), Color.White);
 
             else if(currentType == ObjectType.Enemy)
-                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType != ObjectType.Delete)
-                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X, Mouse.GetState().Y), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -301,6 +301,9 @@ namespace PlatformerEditor
             return new Point(x, y);
         }
 
+        /// <summary>
+        /// loads in the level.json file and saves the level data to the list of Tiles.
+        /// </summary>
         private void loadCurrentMap()
         {
             StreamReader jinput = new StreamReader("../../../../../JungleScape/Content/level.json");
