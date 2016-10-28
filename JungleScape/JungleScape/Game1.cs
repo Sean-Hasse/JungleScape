@@ -209,7 +209,10 @@ namespace JungleScape
 
                 case GameState.Story:
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState))
+                    {
+                        Initialize();
                         myState = GameState.Game;
+                    }
                     break;
 
                 case GameState.Options:
@@ -326,7 +329,7 @@ namespace JungleScape
                         {
                             player1 = (Player)chara;
 
-                            if (player1.alive == false)
+                            if (player1.alive == false || player1.hitBox.Y >= desiredBBHeight)
                                 myState = GameState.GameOver;
                         }
                     }
@@ -436,7 +439,7 @@ namespace JungleScape
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,null,levelMap.cam.translation(playerCamRef));
@@ -444,6 +447,7 @@ namespace JungleScape
             switch (myState)
             {
                 case GameState.Menu:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
@@ -464,6 +468,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Options:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.DrawString(testFont, "Set Your Screen Resolution ", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 150), Color.White);
@@ -482,6 +487,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Instructions:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.DrawString(testFont, "How To Play The Game:", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "Press the W key to jump.", new Vector2(0, 150), Color.White);
@@ -496,6 +502,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Story:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.DrawString(testFont, "JungleScape Storyline:", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "The player was going to a professional archery competition in South America.", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "Suddenly his plane crashes in the middle of wild, unexplored jungle.", new Vector2(0, 150), Color.White);
@@ -510,6 +517,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Editor:
+                    spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.DrawString(testFont, "How To Use The Map Editor:", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "Begin by starting a new instance of the editor to view the screen.", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "Place the game objects into the game by left clicking on your mouse.", new Vector2(0, 200), Color.White);
@@ -524,9 +532,6 @@ namespace JungleScape
                 case GameState.Game:
                     spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth,desiredBBHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
-                    spriteBatch.DrawString(testFont, "This is a Game Screen", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'G' key to initiate game over", new Vector2(0, 50), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'P' key to pause", new Vector2(0, 100), Color.White);
                     
                     // draw the arrows inside of the list of arrows (the ones still valid)
                     foreach(Arrow arrow in arrows)

@@ -8,29 +8,35 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
-    public class Boss : Character
+    public class Boss : Enemy
     {
-        public Boss(Rectangle hBox, Texture2D texture, int hp) : base(hBox, texture, hp)
+        // attributes
+        List<GameObject> gameObjs;
+
+        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp) : base(hBox, env, texture, hp)
         {
+            gameObjs = env;
             speedX = 4;
         }
 
+        // methods
+
+        // Move method takes the list of Game Objects and finds the player, and has the boss move towards them.
         public override void Move()
         {
-            throw new NotImplementedException();
-        }
-
-        public override void Move(List<GameObject> gObj)
-        {
-            foreach(Player p in gObj.OfType<Player>())
+            foreach(Player p in gameObjs.OfType<Player>())
             {
                 if (p.hitBox.X > hitBox.X)
                     hitBox.X += speedX;
                 else if (p.hitBox.X < hitBox.X)
                     hitBox.X -= speedX;
             }
-            
-            
+        }
+
+        // other Move method. Not implemented here
+        public override void Move(List<GameObject> gObjs)
+        {
+            throw new NotImplementedException();
         }
     }
 }

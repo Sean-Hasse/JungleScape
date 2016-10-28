@@ -151,7 +151,7 @@ namespace JungleScape
                 if (aimDir == "diagonal right")
                 {
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
-                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 20, 10), arrowImage, 1);
+                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 40, 10), arrowImage, 1);
 
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
