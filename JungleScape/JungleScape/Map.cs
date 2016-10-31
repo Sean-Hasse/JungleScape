@@ -51,6 +51,10 @@ namespace JungleScape
                     case ObjectType.Enemy:
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy], 2));
                         break;
+                    case ObjectType.BossLeapZone:
+                        //BossLeapZone zone = new BossLeapZone(tile.bounds, null, );
+                        //objectMap.Add(zone);
+                        break;
                 }
             }
             cam = new Camera(findPlayer());
@@ -83,6 +87,10 @@ namespace JungleScape
             }
         }
 
+        /// <summary>
+        /// Finds the player in the game map.
+        /// </summary>
+        /// <returns>Player object</returns>
         public Player findPlayer()
         {
             Player pref = new Player(new Rectangle(), null, 0);

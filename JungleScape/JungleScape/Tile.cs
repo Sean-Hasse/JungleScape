@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JungleScape
 {
-    public enum ObjectType { Player, TopBrick, PlainBrick, Enemy }
+    public enum ObjectType { Player, TopBrick, PlainBrick, Enemy, BossLeapZone }
     class Tile
     {
         public Rectangle bounds { get; set; }

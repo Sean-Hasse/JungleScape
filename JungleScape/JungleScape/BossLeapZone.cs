@@ -12,18 +12,16 @@ namespace JungleScape
 
     public class BossLeapZone : GameObject
     {
-        public List<BossLeapZone> linkedZones { get; }
-        public BossLeapDirection direction { get; }
+        public Dictionary<BossLeapDirection, BossLeapZone> linkedZones { get; }
 
-        public BossLeapZone(Rectangle hBox, Texture2D texture, BossLeapDirection direction) : base(hBox, texture)
+        public BossLeapZone(Rectangle hBox, Texture2D texture) : base(hBox, texture)
         {
-            this.direction = direction;
-            linkedZones = new List<BossLeapZone>();
+            linkedZones = new Dictionary<BossLeapDirection, BossLeapZone>();
         }
 
-        public void AddZones(List<BossLeapZone> zones)
+        public void AddZone(BossLeapDirection direction, BossLeapZone zone)
         {
-            linkedZones.AddRange(zones);
+            linkedZones.Add(direction, zone);
         }
     }
 }
