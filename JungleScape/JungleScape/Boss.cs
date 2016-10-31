@@ -12,9 +12,11 @@ namespace JungleScape
     {
         // attributes
         List<GameObject> gameObjs;
+        BossLeapZone currentZone;
 
-        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp) : base(hBox, env, texture, hp)
+        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, BossLeapZone startZone) : base(hBox, env, texture, hp)
         {
+            currentZone = startZone;
             gameObjs = env;
             speedX = 4;
         }
