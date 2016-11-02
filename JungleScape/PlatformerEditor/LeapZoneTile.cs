@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlatformerEditor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
-    public class BossLeapZone : GameObject
+    public class LeapZoneTile : Tile
     {
         /// <summary>
         /// id reference for this tile
@@ -20,7 +21,7 @@ namespace JungleScape
         /// </summary>
         public List<int> linkedZones { get; }
 
-        public BossLeapZone(Rectangle hBox, Texture2D texture, int id, List<int> linkedZones) : base(hBox, texture)
+        public LeapZoneTile(Rectangle bounds, Texture2D texture, ObjectType type, List<int> linkedZones, int id) : base(bounds, texture, type)
         {
             this.id = id;
             this.linkedZones = linkedZones;

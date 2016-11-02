@@ -1,7 +1,7 @@
-﻿//using LevelEditor;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PlatformerEditor;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +21,7 @@ namespace JungleScape
         Editor,
         Victory,
         GameOver
-    };
+    }
     /// <summary>
     /// This is the main type for your game.
     /// </summary>

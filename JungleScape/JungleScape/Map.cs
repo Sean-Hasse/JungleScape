@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Microsoft.Xna.Framework.Input;
+using PlatformerEditor;
 
 namespace JungleScape
 {
@@ -17,6 +18,7 @@ namespace JungleScape
         public static int GRID_SCALE = 50;
         //public Player playerCamRef;
         public Camera cam;
+        public List<BossLeapZone> leapZoneMap { get; set; }
 
         public Map()
         {
@@ -52,8 +54,9 @@ namespace JungleScape
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy], 2));
                         break;
                     case ObjectType.BossLeapZone:
-                        //BossLeapZone zone = new BossLeapZone(tile.bounds, null, );
-                        //objectMap.Add(zone);
+                        //Leap Zone tiles will be LeapZoneTile type instead of a normal tile, and a cast is needed to get extra attributes.
+                        LeapZoneTile zoneTile = (LeapZoneTile)tile;
+                        leapZoneMap.Add(new BossLeapZone(zoneTile.bounds, null, zoneTile.id, zoneTile.linkedZones));
                         break;
                 }
             }
