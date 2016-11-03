@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PlatformerEditor
 {
-    public enum ObjectType { Player, TopBrick, PlainBrick, Enemy, Delete, BossLeapZone, Boss }
+    public enum ObjectType { Player, TopBrick, PlainBrick, Enemy, Delete, BossLeapZone, Boss, Link }
     public class Tile
     {
         public Rectangle bounds { get; set; }

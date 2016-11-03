@@ -29,11 +29,16 @@ namespace JungleScape
         /// <param name="type">can be ignored; will always be BossLeapZone</param>
         /// <param name="linkedZones">List of ID integers for linked zones</param>
         /// <param name="id">ID integer for this zone</param>
-        public LeapZoneTile(Rectangle bounds, Texture2D texture, ObjectType type, List<int> linkedZones, int id) : base(bounds, texture, type)
+        public LeapZoneTile(Rectangle bounds, Texture2D texture, ObjectType type, int id) : base(bounds, texture, type)
         {
             this.type = ObjectType.BossLeapZone;
             this.id = id;
-            this.linkedZones = linkedZones;
+            linkedZones = new List<int>();
+        }
+
+        public void linkZone(LeapZoneTile tile)
+        {
+            linkedZones.Add(tile.id);
         }
     }
 }

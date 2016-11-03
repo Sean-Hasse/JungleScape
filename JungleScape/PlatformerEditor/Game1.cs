@@ -151,7 +151,7 @@ namespace PlatformerEditor
             {
                 case ObjectType.Delete:
                     if (SingleKeyPress(Keys.Up))
-                        currentType = ObjectType.Enemy;
+                        currentType = ObjectType.Link;
                     if (SingleKeyPress(Keys.Down))
                         currentType = ObjectType.TopBrick;
                     break;
@@ -176,6 +176,24 @@ namespace PlatformerEditor
                 case ObjectType.Enemy:
                     if (SingleKeyPress(Keys.Up))
                         currentType = ObjectType.Player;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.Boss;
+                    break;
+                case ObjectType.Boss:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Enemy;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.BossLeapZone;
+                    break;
+                case ObjectType.BossLeapZone:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Boss;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.Link;
+                    break;
+                case ObjectType.Link:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.BossLeapZone;
                     if (SingleKeyPress(Keys.Down))
                         currentType = ObjectType.Delete;
                     break;
@@ -249,6 +267,15 @@ namespace PlatformerEditor
 
             else if(currentType == ObjectType.Enemy)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
+
+            else if(currentType == ObjectType.Boss)
+                spriteBatch.Draw(tileDict[ObjectType.Enemy], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
+
+            else if(currentType == ObjectType.BossLeapZone)
+                spriteBatch.Draw(tileDict[ObjectType.PlainBrick], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
+
+            else if(currentType == ObjectType.Link)
+                spriteBatch.Draw(tileDict[ObjectType.Player], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             else if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE, GRID_SIZE)), Color.White);

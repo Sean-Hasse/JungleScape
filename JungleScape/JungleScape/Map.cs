@@ -16,7 +16,6 @@ namespace JungleScape
     {
         public List<GameObject> objectMap { get; set; }
         public static int GRID_SCALE = 50;
-        //public Player playerCamRef;
         public Camera cam;
         public List<BossLeapZone> leapZoneMap { get; set; }
 
