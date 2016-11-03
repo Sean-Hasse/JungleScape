@@ -52,6 +52,9 @@ namespace JungleScape
         public static int desiredBBWidth = 1920;
         public static int desiredBBHeight = 1080;
 
+        public static int backgroundWidth = 1920;
+        public static int backgroundHeight = 1080;
+
         public Player playerCamRef;
 
         List<Enemy> enemies = new List<Enemy>();
@@ -330,7 +333,7 @@ namespace JungleScape
                         {
                             player1 = (Player)chara;
 
-                            if (player1.alive == false || player1.hitBox.Y >= desiredBBHeight)
+                            if (player1.alive == false || player1.hitBox.Y >= backgroundHeight)
                                 myState = GameState.GameOver;
                         }
                     }
@@ -531,7 +534,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth * 2 ,desiredBBHeight), Color.White);
+                    spriteBatch.Draw(background, new Rectangle(0,0,backgroundWidth * 2 , backgroundHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
 
