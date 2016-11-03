@@ -49,17 +49,31 @@ namespace JungleScape
         private void Pounce()
         {
             int listID = currentZone.id;
-            List<int> jumpZonesID = new List<int>();
-            foreach(BossLeapZone zone in leapList)
+
+            // create a list of the ID's of the zones the boss can jump to
+            List<int> jumpZonesID = currentZone.linkedZones;
+            List<BossLeapZone> jumpZones = new List<BossLeapZone>();
+
+            // populate the jumpZones list with the BossLeapZones associated with the ID's in the JumpZonesID list
+            foreach (int zone in jumpZonesID)
             {
-                if(listID == zone.id)
+                foreach (BossLeapZone lzone in leapList)
                 {
-                    foreach(int nextZone in zone.linkedZones)
-                    {
-                        jumpZonesID.Add(nextZone);
-                    }
+                    if (zone == lzone.id)
+                        jumpZones.Add(lzone);
                 }
             }
+
+            // check which jump zone the boss can jump to that the player is in
+            foreach (Player p in gameObjs)
+            {
+                foreach (BossLeapZone zone in jumpZones)
+                {
+                    if (zone.DetectCollision(p))
+                        return;
+                }
+            }
+
         }
 
         // other Move method. Not implemented here
