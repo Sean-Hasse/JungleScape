@@ -191,8 +191,8 @@ namespace PlatformerEditor
                 Point currentCoord = getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY);
                 foreach(Tile tile in tiles)
                 {
-                    Point checkPoint = new Point(tile.bounds.X, tile.bounds.Y);
-                    if (checkPoint == currentCoord)
+                    Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
+                    if (currentCoord == checkPoint)
                     {
                         tiles.Remove(tile);
                         break;

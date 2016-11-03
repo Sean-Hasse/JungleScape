@@ -21,8 +21,17 @@ namespace JungleScape
         /// </summary>
         public List<int> linkedZones { get; }
 
+        /// <summary>
+        /// makes a new LeapZoneTile object
+        /// </summary>
+        /// <param name="bounds">Rectangle boundign box</param>
+        /// <param name="texture">Texture2D of the sprite</param>
+        /// <param name="type">can be ignored; will always be BossLeapZone</param>
+        /// <param name="linkedZones">List of ID integers for linked zones</param>
+        /// <param name="id">ID integer for this zone</param>
         public LeapZoneTile(Rectangle bounds, Texture2D texture, ObjectType type, List<int> linkedZones, int id) : base(bounds, texture, type)
         {
+            this.type = ObjectType.BossLeapZone;
             this.id = id;
             this.linkedZones = linkedZones;
         }
