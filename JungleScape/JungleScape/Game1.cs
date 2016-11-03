@@ -53,7 +53,8 @@ namespace JungleScape
         public static int desiredBBHeight = 1080;
 
         public Player playerCamRef;
-        
+
+        List<Enemy> enemies = new List<Enemy>();
 
         //Texture2D background;
 
@@ -314,7 +315,7 @@ namespace JungleScape
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
                         myState = GameState.Pause;
 
-                    List<Enemy> enemies = new List<Enemy>();
+                    //List<Enemy> enemies = new List<Enemy>();
                     // Change the gamestates based on the state of the map
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
@@ -532,6 +533,12 @@ namespace JungleScape
                 case GameState.Game:
                     spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth,desiredBBHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
+                    spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
+
+                    foreach (Enemy enemy in enemies)
+                    {
+                        spriteBatch.DrawString(testFont, enemy.healthPoints.ToString(), new Vector2(enemy.hitBox.X, enemy.hitBox.Y - 45), Color.Red);
+                    }
                     
                     // draw the arrows inside of the list of arrows (the ones still valid)
                     foreach(Arrow arrow in arrows)
