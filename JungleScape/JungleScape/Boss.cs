@@ -8,21 +8,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
-    public class Boss : Enemy
+    public class Boss : Character
     {
         // attributes
-        List<GameObject> gameObjs;
         List<BossLeapZone> leapList;
         BossLeapZone currentZone;
+        Player player1;
         double leapTimer;
 
-        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, BossLeapZone startZone, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
+        public Boss(Rectangle hBox, Texture2D texture, int hp, BossLeapZone startZone, List<BossLeapZone> lList, Player p) : base(hBox, texture, hp)
         {
             currentZone = startZone;
             leapList = lList;
-            gameObjs = env;
             speedX = 4;
             leapTimer = 0;
+            player1 = p;
         }
 
         // methods
@@ -30,13 +30,11 @@ namespace JungleScape
         // Move method takes the list of Game Objects and finds the player, and has the boss move towards them.
         public override void Move()
         {
-            foreach(Player p in gameObjs.OfType<Player>())
-            {
-                if (p.hitBox.X > hitBox.X)
-                    hitBox.X += speedX;
-                else if (p.hitBox.X < hitBox.X)
-                    hitBox.X -= speedX;
-            }
+            
+            if (player1.hitBox.X > hitBox.X)
+                hitBox.X += speedX;
+            else if (player1.hitBox.X < hitBox.X)
+                hitBox.X -= speedX;
 
             // update the timer
             leapTimer++;
@@ -65,15 +63,14 @@ namespace JungleScape
             }
 
             // check which jump zone the boss can jump to that the player is in
-            foreach (Player p in gameObjs)
+            foreach (BossLeapZone zone in jumpZones)
             {
-                foreach (BossLeapZone zone in jumpZones)
+                if (zone.DetectCollision(player1))
                 {
-                    if (zone.DetectCollision(p))
-                        return;
+                    // get the boss to leap to it
+
                 }
             }
-
         }
 
         // other Move method. Not implemented here
