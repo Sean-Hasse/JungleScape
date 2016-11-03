@@ -530,7 +530,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth,desiredBBHeight), Color.White);
+                    spriteBatch.Draw(background, new Rectangle(0,0,desiredBBWidth * 2 ,desiredBBHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     
                     // draw the arrows inside of the list of arrows (the ones still valid)
