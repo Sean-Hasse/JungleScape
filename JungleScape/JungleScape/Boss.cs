@@ -49,8 +49,17 @@ namespace JungleScape
         private void Pounce()
         {
             int listID = currentZone.id;
-            List<BossLeapZone> jumpZones = new List<BossLeapZone>();
-
+            List<int> jumpZonesID = new List<int>();
+            foreach(BossLeapZone zone in leapList)
+            {
+                if(listID == zone.id)
+                {
+                    foreach(int nextZone in zone.linkedZones)
+                    {
+                        jumpZonesID.Add(nextZone);
+                    }
+                }
+            }
         }
 
         // other Move method. Not implemented here
