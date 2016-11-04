@@ -51,11 +51,11 @@ namespace JungleScape
         List<Arrow> arrows;
         //MapEditor editor;
         Texture2D background;
-        public static int desiredBBWidth = 1920;
-        public static int desiredBBHeight = 1080;
+        public static int desiredBBWidth = 1600;
+        public static int desiredBBHeight = 900;
 
-        public static int backgroundWidth = 1920;
-        public static int backgroundHeight = 1080;
+        public static int backgroundWidth = 1600;
+        public static int backgroundHeight = 900;
 
         public Player playerCamRef;
 
@@ -237,10 +237,10 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
                         optionsIndex -= 1;
 
-                    if (optionsIndex >= 4)
+                    if (optionsIndex >= 5)
                         optionsIndex = 0;
                     else if (optionsIndex < 0)
-                        optionsIndex = 3;
+                        optionsIndex = 4;
 
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 0)
                     {
@@ -252,6 +252,7 @@ namespace JungleScape
                         graphics.ApplyChanges();
                         myState = GameState.Menu;
                     }
+
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 1)
                     {
                         //change to 1200 x 1024
@@ -264,7 +265,18 @@ namespace JungleScape
                     }
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 2)
                     {
-                        //change to 1600 x 900
+                        //change to 1900 x 1080
+                        desiredBBWidth = 1920;
+                        desiredBBHeight = 1080;
+                        graphics.PreferredBackBufferWidth = desiredBBWidth;
+                        graphics.PreferredBackBufferHeight = desiredBBHeight;
+                        graphics.ApplyChanges();
+                        myState = GameState.Menu;
+                    }
+
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 3)
+                    {
+                        //change back to the orginal
                         desiredBBWidth = 1600;
                         desiredBBHeight = 900;
                         graphics.PreferredBackBufferWidth = desiredBBWidth;
@@ -274,7 +286,7 @@ namespace JungleScape
                     }
 
                     //go back to the main menu
-                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 3)
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 4)
                         myState = GameState.Menu;
                     break;
 
@@ -489,17 +501,20 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "Set Your Screen Resolution ", new Vector2(0, 0), Color.White);
                     spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "1920 x 1080", new Vector2(0, 200), Color.White);
+                    spriteBatch.DrawString(testFont, "Original", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 300), Color.White);
 
                     if (optionsIndex == 0)
                         spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 100), Color.Yellow);
                     else if (optionsIndex == 1)
                         spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 150), Color.Yellow);
                     else if (optionsIndex == 2)
-                        spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 200), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "1920 x 1080", new Vector2(0, 200), Color.Yellow);
+                    else if (optionsIndex == 3)
+                        spriteBatch.DrawString(testFont, "Original", new Vector2(0, 250), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 250), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 300), Color.Yellow);
 
                     break;
 
