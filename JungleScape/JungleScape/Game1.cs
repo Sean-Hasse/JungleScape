@@ -225,10 +225,10 @@ namespace JungleScape
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
                         optionsIndex -= 1;
 
-                    if (optionsIndex >= 4)
+                    if (optionsIndex >= 5)
                         optionsIndex = 0;
                     else if (optionsIndex < 0)
-                        optionsIndex = 3;
+                        optionsIndex = 4;
 
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 0)
                     {
@@ -240,6 +240,7 @@ namespace JungleScape
                         graphics.ApplyChanges();
                         myState = GameState.Menu;
                     }
+
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 1)
                     {
                         //change to 1200 x 1024
@@ -261,8 +262,19 @@ namespace JungleScape
                         myState = GameState.Menu;
                     }
 
+                    if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 3)
+                    {
+                        //change back to the orginal
+                        desiredBBWidth = 1920;
+                        desiredBBHeight = 1080;
+                        graphics.PreferredBackBufferWidth = desiredBBWidth;
+                        graphics.PreferredBackBufferHeight = desiredBBHeight;
+                        graphics.ApplyChanges();
+                        myState = GameState.Menu;
+                    }
+
                     //go back to the main menu
-                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 3)
+                    else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && optionsIndex == 4)
                         myState = GameState.Menu;
                     break;
 
@@ -477,7 +489,8 @@ namespace JungleScape
                     spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 100), Color.White);
                     spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 150), Color.White);
                     spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Original", new Vector2(0, 250), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 300), Color.White);
 
                     if (optionsIndex == 0)
                         spriteBatch.DrawString(testFont, "1024 x 768", new Vector2(0, 100), Color.Yellow);
@@ -485,8 +498,10 @@ namespace JungleScape
                         spriteBatch.DrawString(testFont, "1280 x 1024", new Vector2(0, 150), Color.Yellow);
                     else if (optionsIndex == 2)
                         spriteBatch.DrawString(testFont, "1600 x 900", new Vector2(0, 200), Color.Yellow);
+                    else if (optionsIndex == 3)
+                        spriteBatch.DrawString(testFont, "Original", new Vector2(0, 250), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 250), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Options Menu", new Vector2(0, 300), Color.Yellow);
 
                     break;
 
