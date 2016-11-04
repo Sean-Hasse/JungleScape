@@ -69,6 +69,49 @@ namespace JungleScape
                 {
                     // get the boss to leap to it
 
+                    /* so here's how I want to do this: The Boss compares its position to the position of the LeapZone it's targeting
+                     * If the difference in x is negative or positive will affect the speed. The Y comparison (less, equal, greater) will then inform which jump it will perform*/
+                    int xCompare = zone.hitBox.X - hitBox.X;    // will be negative if the boss is to the right of the leap zone
+                    int yCompare = zone.hitBox.Y - hitBox.Y;    // will be negative if the boss is below the leap zone
+
+
+                    if(yCompare < 0)
+                    {
+                        // insert code for jumping to a platform above the boss
+
+                        while (hitBox.X >= ???)
+                        {
+                            if (xCompare < 0)
+                                hitBox.X -= speedX;   // reverses the speed of the boss to make it move left if it's to the right of the leap zone
+                            else
+                                hitBox.X += speedX;
+                        }
+                        // insert jump here
+                    }
+                    if (yCompare == 0)
+                    {
+                        // insert code for jumping to a platform on the same level as the boss
+
+                        while (hitBox.X >= ???)
+                        {
+                            if (xCompare < 0)
+                                hitBox.X -= speedX;
+                            else
+                                hitBox.X += speedX;
+                        }
+                        // insert jump here
+                    }
+                    if(yCompare > 0)
+                    {
+                        while (hitBox.X >= ???)
+                        {
+                            if (xCompare < 0)
+                                hitBox.X -= speedX;
+                            else
+                                hitBox.X += speedX;
+                        }
+                        // insert jump here
+                    }
                 }
             }
         }
