@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using PlatformerEditor;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace JungleScape
 {
@@ -58,9 +60,14 @@ namespace JungleScape
         public Player playerCamRef;
 
         List<Enemy> enemies = new List<Enemy>();
+        public static List<SoundEffect> soundEffects;
 
         //Texture2D background;
 
+        public static void PlaySound(int n)
+        {
+            soundEffects[n].CreateInstance().Play();
+        }
 
         public Game1()
         {
@@ -72,6 +79,8 @@ namespace JungleScape
             graphics.PreferredBackBufferWidth = desiredBBWidth;
             graphics.PreferredBackBufferHeight = desiredBBHeight;
             this.Window.AllowUserResizing = true;
+
+            soundEffects = new List<SoundEffect>();
         }
 
         /* possible fix to updating the screen res
@@ -142,6 +151,9 @@ namespace JungleScape
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
             playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
+
+            //sound effects
+            soundEffects.Add(Content.Load<SoundEffect>("bowFire1"));
         }
 
         /// <summary>
@@ -279,6 +291,7 @@ namespace JungleScape
 
                             // populate the list of arrows with valid arrows to be drawn later
                             Arrow firedArrow = player1.FireArrow(arrowImage, levelMap.objectMap);
+                            //soundEffects[0].CreateInstance();
 
                             if (firedArrow != null)
                             {

@@ -157,3 +157,9 @@
 /processorParam:TextureFormat=Color
 /build:PlainPlatformerBrick.png
 
+#begin bowFire1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:bowFire1.wav
+
