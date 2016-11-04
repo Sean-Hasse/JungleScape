@@ -586,14 +586,14 @@ namespace JungleScape
                 case GameState.Victory:
 
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
-                    spriteBatch.DrawString(testFont2, "Victory!", new Vector2(280, 10), Color.White);
-                    spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(285, 250), Color.White);
+                    spriteBatch.DrawString(testFont2, "Victory!", new Vector2(20, 10), Color.White);
+                    spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(20, 150), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 250), Color.White);
 
                     if (victoryIndex == 0)
-                        spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(240, 150), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Back to Menu", new Vector2(20, 150), Color.Yellow);
                     else if (victoryIndex == 1)
-                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(285, 250), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 250), Color.Yellow);
 
                     break;
 
