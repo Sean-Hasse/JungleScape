@@ -97,3 +97,9 @@
 /processorParam:TextureFormat=Color
 /build:SpiderEnemy.png
 
+#begin testFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:testFont.spritefont
+

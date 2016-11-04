@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JungleScape;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PlatformerEditor
 {
@@ -16,6 +18,7 @@ namespace PlatformerEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        SpriteFont font;
         private Background myBackground;
         List<Tile> tiles;
         KeyboardState kbState;
@@ -33,6 +36,10 @@ namespace PlatformerEditor
         int lvlY;
         int lvlX;
         private static int camSpeed = 10;
+        int currentID;
+
+        bool linkState;
+        LeapZoneTile linkTile;
 
         public Game1()
         {
@@ -57,9 +64,9 @@ namespace PlatformerEditor
             // TODO: Add your initialization logic here
             lvlX = 0;
             lvlY = 0;
+            currentID = 0;
+            linkState = false;
             tiles = new List<Tile>();
-
-            
 
             tileDict = new Dictionary<ObjectType, Texture2D>();
             currentType = ObjectType.Delete;
@@ -84,6 +91,8 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
+
+            font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
             loadCurrentMap();
         }
@@ -206,26 +215,67 @@ namespace PlatformerEditor
             //if there is a tile already there, delete it before adding the new one
             if (SingleMouseClick())
             {
+                //current coordinates of mouse click
                 Point currentCoord = getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY);
                 foreach(Tile tile in tiles)
                 {
                     Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
-                    if (currentCoord == checkPoint)
+                    if (currentCoord == checkPoint && !linkState)
                     {
                         tiles.Remove(tile);
                         break;
                     }
                 }
 
-                //add object to list of tiles
-                if (currentType == ObjectType.Player)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
+                if (!linkState)
+                {
+                    //add object to list of tiles
+                    if (currentType == ObjectType.Player)
+                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
 
-                else if (currentType == ObjectType.Enemy)
-                    tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
-                 
-                else if (currentType != ObjectType.Delete)
-                    tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                    else if (currentType == ObjectType.Enemy)
+                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+
+                    else if (currentType == ObjectType.Boss)
+                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), tileDict[ObjectType.Enemy], currentType));
+
+                    else if (currentType == ObjectType.BossLeapZone)
+                    {
+                        currentID++;
+                        tiles.Add(new LeapZoneTile(new Rectangle(new Point(currentCoord.X, currentCoord.Y), new Point(GRID_SIZE * 4, GRID_SIZE)), tileDict[ObjectType.PlainBrick], currentType, currentID));
+                    }
+
+                    else if (currentType == ObjectType.Link)
+                    {
+                        linkState = true;
+                        foreach (LeapZoneTile tile in tiles.OfType<LeapZoneTile>())
+                        {
+                            Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
+                            if (currentCoord == checkPoint)
+                            {
+                                linkTile = tile;
+                                break;
+                            }
+                        }
+                    }
+
+
+                    else if (currentType != ObjectType.Delete)
+                        tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
+                }
+                else
+                {
+                    foreach (LeapZoneTile tile in tiles.OfType<LeapZoneTile>())
+                    {
+                        Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
+                        if (currentCoord == checkPoint)
+                        {
+                            ((LeapZoneTile)(tiles.Find(t => t == linkTile))).linkedZones.Add(tile.id);
+                            tile.linkedZones.Add(linkTile.id);
+                        }
+                    }
+                }
+                
                 
             }
 
@@ -259,26 +309,36 @@ namespace PlatformerEditor
 
             //draw all the tiles in the list of tiles (the current map)
             foreach (var item in tiles)
+            {
                 spriteBatch.Draw(item.texture, item.bounds, Color.White);
+                if(item is LeapZoneTile)
+                {
+                    LeapZoneTile thisTile = (LeapZoneTile)item;
+                    spriteBatch.DrawString(font, thisTile.id.ToString(), new Vector2(item.bounds.X, item.bounds.Y), Color.Purple);
+                }
+                    
+            }
+                
 
+            Point gridCoord = getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY);
             //draw hovering tile at the cursor
-            if(currentType == ObjectType.Player)
+            if (currentType == ObjectType.Player)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y - GRID_SIZE + lvlY), new Point(GRID_SIZE, GRID_SIZE * 2)), Color.White);
 
             else if(currentType == ObjectType.Enemy)
-                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType == ObjectType.Boss)
-                spriteBatch.Draw(tileDict[ObjectType.Enemy], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
+                spriteBatch.Draw(tileDict[ObjectType.Enemy], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType == ObjectType.BossLeapZone)
-                spriteBatch.Draw(tileDict[ObjectType.PlainBrick], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[ObjectType.PlainBrick], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
 
             else if(currentType == ObjectType.Link)
-                spriteBatch.Draw(tileDict[ObjectType.Player], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[ObjectType.Player], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             else if(currentType != ObjectType.Delete)
-                spriteBatch.Draw(tileDict[currentType], new Rectangle(getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY), new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
