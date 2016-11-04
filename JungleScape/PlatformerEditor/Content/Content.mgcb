@@ -97,6 +97,12 @@
 /processorParam:TextureFormat=Color
 /build:SpiderEnemy.png
 
+#begin bowFire.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:bowFire.mp3
+
 #begin testFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

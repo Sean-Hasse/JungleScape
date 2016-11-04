@@ -212,7 +212,10 @@ namespace JungleScape
         private string Aim()
         {
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
+            {
+                Game1.PlaySound(0);
                 return "diagonal right";
+            }
             else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
                 return "diagonal left";
             else if (keyState.IsKeyDown(Keys.Right))
