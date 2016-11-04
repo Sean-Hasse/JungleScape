@@ -8,18 +8,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JungleScape
 {
-    public class Boss : Character
+    public class Boss : Enemy
     {
         // attributes
         List<BossLeapZone> leapList;
+        List<GameObject> gObjs;
         BossLeapZone currentZone;
         Player player1;
         double leapTimer;
+        const int MAX_FALL_SPEED = -11;
 
-        public Boss(Rectangle hBox, Texture2D texture, int hp, BossLeapZone startZone, List<BossLeapZone> lList, Player p) : base(hBox, texture, hp)
+        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, BossLeapZone startZone, List<BossLeapZone> lList, Player p) : base(hBox, env, texture, hp)
         {
             currentZone = startZone;
             leapList = lList;
+            gObjs = env;
+
             speedX = 4;
             leapTimer = 0;
             player1 = p;
@@ -41,6 +45,30 @@ namespace JungleScape
 
             if (leapTimer >= 30)
                 Pounce();
+
+            // implement gravity for the boss
+            foreach (GameObject platforms in gObjs)
+            {
+                if(platforms.DetectCollision(this))
+                {
+                    // if the boss is on a platform, stop it from falling
+                    speedY = 0;
+
+                    // call a "ResetBossY" method
+                }
+                else
+                {
+                    // have the boss fall if not on a platform
+                    hitBox.Y -= speedY;
+                    speedY--;
+                }
+            }
+
+            // maximum falling speed. Probably won't be used but you never know.
+            if (speedY < MAX_FALL_SPEED)
+            {
+                speedY = MAX_FALL_SPEED;
+            }
         }
 
         // method for boss to move from platoform to platform towards the Player. 
@@ -75,42 +103,59 @@ namespace JungleScape
                     int yCompare = zone.hitBox.Y - hitBox.Y;    // will be negative if the boss is below the leap zone
 
 
-                    if(yCompare < 0)
+                    if (yCompare < 0)
                     {
-                        // insert code for jumping to a platform above the boss
-
-                        while (hitBox.X >= ???)
+                        while (!DetectCollision(zone))  // keeps the boss moving until it lands in the zone it's targeted
                         {
                             if (xCompare < 0)
-                                hitBox.X -= speedX;   // reverses the speed of the boss to make it move left if it's to the right of the leap zone
+                                hitBox.X -= speedX;     // reverses the speed of the boss to make it move left if it's to the right of the leap zone
                             else
                                 hitBox.X += speedX;
+
+                            if (xCompare - hitBox.X <= 100)
+                            {
+                                // insert code for jumping to a platform above the boss
+                                speedY = 18;
+                                hitBox.Y -= speedY;
+                                speedY--;
+                            }
                         }
-                        // insert jump here
                     }
                     if (yCompare == 0)
                     {
-                        // insert code for jumping to a platform on the same level as the boss
-
-                        while (hitBox.X >= ???)
+                        while (!DetectCollision(zone))
                         {
                             if (xCompare < 0)
                                 hitBox.X -= speedX;
                             else
                                 hitBox.X += speedX;
+
+                            if (xCompare - hitBox.X <= 100)
+                            {
+                                // insert code for jumping to a platform on the same level as the boss
+                                speedY = 18;
+                                hitBox.Y -= speedY;
+                                speedY--;
+                            }
                         }
-                        // insert jump here
                     }
                     if(yCompare > 0)
                     {
-                        while (hitBox.X >= ???)
+                        while (!DetectCollision(zone))
                         {
                             if (xCompare < 0)
                                 hitBox.X -= speedX;
                             else
                                 hitBox.X += speedX;
+
+                            if (xCompare - hitBox.X <= 100)
+                            {
+                                // insert code for jumping to a platform below the boss
+                                speedY = 18;
+                                hitBox.Y -= speedY;
+                                speedY--;
+                            }
                         }
-                        // insert jump here
                     }
                 }
             }
