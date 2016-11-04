@@ -538,7 +538,7 @@ namespace JungleScape
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
 
-                    foreach (Enemy enemy in enemies)
+                    foreach (Enemy enemy in levelMap.objectMap.OfType<Enemy>())
                     {
                         spriteBatch.DrawString(testFont, enemy.healthPoints.ToString(), new Vector2(enemy.hitBox.X, enemy.hitBox.Y - 45), Color.Red);
                     }
