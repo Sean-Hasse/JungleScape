@@ -217,18 +217,36 @@ namespace PlatformerEditor
             {
                 //current coordinates of mouse click
                 Point currentCoord = getGridCoord(Mouse.GetState().X + lvlX, Mouse.GetState().Y + lvlY);
-                foreach(Tile tile in tiles)
-                {
-                    Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
-                    if (currentCoord == checkPoint && !linkState)
-                    {
-                        tiles.Remove(tile);
-                        break;
-                    }
-                }
 
                 if (!linkState)
                 {
+                    //set to link state when link is selected and is hovering over leap zone tile
+                    if (currentType == ObjectType.Link)
+                    {
+                        foreach (LeapZoneTile tile in tiles.OfType<LeapZoneTile>())
+                        {
+                            Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
+                            if (currentCoord == checkPoint)
+                            {
+                                linkState = true;
+                                linkTile = tile;
+                                break;
+                            }
+                        }
+                    }
+
+                    //remove any tile already in that space
+                    foreach (Tile tile in tiles)
+                    {
+                        Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
+                        if (currentCoord == checkPoint && !linkState)
+                        {
+                            tiles.Remove(tile);
+                            break;
+                        }
+                    }
+
+                
                     //add object to list of tiles
                     if (currentType == ObjectType.Player)
                         tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE), new Point(GRID_SIZE, GRID_SIZE * 2)), tileDict[currentType], currentType));
@@ -239,32 +257,20 @@ namespace PlatformerEditor
                     else if (currentType == ObjectType.Boss)
                         tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), tileDict[ObjectType.Enemy], currentType));
 
+                    //add a leap zone tile
                     else if (currentType == ObjectType.BossLeapZone)
                     {
                         currentID++;
                         tiles.Add(new LeapZoneTile(new Rectangle(new Point(currentCoord.X, currentCoord.Y), new Point(GRID_SIZE * 4, GRID_SIZE)), tileDict[ObjectType.PlainBrick], currentType, currentID));
                     }
-
-                    else if (currentType == ObjectType.Link)
-                    {
-                        linkState = true;
-                        foreach (LeapZoneTile tile in tiles.OfType<LeapZoneTile>())
-                        {
-                            Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
-                            if (currentCoord == checkPoint)
-                            {
-                                linkTile = tile;
-                                break;
-                            }
-                        }
-                    }
-
-
-                    else if (currentType != ObjectType.Delete)
+                    
+                    //add any other tiles if anything but delete
+                    else if (currentType != ObjectType.Delete && currentType != ObjectType.Link)
                         tiles.Add(new Tile(new Rectangle(currentCoord, new Point(GRID_SIZE, GRID_SIZE)), tileDict[currentType], currentType));
                 }
                 else
                 {
+                    //if in link state, link the two tiles
                     foreach (LeapZoneTile tile in tiles.OfType<LeapZoneTile>())
                     {
                         Point checkPoint = getGridCoord(tile.bounds.X, tile.bounds.Y);
@@ -272,6 +278,9 @@ namespace PlatformerEditor
                         {
                             ((LeapZoneTile)(tiles.Find(t => t == linkTile))).linkedZones.Add(tile.id);
                             tile.linkedZones.Add(linkTile.id);
+                            linkTile = null;
+                            linkState = false;
+                            break;
                         }
                     }
                 }
@@ -314,7 +323,7 @@ namespace PlatformerEditor
                 if(item is LeapZoneTile)
                 {
                     LeapZoneTile thisTile = (LeapZoneTile)item;
-                    spriteBatch.DrawString(font, thisTile.id.ToString(), new Vector2(item.bounds.X, item.bounds.Y), Color.Purple);
+                    spriteBatch.DrawString(font, thisTile.id.ToString() + "; " + thisTile.linkedZonesString(), new Vector2(item.bounds.X, item.bounds.Y), Color.Purple);
                 }
                     
             }
