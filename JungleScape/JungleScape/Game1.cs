@@ -54,8 +54,8 @@ namespace JungleScape
         public static int desiredBBWidth = 1600;
         public static int desiredBBHeight = 900;
 
-        public static int backgroundWidth = 1600;
-        public static int backgroundHeight = 900;
+        public static int backgroundWidth = 3800;
+        public static int backgroundHeight = 2160;
 
         public Player playerCamRef;
 
