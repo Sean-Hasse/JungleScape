@@ -28,8 +28,11 @@ namespace PlatformerEditor
         const int GRID_SIZE = 50;
         Dictionary<ObjectType, Texture2D> tileDict;
         ObjectType currentType;
-        public static int desiredBBWidth = 1920;
-        public static int desiredBBHeight = 1080;
+        public static int desiredBBWidth = 1600;
+        public static int desiredBBHeight = 900;
+
+        public static int backgroundWidth = 3800;
+        public static int backgroundHeight = 2160;
 
         public int xPos = 0;
         public int yPos = 0;
@@ -91,6 +94,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
+            tileDict.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
 
             font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
@@ -237,7 +241,7 @@ namespace PlatformerEditor
                         tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
 
                     else if (currentType == ObjectType.Boss)
-                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), tileDict[ObjectType.Enemy], currentType));
+                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
 
                     else if (currentType == ObjectType.BossLeapZone)
                     {
@@ -303,6 +307,7 @@ namespace PlatformerEditor
 
             //draws backgrounds
             //myBackground.Draw(spriteBatch);
+            //spriteBatch.Draw(background, new Rectangle(-lvlX, 0, backgroundWidth, backgroundWidth), Color.White);
             //spriteBatch.Draw(background, new Rectangle(-lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             //spriteBatch.Draw(background, destinationRectangle: new Rectangle(GraphicsDevice.Viewport.Width - lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), color: Color.White, effects: SpriteEffects.FlipHorizontally);
             //spriteBatch.Draw(background, new Rectangle(2 * GraphicsDevice.Viewport.Width - lvlX, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
@@ -329,7 +334,7 @@ namespace PlatformerEditor
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point((int)(GRID_SIZE * 1.5), (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType == ObjectType.Boss)
-                spriteBatch.Draw(tileDict[ObjectType.Enemy], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType == ObjectType.BossLeapZone)
                 spriteBatch.Draw(tileDict[ObjectType.PlainBrick], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
