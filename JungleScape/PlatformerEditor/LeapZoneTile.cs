@@ -40,5 +40,16 @@ namespace JungleScape
         {
             linkedZones.Add(tile.id);
         }
+
+        public string linkedZonesString()
+        {
+            string s = "";
+
+            foreach(int i in linkedZones)
+            {
+                s += i + " ";
+            }
+            return s;
+        }
     }
 }
