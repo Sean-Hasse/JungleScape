@@ -95,7 +95,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             tileDict.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
-
+            tileDict.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("LeapZone"));
             font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
             loadCurrentMap();
@@ -265,7 +265,7 @@ namespace PlatformerEditor
                     else if (currentType == ObjectType.BossLeapZone)
                     {
                         currentID++;
-                        tiles.Add(new LeapZoneTile(new Rectangle(new Point(currentCoord.X, currentCoord.Y), new Point(GRID_SIZE * 4, GRID_SIZE)), tileDict[ObjectType.PlainBrick], currentType, currentID));
+                        tiles.Add(new LeapZoneTile(new Rectangle(new Point(currentCoord.X, currentCoord.Y), new Point(GRID_SIZE * 4, GRID_SIZE)), tileDict[currentType], currentType, currentID));
                     }
                     
                     //add any other tiles if anything but delete
@@ -346,7 +346,7 @@ namespace PlatformerEditor
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), Color.White);
 
             else if(currentType == ObjectType.BossLeapZone)
-                spriteBatch.Draw(tileDict[ObjectType.PlainBrick], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
 
             else if(currentType == ObjectType.Link)
                 spriteBatch.Draw(tileDict[ObjectType.Player], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
