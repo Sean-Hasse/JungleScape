@@ -44,6 +44,8 @@ namespace PlatformerEditor
         bool linkState;
         LeapZoneTile linkTile;
 
+        JsonSerializerSettings settings;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -53,6 +55,9 @@ namespace PlatformerEditor
             //change the screen reolution
             graphics.PreferredBackBufferWidth = desiredBBWidth;
             graphics.PreferredBackBufferHeight = desiredBBHeight;
+
+            settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+
             this.Window.AllowUserResizing = true;
         }
 
@@ -297,7 +302,7 @@ namespace PlatformerEditor
             if (SingleKeyPress(Keys.Enter))
             {
                 StreamWriter joutput = new StreamWriter("../../../../../JungleScape/Content/level.json");
-                joutput.WriteLine(JsonConvert.SerializeObject(tiles));
+                joutput.WriteLine(JsonConvert.SerializeObject(tiles, settings));
                 joutput.Close();
             }
 
@@ -409,11 +414,12 @@ namespace PlatformerEditor
         private void loadCurrentMap()
         {
             StreamReader jinput = new StreamReader("../../../../../JungleScape/Content/level.json");
-            tiles = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
+            tiles = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd(), settings);
             jinput.Close();
 
             foreach(Tile tile in tiles)
                 tile.texture = tileDict[tile.type];
+                
         }
     }
 }
