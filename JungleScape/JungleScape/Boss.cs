@@ -13,6 +13,7 @@ namespace JungleScape
         // attributes
         List<BossLeapZone> leapList;
         List<GameObject> gObjs;
+        Rectangle bottomSide;
         BossLeapZone currentZone;
         Player player1;
         double leapTimer;
@@ -27,34 +28,31 @@ namespace JungleScape
             speedX = 4;
             leapTimer = 0;
             player1 = p;
+            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 8, 1);
         }
 
         // methods
-
-        // Move method takes the list of Game Objects and finds the player, and has the boss move towards them.
+        // Move method finds the player,  has the boss move towards them,  calls the Pounce method when appropriate, .
         public override void Move()
         {
-            
-            if (player1.hitBox.X > hitBox.X)
-                hitBox.X += speedX;
-            else if (player1.hitBox.X < hitBox.X)
-                hitBox.X -= speedX;
-
             // update the timer
             leapTimer++;
 
-            if (leapTimer >= 30)
-                Pounce();
 
             // implement gravity for the boss
             foreach (GameObject platforms in gObjs)
-            {
-                if(platforms.DetectCollision(this))
+            {               
+                if (player1.hitBox.X > hitBox.X && CheckLedges())
+                    hitBox.X += speedX;
+                else if (player1.hitBox.X < hitBox.X && CheckLedges())
+                    hitBox.X -= speedX;
+
+                if (platforms.DetectCollision(this))
                 {
                     // if the boss is on a platform, stop it from falling
                     speedY = 0;
 
-                    // call a "ResetBossY" method
+                    BossResetY();
                 }
                 else
                 {
@@ -69,9 +67,12 @@ namespace JungleScape
             {
                 speedY = MAX_FALL_SPEED;
             }
+
+            if (leapTimer >= 30)
+                Pounce();
         }
 
-        // method for boss to move from platoform to platform towards the Player. 
+        // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
         private void Pounce()
         {
             int listID = currentZone.id;
@@ -99,6 +100,7 @@ namespace JungleScape
 
                     /* so here's how I want to do this: The Boss compares its position to the position of the LeapZone it's targeting
                      * If the difference in x is negative or positive will affect the speed. The Y comparison (less, equal, greater) will then inform which jump it will perform*/
+                    
                     int xCompare = zone.hitBox.X - hitBox.X;    // will be negative if the boss is to the right of the leap zone
                     int yCompare = zone.hitBox.Y - hitBox.Y;    // will be negative if the boss is below the leap zone
 
@@ -118,6 +120,9 @@ namespace JungleScape
                                 speedY = 18;
                                 hitBox.Y -= speedY;
                                 speedY--;
+
+                                // reset the leap timer once pounce work has been done
+                                leapTimer = 0;
                             }
                         }
                     }
@@ -136,6 +141,8 @@ namespace JungleScape
                                 speedY = 18;
                                 hitBox.Y -= speedY;
                                 speedY--;
+
+                                leapTimer = 0;
                             }
                         }
                     }
@@ -154,9 +161,27 @@ namespace JungleScape
                                 speedY = 18;
                                 hitBox.Y -= speedY;
                                 speedY--;
+
+                                leapTimer = 0;
                             }
                         }
                     }
+
+                    // set the current leap zone to the zone the Boss is in
+                    currentZone = zone;
+                }
+                // if the boss does not detect the player in any leap zones it can move to, do nothing until next pounce
+            }
+        }
+
+        // BossResetY does basically the same thing as the PlayerResetY
+        public void BossResetY()
+        {
+            foreach(GameObject platform in gObjs)
+            {
+                if(platform.hitBox.Intersects(bottomSide))
+                {
+                    hitBox.Y = platform.hitBox.Y - hitBox.Height;
                 }
             }
         }
