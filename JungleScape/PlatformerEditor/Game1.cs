@@ -294,8 +294,6 @@ namespace PlatformerEditor
                         }
                     }
                 }
-                
-                
             }
 
             //saves current list of Tiles into JungleScape's Content folder

@@ -19,14 +19,13 @@ namespace JungleScape
         double leapTimer;
         const int MAX_FALL_SPEED = -11;
 
-        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList, Player p) : base(hBox, env, texture, hp)
+        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
         {
             leapList = lList;
             gObjs = env;
 
-            speedX = 4;
+            speedX = 0;
             leapTimer = 0;
-            player1 = p;
             bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 8, 1);
         }
 
@@ -40,11 +39,17 @@ namespace JungleScape
 
             // implement gravity for the boss
             foreach (GameObject platforms in gObjs)
-            {               
+            {
+                if (platforms is Player)
+                    player1 = (Player)platforms;
+                /*
                 if (player1.hitBox.X > hitBox.X && CheckLedges())
                     hitBox.X += speedX;
                 else if (player1.hitBox.X < hitBox.X && CheckLedges())
                     hitBox.X -= speedX;
+                */
+
+                hitBox.X += speedX;
 
                 if (platforms.DetectCollision(this))
                 {
@@ -83,8 +88,6 @@ namespace JungleScape
                 }
             }
 
-            int listID = currentZone.id;
-
             // create a list of the ID's of the zones the boss can jump to
             List<int> jumpZonesID = currentZone.linkedZones;
             List<BossLeapZone> jumpZones = new List<BossLeapZone>();
@@ -104,10 +107,27 @@ namespace JungleScape
             {
                 if (zone.DetectCollision(player1))
                 {
+
+                    int x0 = hitBox.X;  //start x
+                    int y0 = hitBox.Y;  //start y
+                    int x1 = zone.hitBox.X;  //target x
+                    int y1 = zone.hitBox.Y;  //target y
+
+                    //constant x speed in direction of zone
+                    int dx = 1;
+                    if (x1 - x0 > 0)
+                        speedX = dx;
+                    else if (x1 - x0 < 0)
+                        speedX = -dx;
+                    else if (x1 - x0 == 0)
+                        speedX = 0;
+
+
+                    /*
                     // get the boss to leap to it
 
-                    /* so here's how I want to do this: The Boss compares its position to the position of the LeapZone it's targeting
-                     * If the difference in x is negative or positive will affect the speed. The Y comparison (less, equal, greater) will then inform which jump it will perform*/
+                    //so here's how I want to do this: The Boss compares its position to the position of the LeapZone it's targeting
+                    //If the difference in x is negative or positive will affect the speed. The Y comparison (less, equal, greater) will then inform which jump it will perform
                     
                     int xCompare = zone.hitBox.X - hitBox.X;    // will be negative if the boss is to the right of the leap zone
                     int yCompare = zone.hitBox.Y - hitBox.Y;    // will be negative if the boss is below the leap zone
@@ -115,7 +135,7 @@ namespace JungleScape
 
                     if (yCompare < 0)
                     {
-                        while (!DetectCollision(zone))  // keeps the boss moving until it lands in the zone it's targeted
+                        if (!DetectCollision(zone))  // keeps the boss moving until it lands in the zone it's targeted
                         {
                             if (xCompare < 0)
                                 hitBox.X -= speedX;     // reverses the speed of the boss to make it move left if it's to the right of the leap zone
@@ -136,7 +156,7 @@ namespace JungleScape
                     }
                     if (yCompare == 0)
                     {
-                        while (!DetectCollision(zone))
+                        if (!DetectCollision(zone))
                         {
                             if (xCompare < 0)
                                 hitBox.X -= speedX;
@@ -156,7 +176,7 @@ namespace JungleScape
                     }
                     if(yCompare > 0)
                     {
-                        while (!DetectCollision(zone))
+                        if (!DetectCollision(zone))
                         {
                             if (xCompare < 0)
                                 hitBox.X -= speedX;
@@ -175,8 +195,11 @@ namespace JungleScape
                         }
                     }
 
+                    */
+
                     // set the current leap zone to the zone the Boss is in
                     currentZone = zone;
+                    break;
                 }
                 // if the boss does not detect the player in any leap zones it can move to, do nothing until next pounce
             }
