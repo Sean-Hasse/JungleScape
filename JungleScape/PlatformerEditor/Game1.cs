@@ -100,7 +100,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Player, Content.Load<Texture2D>("BasicPlayer0"));
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             tileDict.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
-            tileDict.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("LeapZone"));
+            tileDict.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("ClearLeapZone"));
             tileDict.Add(ObjectType.Link, Content.Load<Texture2D>("LinkSymbol"));
             font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
