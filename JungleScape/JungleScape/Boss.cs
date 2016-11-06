@@ -14,14 +14,13 @@ namespace JungleScape
         List<BossLeapZone> leapList;
         List<GameObject> gObjs;
         Rectangle bottomSide;
-        BossLeapZone currentZone;
+        public BossLeapZone currentZone { get; set; }
         Player player1;
         double leapTimer;
         const int MAX_FALL_SPEED = -11;
 
-        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, BossLeapZone startZone, List<BossLeapZone> lList, Player p) : base(hBox, env, texture, hp)
+        public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList, Player p) : base(hBox, env, texture, hp)
         {
-            currentZone = startZone;
             leapList = lList;
             gObjs = env;
 
@@ -75,6 +74,15 @@ namespace JungleScape
         // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
         private void Pounce()
         {
+            foreach(BossLeapZone zone in leapList)
+            {
+                if (DetectCollision(zone))
+                {
+                    currentZone = zone;
+                    break;
+                }
+            }
+
             int listID = currentZone.id;
 
             // create a list of the ID's of the zones the boss can jump to

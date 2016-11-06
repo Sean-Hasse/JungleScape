@@ -134,6 +134,7 @@ namespace JungleScape
             textures.Add(ObjectType.Player, basePlayer);
             textures.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             textures.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
+            textures.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
 
             // load the sprite for the arrow
             arrowImage = Content.Load<Texture2D>("Arrow");

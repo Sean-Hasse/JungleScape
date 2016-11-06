@@ -19,9 +19,13 @@ namespace JungleScape
         public Camera cam;
         public List<BossLeapZone> leapZoneMap { get; set; }
 
+        JsonSerializerSettings settings;
+
         public Map()
         {
             objectMap = new List<GameObject>();
+            leapZoneMap = new List<BossLeapZone>();
+            settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         }
 
         /// <summary>
@@ -33,7 +37,7 @@ namespace JungleScape
             objectMap.Clear();
 
             StreamReader jinput = new StreamReader("../../../../Content/level.json");
-            List<Tile> inputList = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd());
+            List<Tile> inputList = JsonConvert.DeserializeObject<List<Tile>>(jinput.ReadToEnd(), settings);
             jinput.Close();
 
             foreach(Tile tile in inputList)
@@ -51,6 +55,9 @@ namespace JungleScape
                         break;
                     case ObjectType.Enemy:
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy], 2));
+                        break;
+                    case ObjectType.Boss:
+                        objectMap.Add(new Boss(tile.bounds, objectMap, textures[ObjectType.Boss], 10, leapZoneMap, findPlayer()));
                         break;
                     case ObjectType.BossLeapZone:
                         //Leap Zone tiles will be LeapZoneTile type instead of a normal tile, and a cast is needed to get extra attributes.
