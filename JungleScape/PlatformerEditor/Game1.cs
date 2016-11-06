@@ -412,7 +412,13 @@ namespace PlatformerEditor
             jinput.Close();
 
             foreach(Tile tile in tiles)
-                tile.texture = tileDict[tile.type];
+            {
+                if (tile.type != ObjectType.BossLeapZone)
+                    tile.texture = tileDict[tile.type];
+                else
+                    tile.texture = tileDict[ObjectType.PlainBrick];
+            }
+                
         }
     }
 }
