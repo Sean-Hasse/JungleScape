@@ -96,6 +96,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             tileDict.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
             tileDict.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("LeapZone"));
+            tileDict.Add(ObjectType.Link, Content.Load<Texture2D>("LinkSymbol"));
             font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
             loadCurrentMap();
@@ -349,7 +350,7 @@ namespace PlatformerEditor
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE * 4, GRID_SIZE)), Color.White);
 
             else if(currentType == ObjectType.Link)
-                spriteBatch.Draw(tileDict[ObjectType.Player], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
 
             else if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
