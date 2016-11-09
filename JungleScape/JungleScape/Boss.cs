@@ -14,10 +14,12 @@ namespace JungleScape
         List<BossLeapZone> leapList;
         List<GameObject> gObjs;
         Rectangle bottomSide;
+        Rectangle leftSide;
+        Rectangle rightSide;
         public BossLeapZone currentZone { get; set; }
         Player player1;
         double leapTimer;
-        const int MAX_FALL_SPEED = -11;
+        const int MAX_FALL_SPEED = 11;
 
         public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
         {
@@ -25,8 +27,11 @@ namespace JungleScape
             gObjs = env;
 
             speedX = 0;
+            speedY = 3;
             leapTimer = 0;
-            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 8, 1);
+            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
+            leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
+            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height - 3);
         }
 
         // methods
@@ -36,38 +41,56 @@ namespace JungleScape
             // update the timer
             leapTimer++;
 
+            //update x values
+            hitBox.X += speedX;
+            bottomSide.X += speedX;
+            leftSide.X += speedX;
+            rightSide.X += speedX;
+            
+            //update y values
+            hitBox.Y += speedY;
+            bottomSide.Y += speedY;
+            leftSide.Y += speedY;
+            rightSide.Y += speedY;
+            speedY++;
 
             // implement gravity for the boss
-            foreach (GameObject platforms in gObjs)
+            foreach (GameObject platform in gObjs)
             {
-                if (platforms is Player)
-                    player1 = (Player)platforms;
-                /*
-                if (player1.hitBox.X > hitBox.X && CheckLedges())
-                    hitBox.X += speedX;
-                else if (player1.hitBox.X < hitBox.X && CheckLedges())
-                    hitBox.X -= speedX;
-                */
+                if (platform is Player)
+                {
+                    player1 = (Player)platform;
+                    /*
+                    if (player1.hitBox.X > hitBox.X && CheckLedges())
+                        hitBox.X += speedX;
+                    else if (player1.hitBox.X < hitBox.X && CheckLedges())
+                        hitBox.X -= speedX;
+                    */
+                }
+                
 
-                hitBox.X += speedX;
-
-                if (platforms.DetectCollision(this))
+                if (platform.hitBox.Intersects(bottomSide) && !(platform is BossLeapZone))
                 {
                     // if the boss is on a platform, stop it from falling
                     speedY = 0;
-
-                    BossResetY();
+                    BossResetY(platform);
                 }
-                else
+                if(platform.hitBox.Intersects(rightSide) && !(platform is BossLeapZone))
                 {
-                    // have the boss fall if not on a platform
-                    hitBox.Y -= speedY;
-                    speedY--;
+                    //speedX = 0;
+                    BossResetXRight(platform);
+                }
+                if(platform.hitBox.Intersects(leftSide) && !(platform is BossLeapZone))
+                {
+                    //speedX = 0;
+                    BossResetXLeft(platform);
                 }
             }
+            
+            
 
             // maximum falling speed. Probably won't be used but you never know.
-            if (speedY < MAX_FALL_SPEED)
+            if (speedY > MAX_FALL_SPEED)
             {
                 speedY = MAX_FALL_SPEED;
             }
@@ -113,14 +136,16 @@ namespace JungleScape
                     int x1 = zone.hitBox.X;  //target x
                     int y1 = zone.hitBox.Y;  //target y
 
+                    
                     //constant x speed in direction of zone
-                    int dx = 1;
+                    int dx = 4;
                     if (x1 - x0 > 0)
                         speedX = dx;
                     else if (x1 - x0 < 0)
                         speedX = -dx;
                     else if (x1 - x0 == 0)
                         speedX = 0;
+                    
 
 
                     /*
@@ -206,14 +231,27 @@ namespace JungleScape
         }
 
         // BossResetY does basically the same thing as the PlayerResetY
-        public void BossResetY()
+        public void BossResetY(GameObject platform)
         {
-            foreach(GameObject platform in gObjs)
+            if(platform.hitBox.Intersects(bottomSide))
             {
-                if(platform.hitBox.Intersects(bottomSide))
-                {
-                    hitBox.Y = platform.hitBox.Y - hitBox.Height;
-                }
+                hitBox.Y = platform.hitBox.Y - hitBox.Height;
+            }
+        }
+
+        public void BossResetXLeft(GameObject platform)
+        {
+            if (platform.hitBox.Intersects(bottomSide))
+            {
+                hitBox.X = platform.hitBox.X + platform.hitBox.Width;
+            }
+        }
+
+        public void BossResetXRight(GameObject platform)
+        {
+            if (platform.hitBox.Intersects(bottomSide))
+            {
+                hitBox.X = platform.hitBox.X - hitBox.Width;
             }
         }
 
