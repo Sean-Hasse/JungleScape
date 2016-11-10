@@ -62,7 +62,7 @@ namespace JungleScape
             leftSide.Y -= speedY;
             rightSide.Y -= speedY;
             speedY--;
-
+            
             foreach(Environment platform in gObjs.OfType<Environment>())
             {
                 if(bottomSide.Intersects(platform.hitBox) && !isPouncing)
@@ -84,18 +84,19 @@ namespace JungleScape
                 }
             }
 
+            if(speedY != 0)
+                isPouncing = true;  // doesn't get set to false yet
+
             if (speedY >= MAX_FALL_SPEED)
                 speedY = MAX_FALL_SPEED;
             
-            if (leapTimer >= 30 && speedY == 0)
+            if (leapTimer >= 30 && !isPouncing)
                Pounce();
         }
 
         // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
         private void Pounce()
         {
-            isPouncing = true;  // doesn't get set to false yet
-
             foreach(BossLeapZone zone in leapList)
             {
                 if (DetectCollision(zone))
