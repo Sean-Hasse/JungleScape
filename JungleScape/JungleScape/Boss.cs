@@ -26,8 +26,8 @@ namespace JungleScape
             leapList = lList;
             gObjs = env;
 
-            speedX = 0;
-            speedY = 3;
+            speedX = 2;
+            speedY = 0;
             leapTimer = 0;
             bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
             leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
@@ -38,6 +38,13 @@ namespace JungleScape
         // Move method finds the player,  has the boss move towards them,  calls the Pounce method when appropriate, .
         public override void Move()
         {
+            // TEMP MOVE CODE. FROM ENEMEY
+            if (!CheckLedges())
+            {
+                speedX = -speedX;
+            }
+
+
             // update the timer
             leapTimer++;
 
@@ -52,51 +59,9 @@ namespace JungleScape
             bottomSide.Y += speedY;
             leftSide.Y += speedY;
             rightSide.Y += speedY;
-            speedY++;
-
-            // implement gravity for the boss
-            foreach (GameObject platform in gObjs)
-            {
-                if (platform is Player)
-                {
-                    player1 = (Player)platform;
-                    /*
-                    if (player1.hitBox.X > hitBox.X && CheckLedges())
-                        hitBox.X += speedX;
-                    else if (player1.hitBox.X < hitBox.X && CheckLedges())
-                        hitBox.X -= speedX;
-                    */
-                }
-                
-
-                if (platform.hitBox.Intersects(bottomSide) && !(platform is BossLeapZone))
-                {
-                    // if the boss is on a platform, stop it from falling
-                    speedY = 0;
-                    BossResetY(platform);
-                }
-                if(platform.hitBox.Intersects(rightSide) && !(platform is BossLeapZone))
-                {
-                    //speedX = 0;
-                    BossResetXRight(platform);
-                }
-                if(platform.hitBox.Intersects(leftSide) && !(platform is BossLeapZone))
-                {
-                    //speedX = 0;
-                    BossResetXLeft(platform);
-                }
-            }
             
-            
-
-            // maximum falling speed. Probably won't be used but you never know.
-            if (speedY > MAX_FALL_SPEED)
-            {
-                speedY = MAX_FALL_SPEED;
-            }
-
-            if (leapTimer >= 30)
-                Pounce();
+            //if (leapTimer >= 30)
+            //   Pounce();
         }
 
         // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
@@ -131,19 +96,19 @@ namespace JungleScape
                 if (zone.DetectCollision(player1))
                 {
 
-                    int x0 = hitBox.X;  //start x
-                    int y0 = hitBox.Y;  //start y
-                    int x1 = zone.hitBox.X;  //target x
-                    int y1 = zone.hitBox.Y;  //target y
+                    int xPos = hitBox.X;  //start x
+                    int yPos = hitBox.Y;  //start y
+                    int xZone = zone.hitBox.X;  //target x
+                    int yZone = zone.hitBox.Y;  //target y
 
                     
                     //constant x speed in direction of zone
                     int dx = 4;
-                    if (x1 - x0 > 0)
+                    if (xZone - xPos > 0)
                         speedX = dx;
-                    else if (x1 - x0 < 0)
+                    else if (xZone - xPos < 0)
                         speedX = -dx;
-                    else if (x1 - x0 == 0)
+                    else if (xZone - xPos == 0)
                         speedX = 0;
                     
 
