@@ -61,6 +61,9 @@ namespace JungleScape
 
         List<Enemy> enemies = new List<Enemy>();
         public static List<SoundEffect> soundEffects;
+        public static List<Song> songs;
+
+        private int gameMusicTimer;
 
         //Texture2D background;
 
@@ -81,6 +84,7 @@ namespace JungleScape
             this.Window.AllowUserResizing = true;
 
             soundEffects = new List<SoundEffect>();
+            songs = new List<Song>();
         }
 
         /* possible fix to updating the screen res
@@ -155,8 +159,11 @@ namespace JungleScape
             levelMap.loadMap(textures);
             playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
 
-            //sound effects
+            //sound effects and music
             soundEffects.Add(Content.Load<SoundEffect>("bowFire1"));
+
+            songs.Add(Content.Load<Song>("Game"));
+            songs.Add(Content.Load<Song>("GameOver"));
         }
 
         /// <summary>
@@ -295,6 +302,14 @@ namespace JungleScape
 
 
                 case GameState.Game:
+                    if (gameMusicTimer == 0)
+                    {
+                        MediaPlayer.Volume = .25f;
+                        MediaPlayer.Play(songs[0]);
+                        MediaPlayer.IsRepeating = true;
+                    }
+                    gameMusicTimer++;
+
                     playerCamRef = levelMap.findPlayer();
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
@@ -414,6 +429,12 @@ namespace JungleScape
                     break;
 
                 case GameState.GameOver:
+
+                    MediaPlayer.Pause();
+                    MediaPlayer.Volume = .25f;
+                    MediaPlayer.Play(songs[1]);
+                    MediaPlayer.IsRepeating = true;
+
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         gameOverIndex += 1;
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))

@@ -157,3 +157,15 @@
 /processorParam:TextureFormat=Color
 /build:ClearLeapZone.png
 
+#begin GameOver.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameOver.mp3
+
+#begin Game.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Game.mp3
+
