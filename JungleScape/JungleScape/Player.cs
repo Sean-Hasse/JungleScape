@@ -156,6 +156,9 @@ namespace JungleScape
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
 
+                    //plays fireing arrow sound
+                    Game1.PlaySound(0);
+
                     // reset timer
                     timerArrow = 0;
 
@@ -166,6 +169,7 @@ namespace JungleScape
                 {
                     arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 40, 10), arrowImage, 1);
                     arrow.direction = "diagonal left";
+                    Game1.PlaySound(0);
                     timerArrow = 0;
                 }
 
@@ -174,6 +178,7 @@ namespace JungleScape
                 {
                     arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 40, 10), arrowImage, 1);
                     arrow.direction = "up";
+                    Game1.PlaySound(0);
                     timerArrow = 0;
                 }
 
@@ -182,6 +187,7 @@ namespace JungleScape
                 {
                     arrow = new Arrow(12, 0, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y + hitBox.Height / 2 - 15, 40, 10), arrowImage, 1);
                     arrow.direction = "right";
+                    Game1.PlaySound(0);
                     timerArrow = 0;
                 }
 
@@ -190,6 +196,7 @@ namespace JungleScape
                 {
                     arrow = new Arrow(-12, 0, new Rectangle(hitBox.X, hitBox.Y + hitBox.Height / 2 - 10, 40, 10), arrowImage, 1);
                     arrow.direction = "left";
+                    Game1.PlaySound(0);
                     timerArrow = 0;
                 }
             
@@ -212,8 +219,7 @@ namespace JungleScape
         private string Aim()
         {
             if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Right))
-            {
-                Game1.PlaySound(0);
+            {  
                 return "diagonal right";
             }
             else if (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Left))
