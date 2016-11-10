@@ -27,7 +27,7 @@ namespace JungleScape
         public Player(Rectangle hBox, Texture2D texture, int hp) : base(hBox, texture, hp)
         {
             keyState = new KeyboardState();
-            speedX = 6;
+            speedX = 12;
             speedY = 0;
         }
 

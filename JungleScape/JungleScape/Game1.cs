@@ -159,6 +159,12 @@ namespace JungleScape
             levelMap.loadMap(textures);
             playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
 
+            // give the boss the player to follow
+            foreach(Boss boss in levelMap.objectMap.OfType<Boss>())
+            {
+                boss.Player1 = levelMap.findPlayer();
+            }
+
             //sound effects and music
             soundEffects.Add(Content.Load<SoundEffect>("bowFire1"));
 
