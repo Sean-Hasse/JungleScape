@@ -66,7 +66,7 @@ namespace JungleScape
 
         public static void PlaySound(int n)
         {
-            soundEffects[n].CreateInstance().Play();
+            soundEffects[n].Play();
         }
 
         public Game1()
@@ -306,7 +306,6 @@ namespace JungleScape
 
                             // populate the list of arrows with valid arrows to be drawn later
                             Arrow firedArrow = player1.FireArrow(arrowImage, levelMap.objectMap);
-                            //soundEffects[0].CreateInstance();
 
                             if (firedArrow != null)
                             {
