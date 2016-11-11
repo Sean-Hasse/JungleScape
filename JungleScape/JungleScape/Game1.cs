@@ -51,6 +51,8 @@ namespace JungleScape
         List<Arrow> arrows;
         //MapEditor editor;
         Texture2D background;
+        Texture2D logo;
+
         public static int desiredBBWidth = 1600;
         public static int desiredBBHeight = 900;
 
@@ -158,6 +160,7 @@ namespace JungleScape
             playerTextures.Add(Content.Load<Texture2D>("BasicPlayer45"));
             playerTextures.Add(Content.Load<Texture2D>("BasicPlayer90"));
             background = Content.Load<Texture2D>("BasicBackground");
+            logo = Content.Load<Texture2D>("Jungle Escape Logo");
 
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
