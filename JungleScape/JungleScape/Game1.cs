@@ -389,9 +389,10 @@ namespace JungleScape
                     }
 
                     // check if the new list of enemies is empty
-                    if (enemies.Count == 0)
+                    foreach (Boss boss in enemies.OfType<Boss>())
                     {
-                        myState = GameState.Victory;
+                        if(!boss.alive)
+                            myState = GameState.Victory;
                     }
 
                     // reset the enemy list to repopulate on the next update

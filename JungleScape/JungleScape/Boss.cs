@@ -65,13 +65,11 @@ namespace JungleScape
                 speedY--;
 
             // move properly along edges
-            bool onLedge = CheckLedges();
-
-            if (!isPouncing && onLedge && speedX > 0)
+            if (!isPouncing && CheckLedges() && speedX > 0)
                 speedX = 4;
-            else if (!isPouncing && onLedge && speedX <= 0)
+            else if (!isPouncing && CheckLedges() && speedX <= 0)
                 speedX = -4;
-            else if (!isPouncing && !onLedge)
+            else if (!isPouncing && !CheckLedges())
                 speedX = -speedX;
 
 
