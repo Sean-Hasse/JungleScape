@@ -61,9 +61,21 @@ namespace JungleScape
             bottomSide.Y -= speedY;
             leftSide.Y -= speedY;
             rightSide.Y -= speedY;
-            speedY--;
-            
-            foreach(Environment platform in gObjs.OfType<Environment>())
+            if (isPouncing)
+                speedY--;
+
+            // move properly along edges
+            bool onLedge = CheckLedges();
+
+            if (!isPouncing && onLedge && speedX > 0)
+                speedX = 4;
+            else if (!isPouncing && onLedge && speedX <= 0)
+                speedX = -4;
+            else if (!isPouncing && !onLedge)
+                speedX = -speedX;
+
+
+            foreach (Environment platform in gObjs.OfType<Environment>())
             {
                 if(bottomSide.Intersects(platform.hitBox) && !isPouncing)
                 {
@@ -144,9 +156,12 @@ namespace JungleScape
                         speedY = (int)pounceSpeedY;
                     }
 
-                    speedX = -pounceSpeedX;
+                    speedX = pounceSpeedX;
                 }
-                // if the boss does not detect the player in any leap zones it can move to, do nothing until next pounce
+
+                // determine if the jump is done
+                if (DetectCollision(zone))
+                    isPouncing = false;
             }
         }
 
