@@ -159,6 +159,12 @@ namespace JungleScape
             levelMap.loadMap(textures);
             playerCamRef = new Player(new Rectangle(desiredBBWidth / 2, desiredBBHeight / 2, 0, 0), null, 0);
 
+            // give the boss the player to follow
+            foreach(Boss boss in levelMap.objectMap.OfType<Boss>())
+            {
+                boss.Player1 = levelMap.findPlayer();
+            }
+
             //sound effects and music
             soundEffects.Add(Content.Load<SoundEffect>("bowFire1"));
 
@@ -195,6 +201,7 @@ namespace JungleScape
 
             switch (myState)
             {
+                // Each gamestste checks for keypresses to navigate through a menu, and switch to the proper gamestate based on a current index
                 case GameState.Menu:
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         menuIndex += 1;
@@ -302,6 +309,7 @@ namespace JungleScape
 
 
                 case GameState.Game:
+                    //Play normal game theme
                     if (gameMusicTimer == 0)
                     {
                         MediaPlayer.Volume = .25f;
@@ -430,6 +438,7 @@ namespace JungleScape
 
                 case GameState.GameOver:
 
+                    //play gameOver theme
                     MediaPlayer.Pause();
                     MediaPlayer.Volume = .25f;
                     MediaPlayer.Play(songs[1]);

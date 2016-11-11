@@ -19,6 +19,7 @@ namespace JungleScape
         public BossLeapZone currentZone { get; set; }
         Player player1;
         double leapTimer;
+        bool isPouncing;
         const int MAX_FALL_SPEED = 11;
 
         public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
@@ -26,25 +27,26 @@ namespace JungleScape
             leapList = lList;
             gObjs = env;
 
-            speedX = 2;
+            speedX = 0;
             speedY = 0;
             leapTimer = 0;
             bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
             leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
             rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height - 3);
+            isPouncing = false;
+        }
+
+        // propterty
+        public Player Player1
+        {
+            get { return player1; }
+            set { player1 = value; }
         }
 
         // methods
         // Move method finds the player,  has the boss move towards them,  calls the Pounce method when appropriate, .
         public override void Move()
         {
-            // TEMP MOVE CODE. FROM ENEMEY
-            if (!CheckLedges())
-            {
-                speedX = -speedX;
-            }
-
-
             // update the timer
             leapTimer++;
 
@@ -55,13 +57,41 @@ namespace JungleScape
             rightSide.X += speedX;
             
             //update y values
-            hitBox.Y += speedY;
-            bottomSide.Y += speedY;
-            leftSide.Y += speedY;
-            rightSide.Y += speedY;
+            hitBox.Y -= speedY;
+            bottomSide.Y -= speedY;
+            leftSide.Y -= speedY;
+            rightSide.Y -= speedY;
+            speedY--;
             
-            //if (leapTimer >= 30)
-            //   Pounce();
+            foreach(Environment platform in gObjs.OfType<Environment>())
+            {
+                if(bottomSide.Intersects(platform.hitBox) && !isPouncing)
+                {
+                    speedY = 0;
+                    BossResetY(platform);
+                }
+
+                if(rightSide.Intersects(platform.hitBox) && !isPouncing)
+                {
+                    speedX = 0;
+                    BossResetXRight(platform);
+                }
+
+                if(leftSide.Intersects(platform.hitBox) && !isPouncing)
+                {
+                    speedX = 0;
+                    BossResetXLeft(platform);
+                }
+            }
+
+            if(speedY != 0)
+                isPouncing = true;  // doesn't get set to false yet
+
+            if (speedY >= MAX_FALL_SPEED)
+                speedY = MAX_FALL_SPEED;
+            
+            if (leapTimer >= 30 && !isPouncing)
+               Pounce();
         }
 
         // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
@@ -97,99 +127,24 @@ namespace JungleScape
                 {
 
                     int xPos = hitBox.X;  //start x
-                    int yPos = hitBox.Y;  //start y
+                    int yPos = hitBox.Bottom;  //start y
                     int xZone = zone.hitBox.X;  //target x
-                    int yZone = zone.hitBox.Y;  //target y
-
+                    int yZone = zone.hitBox.Bottom;  //target y
                     
-                    //constant x speed in direction of zone
-                    int dx = 4;
-                    if (xZone - xPos > 0)
-                        speedX = dx;
-                    else if (xZone - xPos < 0)
-                        speedX = -dx;
-                    else if (xZone - xPos == 0)
-                        speedX = 0;
-                    
+                    int xDistance = xZone - xPos;    // will be negative if the boss is to the right of the leap zone
+                    int yDistance = yZone - yPos;    // will be negative if the boss is below the leap zone
 
+                    // kinematic equation stuff
+                    int pounceSpeedX = 10;
+                    float time = (2*(xDistance)/pounceSpeedX);
+                    float pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
 
-                    /*
-                    // get the boss to leap to it
-
-                    //so here's how I want to do this: The Boss compares its position to the position of the LeapZone it's targeting
-                    //If the difference in x is negative or positive will affect the speed. The Y comparison (less, equal, greater) will then inform which jump it will perform
-                    
-                    int xCompare = zone.hitBox.X - hitBox.X;    // will be negative if the boss is to the right of the leap zone
-                    int yCompare = zone.hitBox.Y - hitBox.Y;    // will be negative if the boss is below the leap zone
-
-
-                    if (yCompare < 0)
+                    if (yDistance <= 0)
                     {
-                        if (!DetectCollision(zone))  // keeps the boss moving until it lands in the zone it's targeted
-                        {
-                            if (xCompare < 0)
-                                hitBox.X -= speedX;     // reverses the speed of the boss to make it move left if it's to the right of the leap zone
-                            else
-                                hitBox.X += speedX;
-
-                            if (xCompare - hitBox.X <= 100)
-                            {
-                                // insert code for jumping to a platform above the boss
-                                speedY = 18;
-                                hitBox.Y -= speedY;
-                                speedY--;
-
-                                // reset the leap timer once pounce work has been done
-                                leapTimer = 0;
-                            }
-                        }
-                    }
-                    if (yCompare == 0)
-                    {
-                        if (!DetectCollision(zone))
-                        {
-                            if (xCompare < 0)
-                                hitBox.X -= speedX;
-                            else
-                                hitBox.X += speedX;
-
-                            if (xCompare - hitBox.X <= 100)
-                            {
-                                // insert code for jumping to a platform on the same level as the boss
-                                speedY = 18;
-                                hitBox.Y -= speedY;
-                                speedY--;
-
-                                leapTimer = 0;
-                            }
-                        }
-                    }
-                    if(yCompare > 0)
-                    {
-                        if (!DetectCollision(zone))
-                        {
-                            if (xCompare < 0)
-                                hitBox.X -= speedX;
-                            else
-                                hitBox.X += speedX;
-
-                            if (xCompare - hitBox.X <= 100)
-                            {
-                                // insert code for jumping to a platform below the boss
-                                speedY = 18;
-                                hitBox.Y -= speedY;
-                                speedY--;
-
-                                leapTimer = 0;
-                            }
-                        }
+                        speedY = (int)pounceSpeedY;
                     }
 
-                    */
-
-                    // set the current leap zone to the zone the Boss is in
-                    currentZone = zone;
-                    break;
+                    speedX = -pounceSpeedX;
                 }
                 // if the boss does not detect the player in any leap zones it can move to, do nothing until next pounce
             }
