@@ -64,6 +64,7 @@ namespace JungleScape
         public static List<Song> songs;
 
         private int gameMusicTimer;
+        private bool once;
 
         //Texture2D background;
 
@@ -112,6 +113,9 @@ namespace JungleScape
 
             // create a list of arrows to be drawn
             arrows = new List<Arrow>();
+
+            //set music timer back to 0 (see logic when playing songs)
+            gameMusicTimer = 0;
 
             base.Initialize();
         }
@@ -312,6 +316,7 @@ namespace JungleScape
                     //Play normal game theme
                     if (gameMusicTimer == 0)
                     {
+                        MediaPlayer.Stop();
                         MediaPlayer.Volume = .25f;
                         MediaPlayer.Play(songs[0]);
                         MediaPlayer.IsRepeating = true;
@@ -384,7 +389,10 @@ namespace JungleScape
                             player1 = (Player)chara;
 
                             if (player1.alive == false || player1.hitBox.Y >= backgroundHeight)
+                            {
+                                gameMusicTimer = 0;
                                 myState = GameState.GameOver;
+                            }   
                         }
                     }
 
@@ -440,10 +448,14 @@ namespace JungleScape
                 case GameState.GameOver:
 
                     //play gameOver theme
-                    MediaPlayer.Pause();
-                    MediaPlayer.Volume = .25f;
-                    MediaPlayer.Play(songs[1]);
-                    MediaPlayer.IsRepeating = true;
+                    if (gameMusicTimer == 0)
+                    {
+                        MediaPlayer.Stop();
+                        MediaPlayer.Volume = .25f;
+                        MediaPlayer.Play(songs[1]);
+                        MediaPlayer.IsRepeating = true;
+                    }
+                    gameMusicTimer++;
 
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         gameOverIndex += 1;
