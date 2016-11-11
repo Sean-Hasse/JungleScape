@@ -201,6 +201,7 @@ namespace JungleScape
 
             switch (myState)
             {
+                // Each gamestste checks for keypresses to navigate through a menu, and switch to the proper gamestate based on a current index
                 case GameState.Menu:
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         menuIndex += 1;
@@ -308,6 +309,7 @@ namespace JungleScape
 
 
                 case GameState.Game:
+                    //Play normal game theme
                     if (gameMusicTimer == 0)
                     {
                         MediaPlayer.Volume = .25f;
@@ -436,6 +438,7 @@ namespace JungleScape
 
                 case GameState.GameOver:
 
+                    //play gameOver theme
                     MediaPlayer.Pause();
                     MediaPlayer.Volume = .25f;
                     MediaPlayer.Play(songs[1]);
