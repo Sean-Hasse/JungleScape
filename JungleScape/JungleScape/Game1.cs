@@ -177,6 +177,8 @@ namespace JungleScape
 
             songs.Add(Content.Load<Song>("Game"));
             songs.Add(Content.Load<Song>("GameOver"));
+            songs.Add(Content.Load<Song>("BossEpic"));
+            songs.Add(Content.Load<Song>("menu1"));
         }
 
         /// <summary>
@@ -210,6 +212,15 @@ namespace JungleScape
             {
                 // Each gamestste checks for keypresses to navigate through a menu, and switch to the proper gamestate based on a current index
                 case GameState.Menu:
+                    if (gameMusicTimer == 0)
+                    {
+                        MediaPlayer.Stop();
+                        MediaPlayer.Volume = .25f;
+                        MediaPlayer.Play(songs[3]);
+                        MediaPlayer.IsRepeating = true;
+                    }
+                    gameMusicTimer++;
+
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         menuIndex += 1;
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
@@ -476,7 +487,10 @@ namespace JungleScape
                         myState = GameState.Game;
                     }
                     if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 1)
+                    {
+                        gameMusicTimer = 0;
                         myState = GameState.Menu;
+                    }
                     else if (SingleKeyPress(Keys.Enter, kbState, previousKbState) && gameOverIndex == 2)
                         Exit();
 
@@ -525,7 +539,7 @@ namespace JungleScape
             {
                 case GameState.Menu:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
-                    spriteBatch.DrawString(testFont2, "JungleScape", new Vector2(10, 0), Color.White);
+                    spriteBatch.Draw(logo, new Rectangle(0, 0, desiredBBWidth/3, desiredBBHeight/6), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
                     spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.White);
