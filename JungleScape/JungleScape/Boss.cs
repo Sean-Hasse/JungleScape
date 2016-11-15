@@ -75,33 +75,44 @@ namespace JungleScape
 
             foreach (Environment platform in gObjs.OfType<Environment>())
             {
-                if(bottomSide.Intersects(platform.hitBox) && !isPouncing)
-                {
-                    speedY = 0;
-                    BossResetY(platform);
-                }
+                if (!isPouncing) {
+                    if (bottomSide.Intersects(platform.hitBox))
+                    {
+                        speedY = 0;
+                        BossResetY(platform);
+                    }
 
-                if(rightSide.Intersects(platform.hitBox) && !isPouncing)
-                {
-                    speedX = 0;
-                    BossResetXRight(platform);
-                }
+                    if (rightSide.Intersects(platform.hitBox))
+                    {
+                        speedX = 0;
+                        BossResetXRight(platform);
+                    }
 
-                if(leftSide.Intersects(platform.hitBox) && !isPouncing)
-                {
-                    speedX = 0;
-                    BossResetXLeft(platform);
+                    if (leftSide.Intersects(platform.hitBox))
+                    {
+                        speedX = 0;
+                        BossResetXLeft(platform);
+                    }
                 }
             }
 
             if(speedY != 0)
-                isPouncing = true;  // doesn't get set to false yet
+                isPouncing = true;
 
             if (speedY >= MAX_FALL_SPEED)
                 speedY = MAX_FALL_SPEED;
             
             if (leapTimer >= 30 && !isPouncing)
                Pounce();
+
+            foreach (BossLeapZone zone in gObjs.OfType<BossLeapZone>())
+            {
+                if (isPouncing && zone != currentZone && DetectCollision(zone))
+                {
+                    isPouncing = false;
+                    break;
+                }
+            }
         }
 
         // Pounce method. Gets a list of BossLeapZones connected to the one it's on, 
@@ -146,20 +157,21 @@ namespace JungleScape
 
                     // kinematic equation stuff
                     int pounceSpeedX = 10;
-                    float time = (2*(xDistance)/pounceSpeedX);
-                    float pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
+                    //float time = (2*(xDistance)/pounceSpeedX);
+                    //pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
 
                     if (yDistance <= 0)
                     {
-                        speedY = (int)pounceSpeedY;
+                        //speedY = (int)pounceSpeedY;
+                        speedY = (int)(3 * Math.Sqrt(((xDistance * xDistance) / (pounceSpeedX * pounceSpeedX)) - (2 * yDistance)));
+                    }
+                    else if (yDistance > 0)
+                    {
+
                     }
 
                     speedX = pounceSpeedX;
                 }
-
-                // determine if the jump is done
-                if (DetectCollision(zone))
-                    isPouncing = false;
             }
         }
 
