@@ -30,9 +30,6 @@ namespace JungleScape
             speedX = 0;
             speedY = 0;
             leapTimer = 0;
-            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
-            leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
-            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height - 3);
             isPouncing = false;
         }
 
@@ -47,20 +44,19 @@ namespace JungleScape
         // Move method finds the player,  has the boss move towards them,  calls the Pounce method when appropriate, .
         public override void Move()
         {
+            // create hitboxes for messing with movement
+            bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
+            leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
+            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height - 3);
+
             // update the timer
             leapTimer++;
 
             //update x values
             hitBox.X += speedX;
-            bottomSide.X += speedX;
-            leftSide.X += speedX;
-            rightSide.X += speedX;
             
             //update y values
             hitBox.Y -= speedY;
-            bottomSide.Y -= speedY;
-            leftSide.Y -= speedY;
-            rightSide.Y -= speedY;
             if (isPouncing)
                 speedY--;
 
@@ -96,15 +92,15 @@ namespace JungleScape
                 }
             }
 
-            if(speedY != 0)
-                isPouncing = true;
 
             if (speedY >= MAX_FALL_SPEED)
                 speedY = MAX_FALL_SPEED;
-            
-            if (leapTimer >= 30 && !isPouncing)
-               Pounce();
 
+            if (leapTimer >= 60 && !isPouncing)
+            {
+                Pounce();
+                leapTimer = 0;
+            }
             foreach (BossLeapZone zone in gObjs.OfType<BossLeapZone>())
             {
                 if (isPouncing && zone != currentZone && DetectCollision(zone))
@@ -146,17 +142,26 @@ namespace JungleScape
             {
                 if (zone.DetectCollision(player1))
                 {
+                    isPouncing = true;
 
-                    int xPos = hitBox.X;  //start x
-                    int yPos = hitBox.Bottom;  //start y
-                    int xZone = zone.hitBox.X;  //target x
-                    int yZone = zone.hitBox.Bottom;  //target y
+                    int xPos = hitBox.X;                //start x
+                    int yPos = hitBox.Bottom;           //start y
+                    int xZone = zone.hitBox.X;          //target x
+                    int yZone = zone.hitBox.Bottom;     //target y
                     
                     int xDistance = xZone - xPos;    // will be negative if the boss is to the right of the leap zone
                     int yDistance = yZone - yPos;    // will be negative if the boss is below the leap zone
 
                     // kinematic equation stuff
-                    int pounceSpeedX = 10;
+                    int pounceSpeedX;
+
+                    if (xDistance < 0)
+                        pounceSpeedX = -10;
+                    else if (xDistance > 0)
+                        pounceSpeedX = 10;
+                    else
+                        pounceSpeedX = 0;
+
                     //float time = (2*(xDistance)/pounceSpeedX);
                     //pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
 
@@ -171,6 +176,7 @@ namespace JungleScape
                     }
 
                     speedX = pounceSpeedX;
+                    break;
                 }
             }
         }
