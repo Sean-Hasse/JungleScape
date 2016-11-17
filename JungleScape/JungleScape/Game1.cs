@@ -539,7 +539,7 @@ namespace JungleScape
             {
                 case GameState.Menu:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
-                    spriteBatch.Draw(logo, new Rectangle(0, 0, desiredBBWidth/3, desiredBBHeight/6), Color.White);
+                    spriteBatch.Draw(logo, new Rectangle(0, 0, desiredBBWidth/6, desiredBBHeight/6), Color.White);
                     spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
                     spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
                     spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.White);
@@ -582,32 +582,66 @@ namespace JungleScape
 
                 case GameState.Instructions:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
-                    spriteBatch.DrawString(testFont, "How To Play The Game:", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the W key to jump.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Combine the keys to move and jump at the same time in one direction.", new Vector2(0, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "Press the spacebar to shoot at an enemy spider.", new Vector2(0, 350), Color.White);
-                    spriteBatch.DrawString(testFont, "To Win:", new Vector2(0, 450), Color.White);
-                    spriteBatch.DrawString(testFont, "Reach the end of the level without dying, there are no checkpoints.", new Vector2(0, 500), Color.White);
-                    spriteBatch.DrawString(testFont, "Be prepared to fight the boss at the end of the game.", new Vector2(0, 550), Color.White);
-                    spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 600), Color.White);
+                    if (desiredBBHeight >= 1080)
+                    {
+                        spriteBatch.DrawString(testFont, "How To Play The Game:", new Vector2(0, 0), Color.White);
+                        spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White);
+                        spriteBatch.DrawString(testFont, "Press the W key to jump.", new Vector2(0, 150), Color.White);
+                        spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 200), Color.White);
+                        spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 250), Color.White);
+                        spriteBatch.DrawString(testFont, "Combine the keys to move and jump at the same time in one direction.", new Vector2(0, 300), Color.White);
+                        spriteBatch.DrawString(testFont, "Press the spacebar to shoot at an enemy spider.", new Vector2(0, 350), Color.White);
+                        spriteBatch.DrawString(testFont, "To Win:", new Vector2(0, 450), Color.White);
+                        spriteBatch.DrawString(testFont, "Reach the end of the level without dying, there are no checkpoints.", new Vector2(0, 500), Color.White);
+                        spriteBatch.DrawString(testFont, "Be prepared to fight the boss at the end of the game.", new Vector2(0, 550), Color.White);
+                        spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 600), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(testFont, "How To Play The Game:", new Vector2(0, 0), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Move and Shoot:", new Vector2(0, 100), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Press the W key to jump.", new Vector2(0, 150), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Press the A key to move left.", new Vector2(0, 200), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Press the D key to move right.", new Vector2(0, 250), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Combine the keys to move and jump at the same time in one direction.", new Vector2(0, 300), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Press the spacebar to shoot at an enemy spider.", new Vector2(0, 350), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "To Win:", new Vector2(0, 450), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Reach the end of the level without dying, there are no checkpoints.", new Vector2(0, 500), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Be prepared to fight the boss at the end of the game.", new Vector2(0, 550), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "hit 'Enter' to return", new Vector2(0, 600), Color.White, 0f, new Vector2(0, 0), .75f, SpriteEffects.None, 0f);
+                    }
                     break;
 
                 case GameState.Story:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
-                    spriteBatch.DrawString(testFont, "JungleScape Storyline:", new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(testFont, "The player was going to a professional archery competition in South America.", new Vector2(0, 100), Color.White);
-                    spriteBatch.DrawString(testFont, "Suddenly his plane crashes in the middle of wild, unexplored jungle.", new Vector2(0, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "The player has to survive huge bugs and wild animals.", new Vector2(0, 200), Color.White);
-                    spriteBatch.DrawString(testFont, "All while solving puzzles to find his way out.", new Vector2(0, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Creators:", new Vector2(0, 350), Color.White);
-                    spriteBatch.DrawString(testFont, "Project Manager: Alexia Bernardo", new Vector2(0, 400), Color.White);
-                    spriteBatch.DrawString(testFont, "Architect: Sean Hasse", new Vector2(0, 450), Color.White);
-                    spriteBatch.DrawString(testFont, "Game Designer: Brady Murren", new Vector2(0, 500), Color.White);
-                    spriteBatch.DrawString(testFont, "Interface Designer: Max Kaiser", new Vector2(0, 550), Color.White);
-                    spriteBatch.DrawString(testFont, "hit ENTER to advance to game", new Vector2(0, 650), Color.White);
+                    if (desiredBBHeight >= 1080)
+                    {
+                        spriteBatch.DrawString(testFont, "JungleScape Storyline:", new Vector2(0, 0), Color.White);
+                        spriteBatch.DrawString(testFont, "The player was going to a professional archery competition in Rio.", new Vector2(0, 100), Color.White);
+                        spriteBatch.DrawString(testFont, "Suddenly his plane crashes in the middle of wild, unexplored jungle.", new Vector2(0, 150), Color.White);
+                        spriteBatch.DrawString(testFont, "The player has to survive huge bugs and wild animals.", new Vector2(0, 200), Color.White);
+                        spriteBatch.DrawString(testFont, "All while solving puzzles to find his way out.", new Vector2(0, 250), Color.White);
+                        spriteBatch.DrawString(testFont, "Creators:", new Vector2(0, 350), Color.White);
+                        spriteBatch.DrawString(testFont, "Project Manager: Alexia Bernardo", new Vector2(0, 400), Color.White);
+                        spriteBatch.DrawString(testFont, "Architect: Sean Hasse", new Vector2(0, 450), Color.White);
+                        spriteBatch.DrawString(testFont, "Game Designer: Brady Murren", new Vector2(0, 500), Color.White);
+                        spriteBatch.DrawString(testFont, "Interface Designer: Max Kaiser", new Vector2(0, 550), Color.White);
+                        spriteBatch.DrawString(testFont, "hit ENTER to advance to game", new Vector2(0, 650), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(testFont, "JungleScape Storyline:", new Vector2(0, 0), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "The player was going to a professional archery competition in Rio.", new Vector2(0, 100), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Suddenly his plane crashes in the middle of wild, unexplored jungle.", new Vector2(0, 150), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "The player has to survive huge bugs and wild animals.", new Vector2(0, 200), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "All while solving puzzles to find his way out.", new Vector2(0, 250), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Creators:", new Vector2(0, 350), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Project Manager: Alexia Bernardo", new Vector2(0, 400), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Architect: Sean Hasse", new Vector2(0, 450), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Game Designer: Brady Murren", new Vector2(0, 500), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "Interface Designer: Max Kaiser", new Vector2(0, 550), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                        spriteBatch.DrawString(testFont, "hit ENTER to advance to game", new Vector2(0, 650), Color.White, 0f, new Vector2(0, 0), .6f, SpriteEffects.None, 0f);
+                    }
                     break;
 
                 case GameState.Editor:
