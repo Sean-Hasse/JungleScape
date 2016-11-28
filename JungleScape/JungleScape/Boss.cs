@@ -77,18 +77,6 @@ namespace JungleScape
                         speedY = 0;
                         BossResetY(platform);
                     }
-
-                    if (rightSide.Intersects(platform.hitBox))
-                    {
-                        speedX = 0;
-                        BossResetXRight(platform);
-                    }
-
-                    if (leftSide.Intersects(platform.hitBox))
-                    {
-                        speedX = 0;
-                        BossResetXLeft(platform);
-                    }
                 }
             }
 
