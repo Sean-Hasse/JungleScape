@@ -52,7 +52,7 @@ namespace JungleScape
         //MapEditor editor;
         Texture2D background;
         Texture2D logo;
-
+        
         public static int desiredBBWidth = 1600;
         public static int desiredBBHeight = 900;
 
@@ -145,8 +145,8 @@ namespace JungleScape
             textures.Add(ObjectType.Enemy, Content.Load<Texture2D>("SpiderEnemy"));
             textures.Add(ObjectType.PlainBrick, Content.Load<Texture2D>("PlainPlatformerBrick"));
             textures.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
-
             textures.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("ClearLeapZone"));
+            //textures.Add(ObjectType.Rock, Content.Load<Texture2D>("black_rock"));
 
             // load the sprite for the arrow
             arrowImage = Content.Load<Texture2D>("Arrow");
