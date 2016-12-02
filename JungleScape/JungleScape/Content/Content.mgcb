@@ -247,3 +247,21 @@
 /processorParam:TextureFormat=Color
 /build:color_rock.png
 
+#begin menu1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:menu1.mp3
+
+#begin instinct.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:instinct.mp3
+
+#begin BossEpic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BossEpic.mp3
+
