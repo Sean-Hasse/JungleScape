@@ -387,17 +387,15 @@ namespace JungleScape
                     if (SingleKeyPress(Keys.P, kbState, previousKbState) || SingleKeyPress(Keys.Escape, kbState, previousKbState))
                         myState = GameState.Pause;
 
-                    //List<Enemy> enemies = new List<Enemy>();
-                    // Change the gamestates based on the state of the map
+                    // Change the gamestates based on the state of the map and check for player death
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
-                        Player player1;
-                        
-
                         // populate the list of enemies with the current list of enemies in object map
                         if (chara is Enemy)
                             enemies.Add((Enemy)chara);
 
+                        // create Player object
+                        Player player1;
                         if (chara is Player)
                         {
                             player1 = (Player)chara;
@@ -411,11 +409,8 @@ namespace JungleScape
                     }
 
                     // check if the new list of enemies is empty
-                    foreach (Boss boss in enemies.OfType<Boss>())
-                    {
-                        if(!boss.alive)
-                            myState = GameState.Victory;
-                    }
+                    if(enemies.Count == 0)
+                        myState = GameState.Victory;
 
                     // reset the enemy list to repopulate on the next update
                     enemies.Clear();
