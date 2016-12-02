@@ -22,6 +22,7 @@ namespace JungleScape
         bool isPouncing;
         const int MAX_FALL_SPEED = 11;
         bool hasLanded;
+        int accel = 3;
 
         public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
         {
@@ -60,7 +61,7 @@ namespace JungleScape
             //update y values
             hitBox.Y -= speedY;
             if (isPouncing)
-                speedY--;
+                speedY -= accel;
 
             // move properly along edges
             if (!isPouncing && CheckLedges() && speedX > 0)
@@ -93,8 +94,8 @@ namespace JungleScape
             }
 
 
-            if (speedY >= MAX_FALL_SPEED)
-                speedY = MAX_FALL_SPEED;
+            //if (speedY <= MAX_FALL_SPEED)
+                //speedY = MAX_FALL_SPEED;
 
             if (leapTimer >= 60 && !isPouncing)
             {
@@ -155,7 +156,6 @@ namespace JungleScape
 
                     int time = 60;
                     double angle = Math.PI / 4;
-                    int accel = 2;
 
                     // kinematic equation stuff
                     double pounceSpeedX = xDistance / (time * Math.Cos(angle));
@@ -167,7 +167,7 @@ namespace JungleScape
                     {
                         //speedY = (int)pounceSpeedY;
                         //speedY = (int)(3 * Math.Sqrt(((xDistance * xDistance) / (pounceSpeedX * pounceSpeedX)) - (2 * yDistance)));
-                        speedY = (int)((yDistance + (0.5 * time * time * accel)) / (time * Math.Sin(angle)));
+                        speedY = (int)((yDistance + (0.5 * time * time)) / (time * Math.Sin(angle)));
                     }
 
                     speedX = (int)pounceSpeedX;
