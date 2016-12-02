@@ -412,6 +412,8 @@ namespace JungleScape
                     if(enemies.Count == 0)
                         myState = GameState.Victory;
 
+
+
                     // reset the enemy list to repopulate on the next update
                     enemies.Clear();
 
