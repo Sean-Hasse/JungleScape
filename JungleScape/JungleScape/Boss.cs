@@ -21,6 +21,7 @@ namespace JungleScape
         double leapTimer;
         bool isPouncing;
         const int MAX_FALL_SPEED = 11;
+        bool hasLanded;
 
         public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
         {
@@ -31,6 +32,7 @@ namespace JungleScape
             speedY = 0;
             leapTimer = 0;
             isPouncing = false;
+            hasLanded = true;
         }
 
         // propterty
@@ -65,8 +67,18 @@ namespace JungleScape
                 speedX = 4;
             else if (!isPouncing && CheckLedges() && speedX <= 0)
                 speedX = -4;
-            else if (!isPouncing && !CheckLedges())
+            else if (!isPouncing && !CheckLedges() && hasLanded)
                 speedX = -speedX;
+            else if(!isPouncing && !CheckLedges() && !hasLanded)
+            {
+                if (speedX > 0)
+                    speedX = 4;
+                else
+                    speedX = -4;
+
+                if (CheckLedges())
+                    hasLanded = true;
+            }
 
 
             foreach (Environment platform in gObjs.OfType<Environment>())
@@ -131,6 +143,7 @@ namespace JungleScape
                 if (zone.DetectCollision(player1))
                 {
                     isPouncing = true;
+                    hasLanded = false;
 
                     int xPos = hitBox.X;                //start x
                     int yPos = hitBox.Bottom;           //start y
