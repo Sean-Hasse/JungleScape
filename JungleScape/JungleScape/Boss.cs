@@ -140,15 +140,12 @@ namespace JungleScape
                     int xDistance = xZone - xPos;    // will be negative if the boss is to the right of the leap zone
                     int yDistance = yZone - yPos;    // will be negative if the boss is below the leap zone
 
-                    // kinematic equation stuff
-                    int pounceSpeedX;
+                    int time = 60;
+                    double angle = Math.PI / 4;
+                    int accel = 2;
 
-                    if (xDistance < 0)
-                        pounceSpeedX = -10;
-                    else if (xDistance > 0)
-                        pounceSpeedX = 10;
-                    else
-                        pounceSpeedX = 0;
+                    // kinematic equation stuff
+                    double pounceSpeedX = xDistance / (time * Math.Cos(angle));
 
                     //float time = (2*(xDistance)/pounceSpeedX);
                     //pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
@@ -156,14 +153,11 @@ namespace JungleScape
                     if (yDistance <= 0)
                     {
                         //speedY = (int)pounceSpeedY;
-                        speedY = (int)(3 * Math.Sqrt(((xDistance * xDistance) / (pounceSpeedX * pounceSpeedX)) - (2 * yDistance)));
-                    }
-                    else if (yDistance > 0)
-                    {
-
+                        //speedY = (int)(3 * Math.Sqrt(((xDistance * xDistance) / (pounceSpeedX * pounceSpeedX)) - (2 * yDistance)));
+                        speedY = (int)((yDistance + (0.5 * time * time * accel)) / (time * Math.Sin(angle)));
                     }
 
-                    speedX = pounceSpeedX;
+                    speedX = (int)pounceSpeedX;
                     break;
                 }
             }
