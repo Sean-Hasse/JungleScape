@@ -14,8 +14,6 @@ namespace JungleScape
         List<BossLeapZone> leapList;
         List<GameObject> gObjs;
         Rectangle bottomSide;
-        Rectangle leftSide;
-        Rectangle rightSide;
         public BossLeapZone currentZone { get; set; }
         Player player1;
         double leapTimer;
@@ -48,8 +46,6 @@ namespace JungleScape
         {
             // create hitboxes for messing with movement
             bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
-            leftSide = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height - 3);
-            rightSide = new Rectangle((hitBox.X + hitBox.Width), hitBox.Y, 1, hitBox.Height - 3);
 
             // update the timer
             leapTimer++;
@@ -62,21 +58,23 @@ namespace JungleScape
             if (isPouncing)
                 speedY--;
 
+            bool ledgeCheck = BossCheckLedges();
+
             // move properly along edges
-            if (!isPouncing && CheckLedges() && speedX > 0)
+            if (!isPouncing && ledgeCheck && speedX > 0)
                 speedX = 4;
-            else if (!isPouncing && CheckLedges() && speedX <= 0)
+            else if (!isPouncing && ledgeCheck && speedX <= 0)
                 speedX = -4;
-            else if (!isPouncing && !CheckLedges() && hasLanded)
+            else if (!isPouncing && !ledgeCheck && hasLanded)
                 speedX = -speedX;
-            else if(!isPouncing && !CheckLedges() && !hasLanded)
+            else if(!isPouncing && !ledgeCheck && !hasLanded)
             {
                 if (speedX > 0)
                     speedX = 4;
                 else
                     speedX = -4;
 
-                if (CheckLedges())
+                if (ledgeCheck)
                     hasLanded = true;
             }
 
@@ -180,6 +178,37 @@ namespace JungleScape
                     break;
                 }
             }
+        }
+
+        public bool BossCheckLedges()
+        {
+            // how I want to do this: make 2 new Rectangles on the Left and Right edge of the enemy 1 pixel taller than it, and when one of them isn't colliding, reverse the speed
+            Rectangle leftRect = new Rectangle(hitBox.X + 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
+            Rectangle rightRect = new Rectangle(hitBox.X + hitBox.Width - 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a the same type of rectange in the top right
+
+            List<Environment> ledges = new List<Environment>();
+            foreach (GameObject obj in gObjs.OfType<Environment>())
+            {
+                if (obj is Environment)
+                    ledges.Add((Environment)obj);
+            }
+
+            // check all platforms for intersections on either side individually. Then, if there are a total of 2 intersections (1 left, 1 right), return true. Else, false.
+            int onLedge = 0;
+
+            foreach (Environment ledge in ledges)
+            {
+                if (rightRect.Intersects(ledge.hitBox))
+                    onLedge++;
+                if (leftRect.Intersects(ledge.hitBox))
+                    onLedge++;
+            }
+
+            // return true if both sides are on the ledge
+            if (onLedge == 2)
+                return true;
+            else
+                return false;
         }
 
         // BossResetY does basically the same thing as the PlayerResetY
