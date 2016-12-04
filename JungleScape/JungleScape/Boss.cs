@@ -20,6 +20,7 @@ namespace JungleScape
         Player player1;
         double leapTimer;
         bool isPouncing;
+        bool needsAdjusted;
         const int MAX_FALL_SPEED = 11;
         int accel = 3;
 
@@ -28,10 +29,11 @@ namespace JungleScape
             leapList = lList;
             gObjs = env;
 
-            speedX = 0;
+            speedX = 4;
             speedY = 0;
             leapTimer = 0;
             isPouncing = false;
+            needsAdjusted = false;
         }
 
         // propterty
@@ -61,16 +63,32 @@ namespace JungleScape
             hitBox.Y -= speedY;
             if (isPouncing)
                 speedY -= accel;
-            if (!isPouncing)
+            else
             {
-                List<bool> ledgeCheck = BossCheckLedges();
-                bool bothSidesOn = ledgeCheck[0] && ledgeCheck[1];  //check if both left and right sides are on the platform
-                
-                // move properly along edges
-                if (!bothSidesOn && !ledgeCheck[0])
-                    speedX = 4;
-                else if (!bothSidesOn && !ledgeCheck[1])
-                    speedX = -4;
+                if (CheckLedges())
+                {
+                    needsAdjusted = false;
+                    if (speedX > 0)
+                        speedX = 4;
+                    else
+                        speedX = -4;
+                }
+
+                if (needsAdjusted)
+                {
+                    List<bool> ledgeCheck = BossCheckLedges();
+
+                    // move properly along edges
+                    if (!ledgeCheck[0])
+                        speedX = -4;
+                    else if (!ledgeCheck[1])
+                        speedX = 4;
+                }
+                else
+                {
+                    if (!CheckLedges())
+                        speedX = -speedX;
+                }
             }
 
 
@@ -136,6 +154,7 @@ namespace JungleScape
                 if (zone.DetectCollision(player1))
                 {
                     isPouncing = true;
+                    needsAdjusted = true;
 
                     int xPos = hitBox.X;                //start x
                     int yPos = hitBox.Bottom;           //start y
