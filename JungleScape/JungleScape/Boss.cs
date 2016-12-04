@@ -14,12 +14,13 @@ namespace JungleScape
         List<BossLeapZone> leapList;
         List<GameObject> gObjs;
         Rectangle bottomSide;
+        Rectangle leftRect;
+        Rectangle rightRect;
         public BossLeapZone currentZone { get; set; }
         Player player1;
         double leapTimer;
         bool isPouncing;
         const int MAX_FALL_SPEED = 11;
-        bool hasLanded;
         int accel = 3;
 
         public Boss(Rectangle hBox, List<GameObject> env, Texture2D texture, int hp, List<BossLeapZone> lList) : base(hBox, env, texture, hp)
@@ -31,7 +32,6 @@ namespace JungleScape
             speedY = 0;
             leapTimer = 0;
             isPouncing = false;
-            hasLanded = true;
         }
 
         // propterty
@@ -47,6 +47,9 @@ namespace JungleScape
         {
             // create hitboxes for messing with movement
             bottomSide = new Rectangle(hitBox.X + 8, (hitBox.Y + hitBox.Height), hitBox.Width - 16, 1);
+            // how I want to do this: make 2 new Rectangles on the Left and Right edge of the enemy 1 pixel taller than it, and when one of them isn't colliding, reverse the speed
+            leftRect = new Rectangle(hitBox.X + 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
+            rightRect = new Rectangle(hitBox.X + hitBox.Width - 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a the same type of rectange in the top right
 
             // update the timer
             leapTimer++;
@@ -58,25 +61,16 @@ namespace JungleScape
             hitBox.Y -= speedY;
             if (isPouncing)
                 speedY -= accel;
-
-            bool ledgeCheck = BossCheckLedges();
-
-            // move properly along edges
-            if (!isPouncing && ledgeCheck && speedX > 0)
-                speedX = 4;
-            else if (!isPouncing && ledgeCheck && speedX <= 0)
-                speedX = -4;
-            else if (!isPouncing && !ledgeCheck && hasLanded)
-                speedX = -speedX;
-            else if(!isPouncing && !ledgeCheck && !hasLanded)
+            if (!isPouncing)
             {
-                if (speedX > 0)
+                List<bool> ledgeCheck = BossCheckLedges();
+                bool bothSidesOn = ledgeCheck[0] && ledgeCheck[1];  //check if both left and right sides are on the platform
+                
+                // move properly along edges
+                if (!bothSidesOn && !ledgeCheck[0])
                     speedX = 4;
-                else
+                else if (!bothSidesOn && !ledgeCheck[1])
                     speedX = -4;
-
-                if (ledgeCheck)
-                    hasLanded = true;
             }
 
 
@@ -142,7 +136,6 @@ namespace JungleScape
                 if (zone.DetectCollision(player1))
                 {
                     isPouncing = true;
-                    hasLanded = false;
 
                     int xPos = hitBox.X;                //start x
                     int yPos = hitBox.Bottom;           //start y
@@ -153,7 +146,7 @@ namespace JungleScape
                     int yDistance = yZone - yPos;    // will be negative if the boss is below the leap zone
 
                     int time = 60;
-                    double angle = Math.PI / 4;
+                    double angle = Math.PI / 3;
 
                     // kinematic equation stuff
                     double pounceSpeedX = xDistance / (time * Math.Cos(angle));
@@ -161,10 +154,8 @@ namespace JungleScape
                     //float time = (2*(xDistance)/pounceSpeedX);
                     //pounceSpeedY = ((yDistance - ((time * time)/2))/ time);
 
-                    if (yDistance <= 0)
+                    if (yDistance <= 175)
                     {
-                        //speedY = (int)pounceSpeedY;
-                        //speedY = (int)(3 * Math.Sqrt(((xDistance * xDistance) / (pounceSpeedX * pounceSpeedX)) - (2 * yDistance)));
                         speedY = (int)((yDistance + (0.5 * time * time)) / (time * Math.Sin(angle)));
                     }
 
@@ -174,35 +165,22 @@ namespace JungleScape
             }
         }
 
-        public bool BossCheckLedges()
+        public List<bool> BossCheckLedges()
         {
-            // how I want to do this: make 2 new Rectangles on the Left and Right edge of the enemy 1 pixel taller than it, and when one of them isn't colliding, reverse the speed
-            Rectangle leftRect = new Rectangle(hitBox.X + 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a 1 pixel wide rectangle in the top left, and extends 1 pixel past the bottom of the enemy
-            Rectangle rightRect = new Rectangle(hitBox.X + hitBox.Width - 1, hitBox.Y, 2, hitBox.Height + 5);       // creates a the same type of rectange in the top right
+            // check all platforms for intersections on either side individually and return true/false values for both sides
+            List<bool> LRCheck = new List<bool>(2);
+            LRCheck.Add(false);
+            LRCheck.Add(false);
 
-            List<Environment> ledges = new List<Environment>();
-            foreach (GameObject obj in gObjs.OfType<Environment>())
+            foreach (Environment obj in gObjs.OfType<Environment>())
             {
-                if (obj is Environment)
-                    ledges.Add((Environment)obj);
+                if (rightRect.Intersects(obj.hitBox))
+                    LRCheck[0] = true;
+                if (leftRect.Intersects(obj.hitBox))
+                    LRCheck[1] = true;
             }
 
-            // check all platforms for intersections on either side individually. Then, if there are a total of 2 intersections (1 left, 1 right), return true. Else, false.
-            int onLedge = 0;
-
-            foreach (Environment ledge in ledges)
-            {
-                if (rightRect.Intersects(ledge.hitBox))
-                    onLedge++;
-                if (leftRect.Intersects(ledge.hitBox))
-                    onLedge++;
-            }
-
-            // return true if both sides are on the ledge
-            if (onLedge == 2)
-                return true;
-            else
-                return false;
+            return LRCheck;
         }
 
         // BossResetY does basically the same thing as the PlayerResetY
