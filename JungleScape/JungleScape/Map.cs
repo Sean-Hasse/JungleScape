@@ -51,7 +51,7 @@ namespace JungleScape
                         objectMap.Add(new Environment(tile.bounds, textures[ObjectType.PlainBrick]));
                         break;
                     case ObjectType.Player:
-                        objectMap.Add(new Player(tile.bounds, textures[ObjectType.Player], 3));
+                        objectMap.Add(new Player(tile.bounds, textures[ObjectType.Player], 5));
                         break;
                     case ObjectType.Enemy:
                         objectMap.Add(new Enemy(tile.bounds, objectMap, textures[ObjectType.Enemy], 2));

@@ -35,6 +35,7 @@ namespace JungleScape
         Map levelMap;
         Dictionary<ObjectType, Texture2D> textures;
         List<Texture2D> playerTextures;
+        List<Texture2D> healthTextures;
         public static GameState myState;
         GameState previousGameState;
         int menuIndex;
@@ -109,6 +110,7 @@ namespace JungleScape
             levelMap = new Map();
             //editor = new MapEditor();
             playerTextures = new List<Texture2D>();
+            healthTextures = new List<Texture2D>();
             textures = new Dictionary<ObjectType, Texture2D>();
             myState = GameState.Menu;
             menuIndex = 0;
@@ -161,6 +163,13 @@ namespace JungleScape
             playerTextures.Add(Content.Load<Texture2D>("BasicPlayer90"));
             background = Content.Load<Texture2D>("BasicBackground");
             logo = Content.Load<Texture2D>("Jungle Escape Logo");
+
+            //list of healthpoint bars
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarGreen"));
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarYel-Green"));
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarOrange"));
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarYellow"));
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarRed"));
 
             //load the map and initialize the camera player reference object
             levelMap.loadMap(textures);
@@ -672,11 +681,48 @@ namespace JungleScape
                 case GameState.Game:
                     spriteBatch.Draw(background, new Rectangle(0,0,backgroundWidth * 2 , backgroundHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
-                    spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
+                    //spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
+
+                    //player health bars
+                    switch (playerCamRef.healthPoints)
+                    {
+                        case 5:
+                            spriteBatch.Draw(healthTextures[0], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100, 10), Color.White);
+                            break;
+                        case 4:
+                            spriteBatch.Draw(healthTextures[1], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100, 10), Color.White);
+                            break;
+                        case 3:
+                            spriteBatch.Draw(healthTextures[2], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100, 10), Color.White);
+                            break;
+                        case 2:
+                            spriteBatch.Draw(healthTextures[3], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100, 10), Color.White);
+                            break;
+                        case 1:
+                            spriteBatch.Draw(healthTextures[4], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100 , 10), Color.White);
+                            break;
+                        default:
+                            spriteBatch.Draw(healthTextures[4], new Rectangle(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 20, 100, 10), Color.White);
+                            break;
+                    }
 
                     foreach (Enemy enemy in levelMap.objectMap.OfType<Enemy>())
                     {
-                        spriteBatch.DrawString(testFont, enemy.healthPoints.ToString(), new Vector2(enemy.hitBox.X, enemy.hitBox.Y - 45), Color.Red);
+                        //spriteBatch.DrawString(testFont, enemy.healthPoints.ToString(), new Vector2(enemy.hitBox.X, enemy.hitBox.Y - 45), Color.Red);
+
+                        //spider health bars
+                        switch(enemy.healthPoints)
+                        {
+                            case 2:
+                                spriteBatch.Draw(healthTextures[0], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                break;
+                            case 1:
+                                spriteBatch.Draw(healthTextures[4], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White); 
+                                break;
+                            default:
+                                spriteBatch.Draw(healthTextures[4], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                break;
+                        }
                     }
                     
                     // draw the arrows inside of the list of arrows (the ones still valid)
