@@ -67,7 +67,8 @@ namespace JungleScape
         public static List<Song> songs;
 
         private int gameMusicTimer;
-        private bool once;
+        private int BossBattleTimer;
+        private bool BossBattleHasStarted = false;
 
         //Texture2D background;
 
@@ -114,12 +115,14 @@ namespace JungleScape
             textures = new Dictionary<ObjectType, Texture2D>();
             myState = GameState.Menu;
             menuIndex = 0;
+            BossBattleHasStarted = false;
 
             // create a list of arrows to be drawn
             arrows = new List<Arrow>();
 
             //set music timer back to 0 (see logic when playing songs)
             gameMusicTimer = 0;
+            BossBattleTimer = 0;
 
             base.Initialize();
         }
@@ -167,8 +170,8 @@ namespace JungleScape
             //list of healthpoint bars
             healthTextures.Add(Content.Load<Texture2D>("HealthBarGreen"));
             healthTextures.Add(Content.Load<Texture2D>("HealthBarYel-Green"));
-            healthTextures.Add(Content.Load<Texture2D>("HealthBarOrange"));
             healthTextures.Add(Content.Load<Texture2D>("HealthBarYellow"));
+            healthTextures.Add(Content.Load<Texture2D>("HealthBarOrange"));
             healthTextures.Add(Content.Load<Texture2D>("HealthBarRed"));
 
             //load the map and initialize the camera player reference object
@@ -188,6 +191,7 @@ namespace JungleScape
             songs.Add(Content.Load<Song>("GameOver"));
             songs.Add(Content.Load<Song>("BossEpic"));
             songs.Add(Content.Load<Song>("menu1"));
+            songs.Add(Content.Load<Song>("instinct"));
         }
 
         /// <summary>
@@ -346,7 +350,30 @@ namespace JungleScape
                     }
                     gameMusicTimer++;
 
-                    playerCamRef = levelMap.findPlayer();
+                    //If player crosses a leap zone, the boss battle has begun
+                    foreach (BossLeapZone zone in levelMap.objectMap.OfType<BossLeapZone>())
+                    {
+                        if (playerCamRef.DetectCollision(zone))
+                        {
+                            BossBattleHasStarted = true;
+                        }
+                    }
+
+                    //If the boss battle has started, plays the boss theme
+                    if (BossBattleHasStarted)
+                    {
+                        if (BossBattleTimer == 0)
+                        {
+                            MediaPlayer.Stop();
+                            MediaPlayer.Volume = .5f;
+                            MediaPlayer.Play(songs[4]);
+                            MediaPlayer.IsRepeating = true;
+                        }
+                        BossBattleTimer++;
+                    }
+
+
+                        playerCamRef = levelMap.findPlayer();
                     foreach (Character chara in levelMap.objectMap.OfType<Character>())
                     {
                         
@@ -419,7 +446,10 @@ namespace JungleScape
 
                     // check if the new list of enemies is empty
                     if(enemies.Count == 0)
+                    {
+                        gameMusicTimer = 0;
                         myState = GameState.Victory;
+                    }
 
 
 
@@ -503,6 +533,15 @@ namespace JungleScape
                     break;
 
                 case GameState.Victory:
+                    if (gameMusicTimer == 0)
+                    {
+                        MediaPlayer.Stop();
+                        MediaPlayer.Volume = .5f;
+                        MediaPlayer.Play(songs[2]);
+                        MediaPlayer.IsRepeating = true;
+                    }
+                    gameMusicTimer++;
+
                     if (SingleKeyPress(Keys.Down, kbState, previousKbState))
                         victoryIndex += 1;
                     else if (SingleKeyPress(Keys.Up, kbState, previousKbState))
