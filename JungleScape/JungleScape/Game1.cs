@@ -709,6 +709,38 @@ namespace JungleScape
                     foreach (Enemy enemy in levelMap.objectMap.OfType<Enemy>())
                     {
                         //spriteBatch.DrawString(testFont, enemy.healthPoints.ToString(), new Vector2(enemy.hitBox.X, enemy.hitBox.Y - 45), Color.Red);
+                        
+                        //check to see if it's a boss
+                        if(enemy is Boss)
+                        {
+                            switch (enemy.healthPoints)
+                            {
+                                case 10:
+                                case 9:
+                                    spriteBatch.Draw(healthTextures[0], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                                case 8:
+                                case 7:
+                                    spriteBatch.Draw(healthTextures[1], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                                case 6:
+                                case 5:
+                                    spriteBatch.Draw(healthTextures[2], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                                case 4:
+                                case 3:
+                                    spriteBatch.Draw(healthTextures[3], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                                case 2:
+                                case 1:
+                                    spriteBatch.Draw(healthTextures[4], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                                default:
+                                    spriteBatch.Draw(healthTextures[4], new Rectangle(enemy.hitBox.X, enemy.hitBox.Y - 20, 100, 10), Color.White);
+                                    break;
+                            }
+                            continue;
+                        }
 
                         //spider health bars
                         switch(enemy.healthPoints)
