@@ -102,6 +102,7 @@ namespace PlatformerEditor
             tileDict.Add(ObjectType.Boss, Content.Load<Texture2D>("Boss Enemy0"));
             tileDict.Add(ObjectType.BossLeapZone, Content.Load<Texture2D>("ClearLeapZone"));
             tileDict.Add(ObjectType.Link, Content.Load<Texture2D>("LinkSymbol"));
+            tileDict.Add(ObjectType.Rock, Content.Load<Texture2D>("black_rock"));
             font = Content.Load<SpriteFont>("testFont");
             // TODO: use this.Content to load your game content here
             loadCurrentMap();
@@ -170,7 +171,7 @@ namespace PlatformerEditor
             {
                 case ObjectType.Delete:
                     if (SingleKeyPress(Keys.Up))
-                        currentType = ObjectType.Link;
+                        currentType = ObjectType.Rock;
                     if (SingleKeyPress(Keys.Down))
                         currentType = ObjectType.TopBrick;
                     break;
@@ -213,6 +214,12 @@ namespace PlatformerEditor
                 case ObjectType.Link:
                     if (SingleKeyPress(Keys.Up))
                         currentType = ObjectType.BossLeapZone;
+                    if (SingleKeyPress(Keys.Down))
+                        currentType = ObjectType.Rock;
+                    break;
+                case ObjectType.Rock:
+                    if (SingleKeyPress(Keys.Up))
+                        currentType = ObjectType.Link;
                     if (SingleKeyPress(Keys.Down))
                         currentType = ObjectType.Delete;
                     break;
@@ -266,6 +273,9 @@ namespace PlatformerEditor
 
                     else if (currentType == ObjectType.Boss)
                         tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y - GRID_SIZE / 2), new Point(GRID_SIZE * 4, (int)(GRID_SIZE * 1.5))), tileDict[currentType], currentType));
+
+                    else if (currentType == ObjectType.Rock)
+                        tiles.Add(new Tile(new Rectangle(new Point(currentCoord.X, currentCoord.Y), new Point(GRID_SIZE *2, GRID_SIZE)), tileDict[currentType], currentType));
 
                     //add a leap zone tile
                     else if (currentType == ObjectType.BossLeapZone)
@@ -354,6 +364,9 @@ namespace PlatformerEditor
 
             else if(currentType == ObjectType.Link)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);
+
+            else if (currentType == ObjectType.Rock)
+                spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE*2 , GRID_SIZE)), Color.White);
 
             else if(currentType != ObjectType.Delete)
                 spriteBatch.Draw(tileDict[currentType], new Rectangle(gridCoord, new Point(GRID_SIZE, GRID_SIZE)), Color.White);

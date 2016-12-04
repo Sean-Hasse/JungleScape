@@ -59,6 +59,10 @@ namespace JungleScape
                     case ObjectType.Boss:
                         objectMap.Add(new Boss(tile.bounds, objectMap, textures[ObjectType.Boss], 10, leapZoneMap));
                         break;
+                    case ObjectType.Rock:
+                        objectMap.Add(new Environment(tile.bounds, textures[ObjectType.Rock]));
+                        break;
+
                     case ObjectType.BossLeapZone:
                         //Leap Zone tiles will be LeapZoneTile type instead of a normal tile, and a cast is needed to get extra attributes.
                         LeapZoneTile zoneTile = (LeapZoneTile)tile;
