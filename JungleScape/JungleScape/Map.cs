@@ -66,7 +66,7 @@ namespace JungleScape
                     case ObjectType.BossLeapZone:
                         //Leap Zone tiles will be LeapZoneTile type instead of a normal tile, and a cast is needed to get extra attributes.
                         LeapZoneTile zoneTile = (LeapZoneTile)tile;
-                        BossLeapZone zone = new BossLeapZone(zoneTile.bounds, textures[ObjectType.BossLeapZone], zoneTile.id, zoneTile.linkedZones);
+                        BossLeapZone zone = new BossLeapZone(zoneTile.bounds, null, zoneTile.id, zoneTile.linkedZones);
                         objectMap.Add(zone);
                         leapZoneMap.Add(zone);
                         break;
@@ -82,7 +82,7 @@ namespace JungleScape
                 //If map object is the player, it takes the keyboard state and draws where the player is currently aiming
                 if (obj is Player)
                 {
-                    
+
                     if (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right))
                         spriteBatch.Draw(textures[1], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
                     else if (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Left))
@@ -105,7 +105,10 @@ namespace JungleScape
                         spriteBatch.Draw(textures[0], obj.hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
                 }
                 else
-                    spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
+                {
+                    if(!(obj is BossLeapZone))
+                        spriteBatch.Draw(obj.sprite, obj.hitBox, Color.White);
+                }
             }
         }
 
