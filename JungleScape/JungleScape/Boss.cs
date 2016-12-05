@@ -110,7 +110,7 @@ namespace JungleScape
             if (leapTimer >= 60 && !isPouncing)
             {
                 Pounce();
-                leapTimer = 0;
+                
             }
             foreach (BossLeapZone zone in gObjs.OfType<BossLeapZone>())
             {
@@ -153,6 +153,7 @@ namespace JungleScape
             {
                 if (zone.DetectCollision(player1))
                 {
+                    leapTimer = 0;
                     isPouncing = true;
                     needsAdjusted = true;
 
