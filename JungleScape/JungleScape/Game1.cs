@@ -807,17 +807,17 @@ namespace JungleScape
                 case GameState.Pause:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.Gray);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
-                    spriteBatch.DrawString(testFont2, "Paused", new Vector2(230, 10), Color.White);
-                    spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.White);
-                    spriteBatch.DrawString(testFont, "Return to Menu", new Vector2(225, 350), Color.White);
+                    spriteBatch.DrawString(testFont2, "Paused", new Vector2((desiredBBWidth/2) - 50, (desiredBBHeight/2) - 400), Color.White);
+                    spriteBatch.DrawString(testFont, "Resume Game", new Vector2((desiredBBWidth / 2) - 50, (desiredBBHeight / 2) - 250), Color.White);
+                    spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2((desiredBBWidth / 2) - 120, (desiredBBHeight / 2) - 175), Color.White);
+                    spriteBatch.DrawString(testFont, "Return to Menu", new Vector2((desiredBBWidth / 2) - 70, (desiredBBHeight / 2) - 100), Color.White);
 
                     if (pauseIndex == 0)
-                        spriteBatch.DrawString(testFont, "Resume Game", new Vector2(230, 150), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Resume Game", new Vector2((desiredBBWidth / 2) - 50, (desiredBBHeight / 2) - 250), Color.Yellow);
                     else if (pauseIndex == 1)
-                        spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2(150, 250), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "How do I Play Again?", new Vector2((desiredBBWidth / 2) - 120, (desiredBBHeight / 2) - 175), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Return to Menu", new Vector2(225, 350), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Return to Menu", new Vector2((desiredBBWidth / 2) - 70, (desiredBBHeight / 2) - 100), Color.Yellow);
 
                     break;
 
