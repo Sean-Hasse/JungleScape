@@ -69,11 +69,11 @@ namespace JungleScape
         {
             // Draw the arrow rotated differently for which way the player aims
             if (direction == "diagonal right")
-                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 7/4, Vector2.Zero, SpriteEffects.None, 0f);
+                sb.Draw(sprite, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 40, 10), null, Color.White, (float)Math.PI * 7/4, Vector2.Zero, SpriteEffects.None, 0f);
             if(direction == "diagonal left")
-                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 5/4, Vector2.Zero, SpriteEffects.None, 0f);
+                sb.Draw(sprite, new Rectangle(hitBox.X, hitBox.Y, 40, 10), null, Color.White, (float)Math.PI * 5/4, Vector2.Zero, SpriteEffects.None, 0f);
             if(direction == "up")
-                sb.Draw(sprite, hitBox, null, Color.White, (float)Math.PI * 3/2, Vector2.Zero, SpriteEffects.None, 0f);
+                sb.Draw(sprite, new Rectangle(hitBox.X + hitBox.Width / 2, hitBox.Y, 40, 10), null, Color.White, (float)Math.PI * 3/2, Vector2.Zero, SpriteEffects.None, 0f);
             if (direction == "right")
                 sb.Draw(sprite, hitBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
             if(direction == "left")

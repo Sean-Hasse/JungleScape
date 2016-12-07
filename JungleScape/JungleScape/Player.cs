@@ -151,7 +151,7 @@ namespace JungleScape
                 if (aimDir == "diagonal right")
                 {
                     // creates an arrow, 6 horizontal speed, 6 verticle, starts in player center with dimesnions 10x5, and uses the passed in image
-                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 40, 10), arrowImage, 1);
+                    arrow = new Arrow(6, -6, new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 20, 10), arrowImage, 1);
 
                     // tell arrow what direction it is moving
                     arrow.direction = "diagonal right";
@@ -167,7 +167,7 @@ namespace JungleScape
                 // aiming diagonal left
                 if (aimDir == "diagonal left")
                 {
-                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 40, 10), arrowImage, 1);
+                    arrow = new Arrow(-6, -6, new Rectangle(hitBox.X, hitBox.Y, 20, 10), arrowImage, 1);
                     arrow.direction = "diagonal left";
                     Game1.PlaySound(0);
                     timerArrow = 0;
@@ -176,7 +176,7 @@ namespace JungleScape
                 // aiming up
                 if (aimDir == "up")
                 {
-                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 40, 10), arrowImage, 1);
+                    arrow = new Arrow(0, -8, new Rectangle(hitBox.X + hitBox.Width/2, hitBox.Y, 10, 40), arrowImage, 1);
                     arrow.direction = "up";
                     Game1.PlaySound(0);
                     timerArrow = 0;

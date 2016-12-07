@@ -185,6 +185,7 @@ namespace JungleScape
             }
 
             //sound effects and music
+            SoundEffect.MasterVolume = .5f;
             soundEffects.Add(Content.Load<SoundEffect>("bowFire1"));
 
             songs.Add(Content.Load<Song>("Game"));
@@ -585,22 +586,22 @@ namespace JungleScape
                 case GameState.Menu:
                     spriteBatch.Draw(background, new Rectangle(0, 0, desiredBBWidth, desiredBBHeight), Color.White);
                     spriteBatch.Draw(logo, new Rectangle(0, 0, desiredBBWidth/6, desiredBBHeight/6), Color.White);
-                    spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.White);
-                    spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.White);
-                    spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.White);
-                    spriteBatch.DrawString(testFont, "Options", new Vector2(20, 375), Color.White);
-                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 450), Color.White);
+                    spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 160), Color.White);
+                    spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 235), Color.White);
+                    spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 310), Color.White);
+                    spriteBatch.DrawString(testFont, "Options", new Vector2(20, 385), Color.White);
+                    spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 460), Color.White);
 
                     if (menuIndex == 0)
-                        spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 150), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Start Game", new Vector2(20, 160), Color.Yellow);
                     else if (menuIndex == 1)
-                        spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 225), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "How to Play", new Vector2(20, 235), Color.Yellow);
                     else if (menuIndex == 2)
-                        spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 300), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "How to Change Map", new Vector2(20, 310), Color.Yellow);
                     else if (menuIndex == 3)
-                        spriteBatch.DrawString(testFont, "Options", new Vector2(20, 375), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Options", new Vector2(20, 385), Color.Yellow);
                     else
-                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 450), Color.Yellow);
+                        spriteBatch.DrawString(testFont, "Exit Game", new Vector2(20, 460), Color.Yellow);
                     break;
 
                 case GameState.Options:
