@@ -719,7 +719,7 @@ namespace JungleScape
                     break;
 
                 case GameState.Game:
-                    spriteBatch.Draw(background, new Rectangle(0,0,backgroundWidth * 2 , backgroundHeight), Color.White);
+                    spriteBatch.Draw(background, new Rectangle(0,0,backgroundWidth * 3 , backgroundHeight), Color.White);
                     levelMap.drawMap(spriteBatch, playerTextures, kbState);
                     //spriteBatch.DrawString(testFont, playerCamRef.healthPoints.ToString(), new Vector2(playerCamRef.hitBox.X, playerCamRef.hitBox.Y - 45), Color.Red);
 
