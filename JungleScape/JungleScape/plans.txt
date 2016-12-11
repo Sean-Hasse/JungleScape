@@ -1,5 +1,3 @@
 ﻿This file is for planned changes, anyone can contribute
 
-- (Alexia) Required drawings for images: Boss sprite and red versions of sprites
-- (Sean/Brady) Figure out how boss room will work. 
-- (Sean/Brady) Figure out how moving camera will work.
+- Submit for class!
